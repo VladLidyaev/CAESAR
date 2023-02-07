@@ -6,9 +6,16 @@ import Foundation
 
 enum Strings {
 
-  // MARK: - LaunchErrorAlert
+  // MARK: - ErrorViewController
 
-  enum LaunchErrorAlert {
-    static let text = "text"
+  enum ErrorViewController {
+    static let title = "ERROR"
+    static let message = "An unknown error has occurred. Restart or reinstall the app."
+  }
+
+  // MARK: - LocalAuthenticationContext
+
+  enum LocalAuthenticationContext {
+    static let reason = "Authentication required"
   }
 }
