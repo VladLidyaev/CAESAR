@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F591E0A2992A3CB003904CA /* Conception.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E092992A3CB003904CA /* Conception.txt */; };
+		4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E0C2992BAEA003904CA /* ConfigDTO.swift */; };
+		4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E0E2992BF65003904CA /* UserDTO.swift */; };
+		4F591E112992C737003904CA /* ChatRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E102992C737003904CA /* ChatRequestDTO.swift */; };
+		4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E122992CA0D003904CA /* ChatDTO.swift */; };
+		4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E142992CBBF003904CA /* MessageDTO.swift */; };
 		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
 		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
 		F52E3FB82991A278001C3EA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB72991A278001C3EA0 /* Assets.xcassets */; };
@@ -19,6 +25,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F591E092992A3CB003904CA /* Conception.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Conception.txt; sourceTree = "<group>"; };
+		4F591E0C2992BAEA003904CA /* ConfigDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDTO.swift; sourceTree = "<group>"; };
+		4F591E0E2992BF65003904CA /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
+		4F591E102992C737003904CA /* ChatRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestDTO.swift; sourceTree = "<group>"; };
+		4F591E122992CA0D003904CA /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
+		4F591E142992CBBF003904CA /* MessageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDTO.swift; sourceTree = "<group>"; };
 		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +55,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F591E0729929F65003904CA /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FE029927484001C3EA0 /* Welcome */,
+				F52E3FD929927213001C3EA0 /* Launch */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		4F591E082992A34F003904CA /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				4F591E092992A3CB003904CA /* Conception.txt */,
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
+		4F591E0B2992BAD2003904CA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4F591E0C2992BAEA003904CA /* ConfigDTO.swift */,
+				4F591E0E2992BF65003904CA /* UserDTO.swift */,
+				4F591E102992C737003904CA /* ChatRequestDTO.swift */,
+				4F591E122992CA0D003904CA /* ChatDTO.swift */,
+				4F591E142992CBBF003904CA /* MessageDTO.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F52E3FA22991A277001C3EA0 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +103,7 @@
 		F52E3FAD2991A277001C3EA0 /* CAESAR */ = {
 			isa = PBXGroup;
 			children = (
+				4F591E082992A34F003904CA /* Documentation */,
 				F52E3FD629927169001C3EA0 /* Classes */,
 				F52E3FD52992715B001C3EA0 /* Resources */,
 				F52E3FCE29927058001C3EA0 /* Supporting files */,
@@ -99,10 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				F52E3FCD29927047001C3EA0 /* Delegate */,
-				F52E3FD929927213001C3EA0 /* Launch */,
-				F52E3FE029927484001C3EA0 /* Welcome */,
-				F57CCAFE2992918200227D3F /* Session */,
-				F57CCB002992918E00227D3F /* Info */,
+				4F591E0B2992BAD2003904CA /* Models */,
+				4F591E0729929F65003904CA /* Screens */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -122,20 +162,6 @@
 				F52E3FE5299274E6001C3EA0 /* WelcomeViewController.swift */,
 			);
 			path = Welcome;
-			sourceTree = "<group>";
-		};
-		F57CCAFE2992918200227D3F /* Session */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Session;
-			sourceTree = "<group>";
-		};
-		F57CCB002992918E00227D3F /* Info */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Info;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +230,7 @@
 			files = (
 				F52E3FBB2991A278001C3EA0 /* LaunchScreen.storyboard in Resources */,
 				F52E3FC52991A563001C3EA0 /* GoogleService-Info.plist in Resources */,
+				4F591E0A2992A3CB003904CA /* Conception.txt in Resources */,
 				F52E3FB82991A278001C3EA0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -215,10 +242,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */,
 				F52E3FE6299274E6001C3EA0 /* WelcomeViewController.swift in Sources */,
 				F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */,
+				4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */,
+				4F591E112992C737003904CA /* ChatRequestDTO.swift in Sources */,
 				F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */,
+				4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */,
 				F52E3FDD29927256001C3EA0 /* LaunchViewController.swift in Sources */,
+				4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
