@@ -17,6 +17,8 @@
 		4F591E1A2992D1F5003904CA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E192992D1F5003904CA /* Constants.swift */; };
 		4F591E1D2992D2FB003904CA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E1C2992D2FB003904CA /* Colors.swift */; };
 		4F591E1F2992D30A003904CA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E1E2992D30A003904CA /* Colors.xcassets */; };
+		4F591E232992D728003904CA /* AutoLayout+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E222992D728003904CA /* AutoLayout+Helpers.swift */; };
+		4F591E252992D77A003904CA /* Template.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E242992D77A003904CA /* Template.txt */; };
 		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
 		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
 		F52E3FB82991A278001C3EA0 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB72991A278001C3EA0 /* Icons.xcassets */; };
@@ -39,6 +41,8 @@
 		4F591E192992D1F5003904CA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4F591E1C2992D2FB003904CA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4F591E1E2992D30A003904CA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		4F591E222992D728003904CA /* AutoLayout+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutoLayout+Helpers.swift"; sourceTree = "<group>"; };
+		4F591E242992D77A003904CA /* Template.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Template.txt; sourceTree = "<group>"; };
 		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +79,7 @@
 		4F591E082992A34F003904CA /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				4F591E242992D77A003904CA /* Template.txt */,
 				4F591E092992A3CB003904CA /* Conception.txt */,
 			);
 			path = Documentation;
@@ -83,11 +88,7 @@
 		4F591E0B2992BAD2003904CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4F591E0C2992BAEA003904CA /* ConfigDTO.swift */,
-				4F591E0E2992BF65003904CA /* UserDTO.swift */,
-				4F591E102992C737003904CA /* ChatRequestDTO.swift */,
-				4F591E122992CA0D003904CA /* ChatDTO.swift */,
-				4F591E142992CBBF003904CA /* MessageDTO.swift */,
+				4F591E212992D6CC003904CA /* DTO */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -108,6 +109,26 @@
 				4F591E1E2992D30A003904CA /* Colors.xcassets */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		4F591E202992D6BE003904CA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4F591E222992D728003904CA /* AutoLayout+Helpers.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4F591E212992D6CC003904CA /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				4F591E0C2992BAEA003904CA /* ConfigDTO.swift */,
+				4F591E0E2992BF65003904CA /* UserDTO.swift */,
+				4F591E102992C737003904CA /* ChatRequestDTO.swift */,
+				4F591E122992CA0D003904CA /* ChatDTO.swift */,
+				4F591E142992CBBF003904CA /* MessageDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		F52E3FA22991A277001C3EA0 = {
@@ -169,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				F52E3FCD29927047001C3EA0 /* Delegate */,
+				4F591E202992D6BE003904CA /* Common */,
 				4F591E0B2992BAD2003904CA /* Models */,
 				4F591E0729929F65003904CA /* Screens */,
 			);
@@ -256,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F591E252992D77A003904CA /* Template.txt in Resources */,
 				4F591E1F2992D30A003904CA /* Colors.xcassets in Resources */,
 				F52E3FBB2991A278001C3EA0 /* LaunchScreen.storyboard in Resources */,
 				F52E3FC52991A563001C3EA0 /* GoogleService-Info.plist in Resources */,
@@ -280,6 +303,7 @@
 				4F591E112992C737003904CA /* ChatRequestDTO.swift in Sources */,
 				F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */,
 				4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */,
+				4F591E232992D728003904CA /* AutoLayout+Helpers.swift in Sources */,
 				F52E3FDD29927256001C3EA0 /* LaunchViewController.swift in Sources */,
 				4F591E172992D1BD003904CA /* Icons.swift in Sources */,
 				4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */,
