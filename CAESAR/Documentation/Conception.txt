@@ -44,7 +44,6 @@
 Config {
   version: Float
   code_ttl: UInt64
-  chat_ttl: UInt64
   chat_request_ttl: UInt64
 }
 

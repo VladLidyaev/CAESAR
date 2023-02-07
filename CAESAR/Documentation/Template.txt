@@ -1,15 +1,31 @@
 === CLASS TEMPLATE ===
 
-// MARK: - #CLASS#
+// MARK: - CLASSNAME
 
-class #CLASS# {
+class CLASSNAME {
   // MARK: - Properties
+
+  // MARK: - Computed variables
+
+  // MARK: - Subviews
+
+  // MARK: - Constraints
 
   // MARK: - Initialization
 
   // MARK: - Public Methods
 
+  // MARK: - Setup UI
+
+  // MARK: - View Constructors
+
   // MARK: - Private Methods
+}
+
+// MARK: - LocalConstants
+
+private enum LocalConstants {
+  
 }
 
 === INITIALIZATION FOR VIEWCONTROLLER ===

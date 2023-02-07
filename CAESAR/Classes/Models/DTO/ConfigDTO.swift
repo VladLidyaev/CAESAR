@@ -6,25 +6,21 @@ import Foundation
 
 struct ConfigDTO {
   let version: Float
-  let code_ttl: UInt64
   let chat_ttl: UInt64
   let chat_request_ttl: UInt64
 
   init?(
     version: NSNumber?,
-    code_ttl: NSNumber?,
     chat_ttl: NSNumber?,
     chat_request_ttl: NSNumber?
   ) {
     guard
       let version = version as? Float,
-      let code_ttl = code_ttl as? UInt64,
       let chat_ttl = chat_ttl as? UInt64,
       let chat_request_ttl = chat_request_ttl as? UInt64
     else { return nil }
     
     self.version = version
-    self.code_ttl = code_ttl
     self.chat_ttl = chat_ttl
     self.chat_request_ttl = chat_request_ttl
   }
@@ -35,7 +31,6 @@ struct ConfigDTO {
 extension ConfigDTO {
   enum Keys: String {
     case version
-    case code_ttl
     case chat_ttl
     case chat_request_ttl
   }

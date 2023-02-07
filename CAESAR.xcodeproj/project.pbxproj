@@ -19,6 +19,10 @@
 		4F591E1F2992D30A003904CA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E1E2992D30A003904CA /* Colors.xcassets */; };
 		4F591E232992D728003904CA /* AutoLayout+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E222992D728003904CA /* AutoLayout+Helpers.swift */; };
 		4F591E252992D77A003904CA /* Template.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E242992D77A003904CA /* Template.txt */; };
+		4F591E2A2992DBDE003904CA /* CaesarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E292992DBDE003904CA /* CaesarManager.swift */; };
+		4F591E362992DD18003904CA /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E352992DD18003904CA /* Strings.swift */; };
+		4F591E392992DEA4003904CA /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E382992DEA4003904CA /* String.swift */; };
+		4F591E3B2992E04F003904CA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E3A2992E04F003904CA /* Config.swift */; };
 		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
 		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
 		F52E3FB82991A278001C3EA0 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB72991A278001C3EA0 /* Icons.xcassets */; };
@@ -43,6 +47,10 @@
 		4F591E1E2992D30A003904CA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		4F591E222992D728003904CA /* AutoLayout+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutoLayout+Helpers.swift"; sourceTree = "<group>"; };
 		4F591E242992D77A003904CA /* Template.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Template.txt; sourceTree = "<group>"; };
+		4F591E292992DBDE003904CA /* CaesarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaesarManager.swift; sourceTree = "<group>"; };
+		4F591E352992DD18003904CA /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		4F591E382992DEA4003904CA /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		4F591E3A2992E04F003904CA /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				4F591E212992D6CC003904CA /* DTO */,
+				4F591E3A2992E04F003904CA /* Config.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -114,6 +123,7 @@
 		4F591E202992D6BE003904CA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				4F591E372992DE9A003904CA /* Extensions */,
 				4F591E222992D728003904CA /* AutoLayout+Helpers.swift */,
 			);
 			path = Common;
@@ -129,6 +139,22 @@
 				4F591E142992CBBF003904CA /* MessageDTO.swift */,
 			);
 			path = DTO;
+			sourceTree = "<group>";
+		};
+		4F591E2B2992DC1D003904CA /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				4F591E352992DD18003904CA /* Strings.swift */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		4F591E372992DE9A003904CA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4F591E382992DEA4003904CA /* String.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		F52E3FA22991A277001C3EA0 = {
@@ -179,6 +205,7 @@
 		F52E3FD52992715B001C3EA0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4F591E2B2992DC1D003904CA /* Strings */,
 				4F591E1B2992D2EF003904CA /* Colors */,
 				4F591E182992D1E4003904CA /* Icons */,
 				4F591E192992D1F5003904CA /* Constants.swift */,
@@ -193,6 +220,7 @@
 				4F591E202992D6BE003904CA /* Common */,
 				4F591E0B2992BAD2003904CA /* Models */,
 				4F591E0729929F65003904CA /* Screens */,
+				4F591E292992DBDE003904CA /* CaesarManager.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -298,14 +326,18 @@
 				4F591E1D2992D2FB003904CA /* Colors.swift in Sources */,
 				4F591E1A2992D1F5003904CA /* Constants.swift in Sources */,
 				F52E3FE6299274E6001C3EA0 /* WelcomeViewController.swift in Sources */,
+				4F591E3B2992E04F003904CA /* Config.swift in Sources */,
+				4F591E2A2992DBDE003904CA /* CaesarManager.swift in Sources */,
 				F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */,
 				4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */,
+				4F591E362992DD18003904CA /* Strings.swift in Sources */,
 				4F591E112992C737003904CA /* ChatRequestDTO.swift in Sources */,
 				F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */,
 				4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */,
 				4F591E232992D728003904CA /* AutoLayout+Helpers.swift in Sources */,
 				F52E3FDD29927256001C3EA0 /* LaunchViewController.swift in Sources */,
 				4F591E172992D1BD003904CA /* Icons.swift in Sources */,
+				4F591E392992DEA4003904CA /* String.swift in Sources */,
 				4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,6 +360,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -389,6 +422,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

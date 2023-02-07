@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  CAESAR
+
+  Created by Vladislav Lidiaev on 07.02.2023.
+  
+*/
+
+"LaunchErrorAlert.text" = "текст"
