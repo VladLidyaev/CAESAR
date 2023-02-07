@@ -1,0 +1,443 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
+		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
+		F52E3FB82991A278001C3EA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB72991A278001C3EA0 /* Assets.xcassets */; };
+		F52E3FBB2991A278001C3EA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB92991A278001C3EA0 /* LaunchScreen.storyboard */; };
+		F52E3FC52991A563001C3EA0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FC42991A563001C3EA0 /* GoogleService-Info.plist */; };
+		F52E3FC929926D24001C3EA0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F52E3FC829926D24001C3EA0 /* FirebaseAuth */; };
+		F52E3FCB29926D24001C3EA0 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = F52E3FCA29926D24001C3EA0 /* FirebaseDatabase */; };
+		F52E3FDD29927256001C3EA0 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FDC29927256001C3EA0 /* LaunchViewController.swift */; };
+		F52E3FE6299274E6001C3EA0 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FE5299274E6001C3EA0 /* WelcomeViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F52E3FB72991A278001C3EA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F52E3FBA2991A278001C3EA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F52E3FBC2991A278001C3EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F52E3FC42991A563001C3EA0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F52E3FDC29927256001C3EA0 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		F52E3FE5299274E6001C3EA0 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F52E3FA82991A277001C3EA0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F52E3FCB29926D24001C3EA0 /* FirebaseDatabase in Frameworks */,
+				F52E3FC929926D24001C3EA0 /* FirebaseAuth in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F52E3FA22991A277001C3EA0 = {
+			isa = PBXGroup;
+			children = (
+				F52E3FAD2991A277001C3EA0 /* CAESAR */,
+				F52E3FAC2991A277001C3EA0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F52E3FAC2991A277001C3EA0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FAB2991A277001C3EA0 /* CAESAR.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F52E3FAD2991A277001C3EA0 /* CAESAR */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FD629927169001C3EA0 /* Classes */,
+				F52E3FD52992715B001C3EA0 /* Resources */,
+				F52E3FCE29927058001C3EA0 /* Supporting files */,
+			);
+			path = CAESAR;
+			sourceTree = "<group>";
+		};
+		F52E3FCD29927047001C3EA0 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */,
+				F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		F52E3FCE29927058001C3EA0 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FBC2991A278001C3EA0 /* Info.plist */,
+				F52E3FC42991A563001C3EA0 /* GoogleService-Info.plist */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		F52E3FD52992715B001C3EA0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FB72991A278001C3EA0 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F52E3FD629927169001C3EA0 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FCD29927047001C3EA0 /* Delegate */,
+				F52E3FD929927213001C3EA0 /* Launch */,
+				F52E3FE029927484001C3EA0 /* Welcome */,
+				F57CCAFE2992918200227D3F /* Session */,
+				F57CCB002992918E00227D3F /* Info */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F52E3FD929927213001C3EA0 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FB92991A278001C3EA0 /* LaunchScreen.storyboard */,
+				F52E3FDC29927256001C3EA0 /* LaunchViewController.swift */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		F52E3FE029927484001C3EA0 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FE5299274E6001C3EA0 /* WelcomeViewController.swift */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		F57CCAFE2992918200227D3F /* Session */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		F57CCB002992918E00227D3F /* Info */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F52E3FAA2991A277001C3EA0 /* CAESAR */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F52E3FBF2991A278001C3EA0 /* Build configuration list for PBXNativeTarget "CAESAR" */;
+			buildPhases = (
+				F52E3FA72991A277001C3EA0 /* Sources */,
+				F52E3FA82991A277001C3EA0 /* Frameworks */,
+				F52E3FA92991A277001C3EA0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CAESAR;
+			packageProductDependencies = (
+				F52E3FC829926D24001C3EA0 /* FirebaseAuth */,
+				F52E3FCA29926D24001C3EA0 /* FirebaseDatabase */,
+			);
+			productName = Caesar;
+			productReference = F52E3FAB2991A277001C3EA0 /* CAESAR.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F52E3FA32991A277001C3EA0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					F52E3FAA2991A277001C3EA0 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = F52E3FA62991A277001C3EA0 /* Build configuration list for PBXProject "CAESAR" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F52E3FA22991A277001C3EA0;
+			packageReferences = (
+				F52E3FC729926D24001C3EA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			productRefGroup = F52E3FAC2991A277001C3EA0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F52E3FAA2991A277001C3EA0 /* CAESAR */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F52E3FA92991A277001C3EA0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F52E3FBB2991A278001C3EA0 /* LaunchScreen.storyboard in Resources */,
+				F52E3FC52991A563001C3EA0 /* GoogleService-Info.plist in Resources */,
+				F52E3FB82991A278001C3EA0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F52E3FA72991A277001C3EA0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F52E3FE6299274E6001C3EA0 /* WelcomeViewController.swift in Sources */,
+				F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */,
+				F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */,
+				F52E3FDD29927256001C3EA0 /* LaunchViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F52E3FB92991A278001C3EA0 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F52E3FBA2991A278001C3EA0 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F52E3FBD2991A278001C3EA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F52E3FBE2991A278001C3EA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F52E3FC02991A278001C3EA0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5XX5CN4AGT;
+				INFOPLIST_FILE = "Caesar/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Balonka.CAESAR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		F52E3FC12991A278001C3EA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5XX5CN4AGT;
+				INFOPLIST_FILE = "Caesar/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Balonka.CAESAR;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F52E3FA62991A277001C3EA0 /* Build configuration list for PBXProject "CAESAR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F52E3FBD2991A278001C3EA0 /* Debug */,
+				F52E3FBE2991A278001C3EA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F52E3FBF2991A278001C3EA0 /* Build configuration list for PBXNativeTarget "CAESAR" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F52E3FC02991A278001C3EA0 /* Debug */,
+				F52E3FC12991A278001C3EA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F52E3FC729926D24001C3EA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F52E3FC829926D24001C3EA0 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F52E3FC729926D24001C3EA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		F52E3FCA29926D24001C3EA0 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F52E3FC729926D24001C3EA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = F52E3FA32991A277001C3EA0 /* Project object */;
+}
