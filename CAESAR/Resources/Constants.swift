@@ -13,7 +13,7 @@ extension Constants {
     static let `default`: TimeInterval = 0.3
     static let extended: TimeInterval = `default` * 2
     static let accelerated: TimeInterval = `default` / 2
-    static let blinking: TimeInterval = 2.0
+    static let blinking: TimeInterval = 1.0
   }
 }
 

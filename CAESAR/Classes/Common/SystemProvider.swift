@@ -1,6 +1,7 @@
 // Made by Vladislav Lidiaev [aka Balonka] on 2023.
 
 import SystemConfiguration
+import UIKit
 
 class SystemProvider {
   static var isConnectedToNetwork: Bool {
@@ -29,5 +30,12 @@ class SystemProvider {
     let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != .zero
     let isConnected = (isReachable && !needsConnection)
     return isConnected
+  }
+
+  static var bundleVersion: Float {
+    let bundle = Bundle.main
+    let bundleVersionKey = "CFBundleVersion"
+    let bundleVersionString = bundle.object(forInfoDictionaryKey: bundleVersionKey) as? NSString
+    return bundleVersionString?.floatValue ?? .zero
   }
 }

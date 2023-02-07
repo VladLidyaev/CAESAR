@@ -2,8 +2,8 @@
 
 import Foundation
 
-// MARK: - Empty
+// MARK: - One
 
-extension String {
-  static let empty: String = ""
+extension CGFloat {
+  static let one: CGFloat = 1.0
 }

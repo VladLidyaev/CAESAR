@@ -8,9 +8,8 @@ import CryptoKit
 class CaesarManager {
   // MARK: - Properties
 
-  let config: Config
-  let userID: String
-  let privateKey: P256.KeyAgreement.PrivateKey
+  private let userInfo: UserInfo
+  private let config: Config
 
   // MARK: - Computed variables
 
@@ -22,12 +21,10 @@ class CaesarManager {
   
   init(
     config: Config,
-    userID: String,
-    privateKey: P256.KeyAgreement.PrivateKey
+    userInfo: UserInfo
   ) {
     self.config = config
-    self.userID = userID
-    self.privateKey = privateKey
+    self.userInfo = userInfo
   }
 
   // MARK: - Public Methods

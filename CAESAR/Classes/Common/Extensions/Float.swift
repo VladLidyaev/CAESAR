@@ -2,8 +2,8 @@
 
 import Foundation
 
-// MARK: - Empty
+// MARK: - One
 
-extension String {
-  static let empty: String = ""
+extension Float {
+  static let one: Float = 1.0
 }

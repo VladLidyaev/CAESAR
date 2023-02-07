@@ -7,9 +7,9 @@ import Foundation
 class Config {
   // MARK: - Properties
 
-  let minSupportedVersion: Float
-  let chatTTL: UInt64
-  let chatRequestTTL: UInt64
+  private let minSupportedVersion: Float
+  private let chatTTL: UInt64
+  private let chatRequestTTL: UInt64
 
   // MARK: - Initialization
 

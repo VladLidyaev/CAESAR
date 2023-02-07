@@ -26,6 +26,9 @@
 		4F591E402992E851003904CA /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E3F2992E851003904CA /* UIViewController.swift */; };
 		4F591E422992EDC6003904CA /* SystemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E412992EDC6003904CA /* SystemProvider.swift */; };
 		4F591E452992F523003904CA /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E442992F523003904CA /* Errors.swift */; };
+		4F591E472992F9DB003904CA /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E462992F9DB003904CA /* UserInfo.swift */; };
+		4F591E492992FCA8003904CA /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E482992FCA8003904CA /* CGFloat.swift */; };
+		4F591E4B2992FD6D003904CA /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E4A2992FD6D003904CA /* Float.swift */; };
 		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
 		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
 		F52E3FB82991A278001C3EA0 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB72991A278001C3EA0 /* Icons.xcassets */; };
@@ -57,6 +60,9 @@
 		4F591E3F2992E851003904CA /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		4F591E412992EDC6003904CA /* SystemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemProvider.swift; sourceTree = "<group>"; };
 		4F591E442992F523003904CA /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		4F591E462992F9DB003904CA /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		4F591E482992FCA8003904CA /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
+		4F591E4A2992FD6D003904CA /* Float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
 		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +110,7 @@
 			children = (
 				4F591E212992D6CC003904CA /* DTO */,
 				4F591E3A2992E04F003904CA /* Config.swift */,
+				4F591E462992F9DB003904CA /* UserInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -161,6 +168,8 @@
 			children = (
 				4F591E382992DEA4003904CA /* String.swift */,
 				4F591E3F2992E851003904CA /* UIViewController.swift */,
+				4F591E482992FCA8003904CA /* CGFloat.swift */,
+				4F591E4A2992FD6D003904CA /* Float.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -341,6 +350,8 @@
 			files = (
 				4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */,
 				4F591E1D2992D2FB003904CA /* Colors.swift in Sources */,
+				4F591E492992FCA8003904CA /* CGFloat.swift in Sources */,
+				4F591E4B2992FD6D003904CA /* Float.swift in Sources */,
 				4F591E422992EDC6003904CA /* SystemProvider.swift in Sources */,
 				4F591E1A2992D1F5003904CA /* Constants.swift in Sources */,
 				4F591E402992E851003904CA /* UIViewController.swift in Sources */,
@@ -358,6 +369,7 @@
 				4F591E452992F523003904CA /* Errors.swift in Sources */,
 				4F591E172992D1BD003904CA /* Icons.swift in Sources */,
 				4F591E392992DEA4003904CA /* String.swift in Sources */,
+				4F591E472992F9DB003904CA /* UserInfo.swift in Sources */,
 				4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
