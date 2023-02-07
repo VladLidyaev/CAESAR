@@ -1,0 +1,22 @@
+{
+  "images" : [
+    {
+      "filename" : "logo_title_icon.pdf",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "caesar-low-resolution-logo-white-on-transparent-background.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

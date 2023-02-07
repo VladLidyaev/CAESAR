@@ -13,9 +13,13 @@
 		4F591E112992C737003904CA /* ChatRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E102992C737003904CA /* ChatRequestDTO.swift */; };
 		4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E122992CA0D003904CA /* ChatDTO.swift */; };
 		4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E142992CBBF003904CA /* MessageDTO.swift */; };
+		4F591E172992D1BD003904CA /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E162992D1BD003904CA /* Icons.swift */; };
+		4F591E1A2992D1F5003904CA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E192992D1F5003904CA /* Constants.swift */; };
+		4F591E1D2992D2FB003904CA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E1C2992D2FB003904CA /* Colors.swift */; };
+		4F591E1F2992D30A003904CA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E1E2992D30A003904CA /* Colors.xcassets */; };
 		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
 		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
-		F52E3FB82991A278001C3EA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB72991A278001C3EA0 /* Assets.xcassets */; };
+		F52E3FB82991A278001C3EA0 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB72991A278001C3EA0 /* Icons.xcassets */; };
 		F52E3FBB2991A278001C3EA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FB92991A278001C3EA0 /* LaunchScreen.storyboard */; };
 		F52E3FC52991A563001C3EA0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F52E3FC42991A563001C3EA0 /* GoogleService-Info.plist */; };
 		F52E3FC929926D24001C3EA0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F52E3FC829926D24001C3EA0 /* FirebaseAuth */; };
@@ -31,10 +35,14 @@
 		4F591E102992C737003904CA /* ChatRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestDTO.swift; sourceTree = "<group>"; };
 		4F591E122992CA0D003904CA /* ChatDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDTO.swift; sourceTree = "<group>"; };
 		4F591E142992CBBF003904CA /* MessageDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDTO.swift; sourceTree = "<group>"; };
+		4F591E162992D1BD003904CA /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		4F591E192992D1F5003904CA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4F591E1C2992D2FB003904CA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		4F591E1E2992D30A003904CA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F52E3FB72991A278001C3EA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F52E3FB72991A278001C3EA0 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		F52E3FBA2991A278001C3EA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F52E3FBC2991A278001C3EA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F52E3FC42991A563001C3EA0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -82,6 +90,24 @@
 				4F591E142992CBBF003904CA /* MessageDTO.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4F591E182992D1E4003904CA /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				F52E3FB72991A278001C3EA0 /* Icons.xcassets */,
+				4F591E162992D1BD003904CA /* Icons.swift */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
+		4F591E1B2992D2EF003904CA /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				4F591E1C2992D2FB003904CA /* Colors.swift */,
+				4F591E1E2992D30A003904CA /* Colors.xcassets */,
+			);
+			path = Colors;
 			sourceTree = "<group>";
 		};
 		F52E3FA22991A277001C3EA0 = {
@@ -132,7 +158,9 @@
 		F52E3FD52992715B001C3EA0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				F52E3FB72991A278001C3EA0 /* Assets.xcassets */,
+				4F591E1B2992D2EF003904CA /* Colors */,
+				4F591E182992D1E4003904CA /* Icons */,
+				4F591E192992D1F5003904CA /* Constants.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -228,10 +256,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F591E1F2992D30A003904CA /* Colors.xcassets in Resources */,
 				F52E3FBB2991A278001C3EA0 /* LaunchScreen.storyboard in Resources */,
 				F52E3FC52991A563001C3EA0 /* GoogleService-Info.plist in Resources */,
 				4F591E0A2992A3CB003904CA /* Conception.txt in Resources */,
-				F52E3FB82991A278001C3EA0 /* Assets.xcassets in Resources */,
+				F52E3FB82991A278001C3EA0 /* Icons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +272,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */,
+				4F591E1D2992D2FB003904CA /* Colors.swift in Sources */,
+				4F591E1A2992D1F5003904CA /* Constants.swift in Sources */,
 				F52E3FE6299274E6001C3EA0 /* WelcomeViewController.swift in Sources */,
 				F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */,
 				4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */,
@@ -250,6 +281,7 @@
 				F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */,
 				4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */,
 				F52E3FDD29927256001C3EA0 /* LaunchViewController.swift in Sources */,
+				4F591E172992D1BD003904CA /* Icons.swift in Sources */,
 				4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -397,7 +429,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Balonka.CAESAR;
+				PRODUCT_BUNDLE_IDENTIFIER = Balonka.Caesar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -417,7 +449,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Balonka.CAESAR;
+				PRODUCT_BUNDLE_IDENTIFIER = Balonka.Caesar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

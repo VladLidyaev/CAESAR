@@ -6,10 +6,6 @@ import FirebaseAuth
 class LaunchViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    Auth.auth().signInAnonymously { authResult, error in
-      guard let result = authResult else { return }
-      
-    }
+    view.backgroundColor = Colors.background
   }
 }
