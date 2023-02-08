@@ -12,9 +12,9 @@ struct MessageDTO {
 
   init(
     id: String = UUID().uuidString,
-     user_id: String,
-     data: Data,
-     timestamp: Date = Date()
+    user_id: String,
+    data: Data,
+    timestamp: Date = Date()
   ) {
     self.id = id
     self.user_id = user_id

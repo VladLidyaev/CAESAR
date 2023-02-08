@@ -430,9 +430,3 @@ class CaesarManager {
     actualViewController.showErrorAlert(message: error?.localizedDescription)
   }
 }
-
-// MARK: - LocalConstants
-
-private enum LocalConstants {
-
-}
