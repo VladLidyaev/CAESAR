@@ -18,4 +18,10 @@ enum Strings {
   enum LocalAuthenticationContext {
     static let reason = "Authentication required"
   }
+
+  // MARK: - UserInfo
+
+  enum UserInfo {
+    static let defaultDisplayName = "Unkown"
+  }
 }

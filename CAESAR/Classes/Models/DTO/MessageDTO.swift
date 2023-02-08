@@ -50,3 +50,16 @@ extension MessageDTO {
     case timestamp
   }
 }
+
+// MARK: - asDictionary
+
+extension MessageDTO {
+  var asDictionary: Dictionary<String, Any> {
+    return [
+      Keys.id.rawValue: id,
+      Keys.user_id.rawValue: user_id,
+      Keys.data.rawValue: data.base64EncodedString(),
+      Keys.timestamp.rawValue: timestamp.timeIntervalSinceReferenceDate,
+    ]
+  }
+}

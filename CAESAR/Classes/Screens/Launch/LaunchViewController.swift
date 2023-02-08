@@ -90,27 +90,29 @@ class LaunchViewController: UIViewController {
       return
     }
 
-    localAuth(
-      onSuccess: { [weak self] in
-        self?.remoteAuth(
-          onSuccess: { userID in
-            self?.createPrivateKey(
-              onSuccess: { privateKey in
-                self?.launchManager(
-                  userInfo: UserInfo(
-                    userID: userID,
-                    privateKey: privateKey
+    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+      self?.localAuth(
+        onSuccess: {
+          self?.remoteAuth(
+            onSuccess: { userID in
+              self?.createPrivateKey(
+                onSuccess: { privateKey in
+                  self?.launchManager(
+                    userInfo: UserInfo(
+                      userID: userID,
+                      privateKey: privateKey
+                    )
                   )
-                )
-              },
-              onError: onError
-            )
-          },
-          onError: onError
-        )
-      },
-      onError: onError
-    )
+                },
+                onError: onError
+              )
+            },
+            onError: onError
+          )
+        },
+        onError: onError
+      )
+    }
   }
 
   // MARK: - Local Auth

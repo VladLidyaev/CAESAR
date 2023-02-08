@@ -52,7 +52,11 @@ class CaesarManager {
   // MARK: - Public Methods
 
   func launch() {
-    
+    updateState { [weak self] in
+      // TODO: -
+    } onError: { [weak self] error in
+      self?.handleError(error)
+    }
   }
 
   // MARK: - Private Methods
@@ -75,6 +79,102 @@ class CaesarManager {
       handleError(LocalError.unsupportedAppVersion)
       return
     }
+  }
+
+  private func updateState(
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    databaseProvider.getUser(
+      userID: userInfo.userDTO.id,
+      onSuccess: { [weak self] userDTO in
+        self?.deleteChatRequestIfNeeded(
+          chatRequestID: userDTO?.chat_request_id,
+          onSuccess: {
+            self?.deleteChatsIfNeeded(
+              chatID: userDTO?.chat_id,
+              onSuccess: {
+                self?.deleteMessagesIfNeeded(
+                  chatID: userDTO?.chat_id,
+                  onSuccess: {
+                    self?.updateUser(
+                      onSuccess: onSuccess,
+                      onError: onError
+                    )
+                  },
+                  onError: onError
+                )
+              },
+              onError: onError
+            )
+          },
+          onError: onError
+        )
+      },
+      onError: onError
+    )
+  }
+
+  private func updateUser(
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    databaseProvider.updateUser(
+      dto: userInfo.userDTO,
+      onSuccess: onSuccess,
+      onError: onError
+    )
+  }
+
+  private func deleteChatRequestIfNeeded(
+    chatRequestID: String?,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    guard let chatRequestID = chatRequestID else {
+      onSuccess()
+      return
+    }
+
+    databaseProvider.deleteChatRequest(
+      chatRequestID: chatRequestID,
+      onSuccess: onSuccess,
+      onError: onError
+    )
+  }
+
+  private func deleteChatsIfNeeded(
+    chatID: String?,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    guard let chatID = chatID else {
+      onSuccess()
+      return
+    }
+
+    databaseProvider.deleteChat(
+      chatID: chatID,
+      onSuccess: onSuccess,
+      onError: onError
+    )
+  }
+
+  private func deleteMessagesIfNeeded(
+    chatID: String?,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    guard let chatID = chatID else {
+      onSuccess()
+      return
+    }
+
+    databaseProvider.deleteMessages(
+      chatID: chatID,
+      onSuccess: onSuccess,
+      onError: onError
+    )
   }
 
   // MARK: - Error Handling

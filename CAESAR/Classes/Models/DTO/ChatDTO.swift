@@ -55,3 +55,17 @@ extension ChatDTO {
     case timestamp
   }
 }
+
+// MARK: - asDictionary
+
+extension ChatDTO {
+  var asDictionary: Dictionary<String, Any> {
+    return [
+      Keys.id.rawValue: id,
+      Keys.chat_request_id.rawValue: chat_request_id,
+      Keys.user_ids.rawValue: user_ids,
+      Keys.message_ids.rawValue: message_ids,
+      Keys.timestamp.rawValue: timestamp.timeIntervalSinceReferenceDate,
+    ]
+  }
+}

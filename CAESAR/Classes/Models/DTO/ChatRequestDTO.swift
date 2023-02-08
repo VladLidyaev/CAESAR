@@ -43,3 +43,15 @@ extension ChatRequestDTO {
     case timestamp
   }
 }
+
+// MARK: - asDictionary
+
+extension ChatRequestDTO {
+  var asDictionary: Dictionary<String, Any> {
+    return [
+      Keys.id.rawValue: id,
+      Keys.user_id.rawValue: user_id,
+      Keys.timestamp.rawValue: timestamp.timeIntervalSinceReferenceDate,
+    ]
+  }
+}

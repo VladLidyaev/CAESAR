@@ -54,3 +54,18 @@ extension UserDTO {
     case chat_id
   }
 }
+
+// MARK: - asDictionary
+
+extension UserDTO {
+  var asDictionary: Dictionary<String, Any> {
+    var dictionary = [
+      Keys.id.rawValue: id,
+      Keys.public_key.rawValue: public_key.base64EncodedString(),
+      Keys.display_name.rawValue: display_name,
+    ]
+    dictionary[Keys.chat_request_id.rawValue] = chat_request_id
+    dictionary[Keys.chat_id.rawValue] = chat_id
+    return dictionary
+  }
+}

@@ -26,7 +26,9 @@ class DatabaseProvider {
     onSuccess: @escaping (ConfigDTO) -> Void,
     onError: @escaping (Error?) -> Void
   ) {
-    mainReference.child(ConfigDTO.key).getData { error, snapshot in
+    mainReference.child(
+      path([ConfigDTO.key])
+    ).getData { error, snapshot in
       guard let snapshot = snapshot else {
         onError(error)
         return
@@ -44,9 +46,100 @@ class DatabaseProvider {
     }
   }
 
-  // MARK: - View Constructors
+  func getUser(
+    userID: String,
+    onSuccess: @escaping (UserDTO?) -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([UserDTO.key, userID])
+    ).getData { error, snapshot in
+      guard let snapshot = snapshot else {
+        onError(error)
+        return
+      }
+
+      guard let dictionary = snapshot.value as? Dictionary<String, Any> else {
+        onSuccess(nil)
+        return
+      }
+      
+      onSuccess(UserDTO(from: dictionary))
+    }
+  }
+
+  func updateUser(
+    dto: UserDTO,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.updateChildValues([
+      path([UserDTO.key, dto.id]): dto.asDictionary
+    ]) { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  func deleteChatRequest(
+    chatRequestID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID])
+    ).removeValue { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  func deleteChat(
+    chatID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatDTO.key, chatID])
+    ).removeValue { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  func deleteMessages(
+    chatID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([MessageDTO.key, chatID])
+    ).removeValue { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
 
   // MARK: - Private Methods
+
+  func path(_ array: [String]) -> String {
+    let formatAction: (String) -> (String) = { string in "/\(string)" }
+    var result: String = .empty
+    array.forEach { result += formatAction($0) }
+    return result
+  }
 }
 
 // MARK: - LocalConstants

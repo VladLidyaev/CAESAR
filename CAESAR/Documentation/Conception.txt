@@ -41,12 +41,14 @@
 
 Структуры данных
 
+Х: лежит отдельно
 Config {
   version: Float
   code_ttl: UInt64
   chat_request_ttl: UInt64
 }
 
+Х: лежат в словаре с ключом = id
 User {
   id: String
   public_key: String
@@ -55,12 +57,14 @@ User {
   chat: String?
 }
 
+Х: лежат в словаре с ключом = id
 ChatRequest {
   id: Int // Код чата
   user_id: String
   timestamp: UInt64
 }
 
+Х: лежат в словаре с ключом = id
 Chat {
   id: UUID // Используем как соль
   users: [String] // Юзеры в чате
@@ -68,6 +72,7 @@ Chat {
   timestamp: UInt64
 }
 
+Х: лежат в словаре с ключом = chat_id, массив
 Message {
   id: UUID
   user: String // Автор
