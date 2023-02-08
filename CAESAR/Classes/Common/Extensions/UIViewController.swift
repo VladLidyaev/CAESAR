@@ -24,7 +24,8 @@ extension UIViewController {
   func showStartChatAlert(
     userName: String,
     acceptAction: @escaping () -> Void,
-    declineAction: @escaping () -> Void
+    declineAction: @escaping () -> Void,
+    completion: @escaping (@escaping () -> Void) -> Void
   ) {
     let companionName = userName == .empty ? Strings.UserInfo.defaultDisplayName : userName
     let alert = UIAlertController(
@@ -46,6 +47,12 @@ extension UIViewController {
         handler: { _ in declineAction() }
       )
     )
+
+    completion({
+      DispatchQueue.main.async {
+        alert.dismiss(animated: true)
+      }
+    })
     DispatchQueue.main.async { [weak self] in
       self?.present(alert, animated: true, completion: nil)
     }
@@ -55,7 +62,9 @@ extension UIViewController {
 // MARK: - WaitingAlert
 
 extension UIViewController {
-  func waitingAlert(completion: @escaping (@escaping () -> Void) -> Void) {
+  func waitingAlert(
+    completion: @escaping (@escaping () -> Void) -> Void
+  ) {
     let alert = UIAlertController(title: .empty, message: nil, preferredStyle: .alert)
     let indicator = UIActivityIndicatorView(frame: alert.view.bounds)
     alert.view.addSubview(indicator)
@@ -64,7 +73,11 @@ extension UIViewController {
     indicator.isUserInteractionEnabled = false
     indicator.startAnimating()
 
-    completion({ alert.dismiss(animated: true) })
+    completion({
+      DispatchQueue.main.async {
+        alert.dismiss(animated: true)
+      }
+    })
     DispatchQueue.main.async { [weak self] in
       self?.present(alert, animated: true, completion: nil)
     }

@@ -39,7 +39,7 @@ class CaesarManager {
   private var state: CaesarManagerState = .welcome
   private weak var actualViewController: CaesarViewController?
 
-  private var config: Config? {
+  var config: Config? {
     didSet {
       checkAppVersion()
     }
@@ -99,6 +99,7 @@ class CaesarManager {
     onSuccess: @escaping (UserDTO) -> Void
   ) {
     let onError: (Error?) -> () = { [weak self] error in
+      guard self?.state.isWelcomeScreen == true else { return }
       self?.handleError(error)
     }
 
@@ -129,15 +130,12 @@ class CaesarManager {
   }
 
   func subscribeOnChat(
+    chatRequestID: String,
     onSuccess: @escaping (ChatDTO) -> Void
   ) {
     let onError: (Error?) -> () = { [weak self] error in
+      guard self?.state.isWelcomeScreen == true else { return }
       self?.handleError(error)
-    }
-
-    guard let chatRequestID = userInfo.chatRequestDTO?.id else {
-      onError(nil)
-      return
     }
 
     databaseProvider.subscribeOnChatID(
@@ -203,6 +201,7 @@ class CaesarManager {
       companion_id: companionID
     )
 
+    deleteSubscribeOnCompanion()
     databaseProvider.createChat(
       chatDTO: chatDTO,
       chatRequestID: chatRequestID,
@@ -220,7 +219,18 @@ class CaesarManager {
     )
   }
 
+  func deleteSubscribeOnChat(chatRequestID: String) {
+    databaseProvider.deleteSubscribeOnChatID(chatRequestID: chatRequestID)
+  }
+
+  func deleteSubscribeOnCompanion() {
+    guard let chatRequestID = userInfo.chatRequestDTO?.id else { return }
+    databaseProvider.deleteSubscribeOnCompanionID(chatRequestID: chatRequestID)
+  }
+
+
   func startChat(chatDTO: ChatDTO) {
+    state = .chatting
     userInfo.chatDTO = chatDTO
     presentVC(makeChatViewController())
   }

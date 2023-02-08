@@ -31,14 +31,13 @@ struct ChatDTO {
       let id = dictionary[Keys.id.rawValue] as? String,
       let chat_request_id = dictionary[Keys.chat_request_id.rawValue] as? String,
       let user_ids = dictionary[Keys.user_ids.rawValue] as? [String],
-      let message_ids = dictionary[Keys.message_ids.rawValue] as? [String],
       let timestamp = dictionary[Keys.timestamp.rawValue] as? TimeInterval
     else { return nil }
 
     self.id = id
     self.chat_request_id = chat_request_id
     self.user_ids = user_ids
-    self.message_ids = message_ids
+    self.message_ids = dictionary[Keys.message_ids.rawValue] as? [String] ?? [String]()
     self.timestamp = Date(timeIntervalSinceReferenceDate: timestamp)
   }
 }

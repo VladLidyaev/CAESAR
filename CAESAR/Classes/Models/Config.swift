@@ -25,5 +25,19 @@ class Config {
     return version >= minSupportedVersion
   }
 
+  func chatTimer(completion: @escaping () -> Void) {
+    let timeInterval = TimeInterval(chatTTL)
+    DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) {
+      completion()
+    }
+  }
+
+  func chatRequestTimer(completion: @escaping () -> Void) {
+    let timeInterval = TimeInterval(chatRequestTTL)
+    DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) {
+      completion()
+    }
+  }
+
   // MARK: - Private Methods
 }

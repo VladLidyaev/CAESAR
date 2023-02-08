@@ -7,6 +7,8 @@ import UIKit
 class WelcomeViewController: CaesarViewController {
   // MARK: - Properties
 
+  private var isTimerActive: Bool = false
+
   // MARK: - Computed variables
 
   // MARK: - Subviews
@@ -86,10 +88,22 @@ class WelcomeViewController: CaesarViewController {
     let codeField = CodeField(blocks: 1, elementsInBlock: Constants.Core.chatRequestIDLength)
     codeField.toolbar = toolbar
     codeField.doAfterCodeDidEnter = { [weak self] code in
-      self?.waitingAlert(completion: { dissMiss in
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-          dissMiss()
+      self?.waitingAlert(completion: { disMiss in
+        self?.isTimerActive = true
+        let disMissAction: () -> Void = {
+          self?.isTimerActive = false
+          self?.manager?.deleteSubscribeOnChat(chatRequestID: code)
+          disMiss()
         }
+        self?.manager?.config?.chatRequestTimer {
+          if self?.isTimerActive == true { disMissAction() }
+        }
+        self?.manager?.requestChat(chatRequestID: code)
+        self?.manager?.subscribeOnChat(chatRequestID: code, onSuccess: { chatDTO in
+          disMissAction()
+          self?.manager?.deleteSubscribeOnCompanion()
+          self?.manager?.startChat(chatDTO: chatDTO)
+        })
       })
     }
     return codeField
@@ -132,6 +146,16 @@ class WelcomeViewController: CaesarViewController {
           },
           declineAction: {
             self?.manager?.declineChatRequest()
+          },
+          completion: { disMiss in
+            self?.isTimerActive = true
+            self?.manager?.config?.chatRequestTimer {
+              if self?.isTimerActive == true {
+                self?.isTimerActive = false
+                disMiss()
+                self?.manager?.declineChatRequest()
+              }
+            }
           }
         )
       })

@@ -96,6 +96,30 @@ class DatabaseProvider {
     }
   }
 
+  // MARK: - GetChatRequest
+
+  func getChatRequest(
+    chatRequestID: String,
+    onSuccess: @escaping (ChatRequestDTO?) -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID])
+    ).getData { error, snapshot in
+      guard let snapshot = snapshot else {
+        onError(error)
+        return
+      }
+
+      guard let dictionary = snapshot.value as? Dictionary<String, Any> else {
+        onSuccess(nil)
+        return
+      }
+
+      onSuccess(ChatRequestDTO(from: dictionary))
+    }
+  }
+
   // MARK: - CreateChatRequest
 
   func createChatRequest(
@@ -190,27 +214,38 @@ class DatabaseProvider {
     onSuccess: @escaping () -> Void,
     onError: @escaping (Error?) -> Void
   ) {
-    if let companionID = companionID {
-      mainReference.updateChildValues([
-        path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue]): companionID
-      ]) { error, _ in
-        guard error == nil else {
-          onError(error)
+    getChatRequest(
+      chatRequestID: chatRequestID,
+      onSuccess: { [weak self] chatRequestDTO in
+        guard let _ = chatRequestDTO, let self = self else {
+          onSuccess()
           return
         }
-        onSuccess()
-      }
-    } else {
-      mainReference.child(
-        path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue])
-      ).removeValue { error, _ in
-        guard error == nil else {
-          onError(error)
-          return
+
+        if let companionID = companionID {
+          self.mainReference.updateChildValues([
+            self.path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue]): companionID
+          ]) { error, _ in
+            guard error == nil else {
+              onError(error)
+              return
+            }
+            onSuccess()
+          }
+        } else {
+          self.mainReference.child(
+            self.path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue])
+          ).removeValue { error, _ in
+            guard error == nil else {
+              onError(error)
+              return
+            }
+            onSuccess()
+          }
         }
-        onSuccess()
-      }
-    }
+      },
+      onError: onError
+    )
   }
 
   // MARK: - DeleteChatRequest
@@ -287,6 +322,12 @@ class DatabaseProvider {
     })
   }
 
+  func deleteSubscribeOnCompanionID(chatRequestID: String) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue])
+    ).removeAllObservers()
+  }
+
   // MARK: - SubscribeOnChatID
 
   func subscribeOnChatID(
@@ -302,9 +343,17 @@ class DatabaseProvider {
         return
       }
 
+      print(value)
+
       guard let chatID = value as? String else { return }
       onSuccess(chatID)
     })
+  }
+
+  func deleteSubscribeOnChatID(chatRequestID: String) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.chat_id.rawValue])
+    ).removeAllObservers()
   }
 
   // MARK: - Private Methods
