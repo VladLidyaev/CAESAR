@@ -11,7 +11,7 @@ struct MessageDTO {
   let timestamp: Date
 
   init(
-     id: String,
+    id: String = UUID().uuidString,
      user_id: String,
      data: Data,
      timestamp: Date = Date()

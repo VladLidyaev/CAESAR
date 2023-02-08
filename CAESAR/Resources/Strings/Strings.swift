@@ -22,6 +22,14 @@ enum Strings {
     static let declineButtonTitle = "Decline"
   }
 
+  // MARK: - WelcomeViewController
+
+  enum WelcomeViewController {
+    static let titleLabelText = "ENTER THE COMPANION CODE:"
+    static let subtitleLabelText = "YOUR CODE:"
+    static let displayNameLabelText = "Your nickname: "
+  }
+
   // MARK: - LocalAuthenticationContext
 
   enum LocalAuthenticationContext {

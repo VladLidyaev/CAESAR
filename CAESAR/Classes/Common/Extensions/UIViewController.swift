@@ -52,6 +52,25 @@ extension UIViewController {
   }
 }
 
+// MARK: - WaitingAlert
+
+extension UIViewController {
+  func waitingAlert(completion: @escaping (@escaping () -> Void) -> Void) {
+    let alert = UIAlertController(title: .empty, message: nil, preferredStyle: .alert)
+    let indicator = UIActivityIndicatorView(frame: alert.view.bounds)
+    alert.view.addSubview(indicator)
+
+    indicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    indicator.isUserInteractionEnabled = false
+    indicator.startAnimating()
+
+    completion({ alert.dismiss(animated: true) })
+    DispatchQueue.main.async { [weak self] in
+      self?.present(alert, animated: true, completion: nil)
+    }
+  }
+}
+
 // MARK: - Present With Dimm Animation
 
 extension UIViewController {

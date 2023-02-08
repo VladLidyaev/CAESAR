@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F45C12A29940CEF0070D5B1 /* CodeField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F45C12929940CEF0070D5B1 /* CodeField.swift */; };
 		4F591E0A2992A3CB003904CA /* Conception.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E092992A3CB003904CA /* Conception.txt */; };
 		4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E0C2992BAEA003904CA /* ConfigDTO.swift */; };
 		4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E0E2992BF65003904CA /* UserDTO.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F45C12929940CEF0070D5B1 /* CodeField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeField.swift; sourceTree = "<group>"; };
 		4F591E092992A3CB003904CA /* Conception.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Conception.txt; sourceTree = "<group>"; };
 		4F591E0C2992BAEA003904CA /* ConfigDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDTO.swift; sourceTree = "<group>"; };
 		4F591E0E2992BF65003904CA /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				4F591E222992D728003904CA /* AutoLayout+Helpers.swift */,
 				4F591E412992EDC6003904CA /* SystemProvider.swift */,
 				4F591E532993E3BE003904CA /* CaesarViewController.swift */,
+				4F45C12929940CEF0070D5B1 /* CodeField.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -366,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */,
+				4F45C12A29940CEF0070D5B1 /* CodeField.swift in Sources */,
 				4F591E542993E3BE003904CA /* CaesarViewController.swift in Sources */,
 				4F591E1D2992D2FB003904CA /* Colors.swift in Sources */,
 				4F591E492992FCA8003904CA /* CGFloat.swift in Sources */,

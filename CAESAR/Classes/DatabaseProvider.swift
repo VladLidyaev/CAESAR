@@ -74,7 +74,7 @@ class DatabaseProvider {
 
   func getChat(
     chatID: String,
-    onSuccess: @escaping (ChatDTO?) -> Void,
+    onSuccess: @escaping (ChatDTO) -> Void,
     onError: @escaping (Error?) -> Void
   ) {
     mainReference.child(
@@ -85,12 +85,14 @@ class DatabaseProvider {
         return
       }
 
-      guard let dictionary = snapshot.value as? Dictionary<String, Any> else {
-        onSuccess(nil)
+      guard
+        let dictionary = snapshot.value as? Dictionary<String, Any>,
+        let chatDTO = ChatDTO(from: dictionary)
+      else {
+        onError(nil)
         return
       }
-
-      onSuccess(ChatDTO(from: dictionary))
+      onSuccess(chatDTO)
     }
   }
 
@@ -281,7 +283,6 @@ class DatabaseProvider {
       }
 
       guard let userID = value as? String else { return }
-
       onSuccess(userID)
     })
   }
@@ -296,11 +297,13 @@ class DatabaseProvider {
     mainReference.child(
       path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.chat_id.rawValue])
     ).observe(.value, with: { snapshot in
-      guard let userID = snapshot.value as? String else {
+      guard let value = snapshot.value else {
         onError(nil)
         return
       }
-      onSuccess(userID)
+
+      guard let chatID = value as? String else { return }
+      onSuccess(chatID)
     })
   }
 
