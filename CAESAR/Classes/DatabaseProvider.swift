@@ -132,6 +132,28 @@ class DatabaseProvider {
     }
   }
 
+  func createChatRequest(
+    userDTO: UserDTO,
+    chatRequestDTO: ChatRequestDTO,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.updateChildValues([
+      path([ChatRequestDTO.key, chatRequestDTO.id]): chatRequestDTO.asDictionary
+    ]) { [weak self] error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+
+      self?.updateUser(
+        dto: userDTO,
+        onSuccess: onSuccess,
+        onError: onError
+      )
+    }
+  }
+
   // MARK: - Private Methods
 
   func path(_ array: [String]) -> String {

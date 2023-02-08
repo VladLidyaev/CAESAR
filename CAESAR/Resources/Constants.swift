@@ -6,6 +6,14 @@ import Foundation
 
 enum Constants {}
 
+// MARK: - Core
+
+extension Constants {
+  enum Core {
+    static let chatRequestIDLength: Int = 6
+  }
+}
+
 // MARK: - Animation
 
 extension Constants {

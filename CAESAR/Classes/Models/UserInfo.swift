@@ -9,6 +9,8 @@ class UserInfo {
   // MARK: - Properties
 
   private let userID: String
+  private var chatRequestID: String?
+  private var chatID: String?
   private let displayName: String
   private let privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
 
@@ -20,7 +22,9 @@ class UserInfo {
     UserDTO(
       id: userID,
       public_key: publicKey.rawRepresentation,
-      display_name: displayName
+      display_name: displayName,
+      chat_request_id: chatRequestID,
+      chat_id: chatID
     )
   }
 
@@ -37,6 +41,14 @@ class UserInfo {
   }
 
   // MARK: - Public Methods
+
+  func setChatRequestID(_ value: String) {
+    chatRequestID = value
+  }
+
+  func setChatID(_ value: String) {
+    chatID = value
+  }
 
   // MARK: - Private Methods
 }

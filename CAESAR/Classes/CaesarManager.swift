@@ -52,11 +52,21 @@ class CaesarManager {
   // MARK: - Public Methods
 
   func launch() {
-    updateState { [weak self] in
-      // TODO: -
-    } onError: { [weak self] error in
+    let onError: (Error?) -> () = { [weak self] error in
       self?.handleError(error)
     }
+
+    updateState(
+      onSuccess: { [weak self] in
+        self?.createChatRequest(
+          onSuccess: {
+            print("SUCCESS")
+          },
+          onError: onError
+        )
+      },
+      onError: onError
+    )
   }
 
   // MARK: - Private Methods
@@ -175,6 +185,33 @@ class CaesarManager {
       onSuccess: onSuccess,
       onError: onError
     )
+  }
+
+  private func createChatRequest(
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    let chatRequestDTO = ChatRequestDTO(
+      id: generateChatRequestID(),
+      user_id: userInfo.userDTO.id
+    )
+    userInfo.setChatRequestID(chatRequestDTO.id)
+    databaseProvider.createChatRequest(
+      userDTO: userInfo.userDTO,
+      chatRequestDTO: chatRequestDTO,
+      onSuccess: onSuccess,
+      onError: onError
+    )
+  }
+
+  // MARK: - Helpers
+
+  private func generateChatRequestID() -> String {
+    var chatRequestID: String = .empty
+    for _ in .zero...Constants.Core.chatRequestIDLength {
+      chatRequestID += String(Int.random(in: .zero...9))
+    }
+    return chatRequestID
   }
 
   // MARK: - Error Handling
