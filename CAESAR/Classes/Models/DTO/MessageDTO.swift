@@ -22,18 +22,13 @@ struct MessageDTO {
     self.timestamp = timestamp
   }
 
-  init?(
-    id: NSString?,
-    user_id: NSString?,
-    data: NSString?,
-    timestamp: NSNumber?
-  ) {
+  init?(from dictionary: Dictionary<String, Any>) {
     guard
-      let id = id as? String,
-      let user_id = user_id as? String,
-      let data_string = data as? String,
+      let id = dictionary[Keys.id.rawValue] as? String,
+      let user_id = dictionary[Keys.user_id.rawValue] as? String,
+      let data_string = dictionary[Keys.data.rawValue] as? String,
       let data = Data(base64Encoded: data_string),
-      let timestamp = timestamp as? TimeInterval
+      let timestamp = dictionary[Keys.timestamp.rawValue] as? TimeInterval
     else { return nil }
 
     self.id = id
@@ -46,6 +41,8 @@ struct MessageDTO {
 // MARK: - Keys
 
 extension MessageDTO {
+  static let key: String = "messages"
+
   enum Keys: String {
     case id
     case user_id

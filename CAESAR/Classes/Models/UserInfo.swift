@@ -8,16 +8,16 @@ import CryptoKit
 class UserInfo {
   // MARK: - Properties
 
-  private let id: String
-  private let privateKey: P256.KeyAgreement.PrivateKey
+  private let userID: String
+  private let privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
 
   // MARK: - Initialization
 
   init(
-    id: String,
-    privateKey: P256.KeyAgreement.PrivateKey
+    userID: String,
+    privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
   ) {
-    self.id = id
+    self.userID = userID
     self.privateKey = privateKey
   }
 }

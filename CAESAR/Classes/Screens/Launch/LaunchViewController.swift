@@ -12,9 +12,7 @@ class LaunchViewController: UIViewController {
 
   private let localAuthenticationContext = LAContext()
   private var localAuthenticationError: NSError?
-  private var userID: String?
-  private var config: Config?
-  private var privateKey: P256.KeyAgreement.PrivateKey?
+  private var manager: CaesarManager?
 
   // MARK: - Subviews
 
@@ -27,10 +25,14 @@ class LaunchViewController: UIViewController {
     setupUI()
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    startBlinkingAnimation()
+  }
+
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    startBlinkingAnimation()
-    launchAuthProcess()
+    auth()
   }
 
   // MARK: - Setup UI
@@ -60,6 +62,7 @@ class LaunchViewController: UIViewController {
   // MARK: - Private Methods
 
   private func startBlinkingAnimation() {
+    logoImageView.alpha = .one
     UIView.animate(
       withDuration: Constants.Animation.blinking,
       delay: .zero,
@@ -72,7 +75,7 @@ class LaunchViewController: UIViewController {
 
   // MARK: - Auth Process
 
-  private func launchAuthProcess() {
+  private func auth() {
     let onError: (Error?) -> () = { [weak self] error in
       self?.showErrorAlert(message: error?.localizedDescription)
     }
@@ -91,7 +94,17 @@ class LaunchViewController: UIViewController {
       onSuccess: { [weak self] in
         self?.remoteAuth(
           onSuccess: { userID in
-            self?.userID = userID
+            self?.createPrivateKey(
+              onSuccess: { privateKey in
+                self?.launchManager(
+                  userInfo: UserInfo(
+                    userID: userID,
+                    privateKey: privateKey
+                  )
+                )
+              },
+              onError: onError
+            )
           },
           onError: onError
         )
@@ -141,6 +154,30 @@ class LaunchViewController: UIViewController {
       }
       onSuccess(authResult.user.uid)
     }
+  }
+
+  // MARK: - Private Key
+
+  private func createPrivateKey(
+    onSuccess: @escaping (SecureEnclave.P256.KeyAgreement.PrivateKey) -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    do {
+      let privateKey = try SecureEnclave.P256.KeyAgreement.PrivateKey()
+      onSuccess(privateKey)
+    } catch {
+      onError(error)
+      return
+    }
+  }
+
+  // MARK: - Caesar Manager
+
+  private func launchManager(userInfo: UserInfo) {
+    let manager = CaesarManager(userInfo: userInfo)
+    manager.launchViewController = self
+    self.manager = manager
+    manager.launch()
   }
 
   // MARK: - Error Handling

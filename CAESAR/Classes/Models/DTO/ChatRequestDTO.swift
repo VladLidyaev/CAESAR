@@ -19,15 +19,11 @@ struct ChatRequestDTO {
     self.timestamp = timestamp
   }
 
-  init?(
-    id: NSString?,
-    user_id: NSString?,
-    timestamp: NSNumber?
-  ) {
+  init?(from dictionary: Dictionary<String, Any>) {
     guard
-      let id = id as? String,
-      let user_id = user_id as? String,
-      let timestamp = timestamp as? TimeInterval
+      let id = dictionary[Keys.id.rawValue] as? String,
+      let user_id = dictionary[Keys.user_id.rawValue] as? String,
+      let timestamp = dictionary[Keys.timestamp.rawValue] as? TimeInterval
     else { return nil }
 
     self.id = id
@@ -39,6 +35,8 @@ struct ChatRequestDTO {
 // MARK: - Keys
 
 extension ChatRequestDTO {
+  static let key: String = "chat_requests"
+
   enum Keys: String {
     case id
     case user_id

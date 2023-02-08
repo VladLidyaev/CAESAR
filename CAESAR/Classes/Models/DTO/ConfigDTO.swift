@@ -9,15 +9,11 @@ struct ConfigDTO {
   let chat_ttl: UInt64
   let chat_request_ttl: UInt64
 
-  init?(
-    min_supported_version: NSNumber?,
-    chat_ttl: NSNumber?,
-    chat_request_ttl: NSNumber?
-  ) {
+  init?(from dictionary: Dictionary<String, Any>) {
     guard
-      let min_supported_version = min_supported_version as? Float,
-      let chat_ttl = chat_ttl as? UInt64,
-      let chat_request_ttl = chat_request_ttl as? UInt64
+      let min_supported_version = dictionary[Keys.min_supported_version.rawValue] as? Float,
+      let chat_ttl = dictionary[Keys.chat_ttl.rawValue] as? UInt64,
+      let chat_request_ttl = dictionary[Keys.chat_request_ttl.rawValue] as? UInt64
     else { return nil }
 
     self.min_supported_version = min_supported_version
@@ -29,6 +25,8 @@ struct ConfigDTO {
 // MARK: - Keys
 
 extension ConfigDTO {
+  static let key: String = "config"
+
   enum Keys: String {
     case min_supported_version
     case chat_ttl

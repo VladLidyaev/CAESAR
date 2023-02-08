@@ -12,11 +12,11 @@ struct UserDTO {
   let chat_id: String?
 
   init(
-     id: String,
-     public_key: Data,
-     display_name: String,
-     chat_request_id: String? = nil,
-     chat_id: String? = nil
+    id: String,
+    public_key: Data,
+    display_name: String,
+    chat_request_id: String? = nil,
+    chat_id: String? = nil
   ) {
     self.id = id
     self.public_key = public_key
@@ -25,31 +25,27 @@ struct UserDTO {
     self.chat_id = chat_id
   }
 
-  init?(
-    id: NSString?,
-    public_key: NSString?,
-    display_name: NSString?,
-    chat_request_id: NSString?,
-    chat_id: NSString?
-  ) {
+  init?(from dictionary: Dictionary<String, Any>) {
     guard
-      let id = id as? String,
-      let public_key_string = public_key as? String,
+      let id = dictionary[Keys.id.rawValue] as? String,
+      let public_key_string = dictionary[Keys.public_key.rawValue] as? String,
       let public_key = Data(base64Encoded: public_key_string),
-      let display_name = display_name as? String
+      let display_name = dictionary[Keys.display_name.rawValue] as? String
     else { return nil }
 
     self.id = id
     self.public_key = public_key
     self.display_name = display_name
-    self.chat_request_id = chat_request_id as? String
-    self.chat_id = chat_id as? String
+    self.chat_request_id = dictionary[Keys.chat_request_id.rawValue] as? String
+    self.chat_id = dictionary[Keys.chat_id.rawValue] as? String
   }
 }
 
 // MARK: - Keys
 
 extension UserDTO {
+  static let key: String = "users"
+
   enum Keys: String {
     case id
     case public_key

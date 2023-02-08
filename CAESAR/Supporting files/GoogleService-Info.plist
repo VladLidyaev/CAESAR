@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:881027360895:ios:9f74f8e78dd8d148e9f74a</string>
+	<key>DATABASE_URL</key>
+	<string>https://caesar-balonka-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>
