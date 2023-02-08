@@ -7,9 +7,9 @@ import Foundation
 class Config {
   // MARK: - Properties
 
-  let minSupportedVersion: Float
-  let chatTTL: UInt64
-  let chatRequestTTL: UInt64
+  private let minSupportedVersion: Float
+  private let chatTTL: UInt64
+  private let chatRequestTTL: UInt64
 
   // MARK: - Initialization
 
@@ -18,4 +18,12 @@ class Config {
     self.chatTTL = dto.chat_ttl
     self.chatRequestTTL = dto.chat_request_ttl
   }
+
+  // MARK: - Public Methods
+
+  func isVersionAvailbale(_ version: Float) -> Bool {
+    return version >= minSupportedVersion
+  }
+
+  // MARK: - Private Methods
 }

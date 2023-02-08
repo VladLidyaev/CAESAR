@@ -50,7 +50,7 @@ class CaesarManager {
   }
 
   private func checkAppVersion(config: Config) {
-    guard SystemProvider.bundleVersion >= config.minSupportedVersion else {
+    guard config.isVersionAvailbale(SystemProvider.bundleVersion) else {
       handleError(LocalError.unsupportedAppVersion)
       return
     }
