@@ -2,9 +2,9 @@
 
 import UIKit
 
-// MARK: - WelcomeViewController
+// MARK: - ChatViewController
 
-class WelcomeViewController: CaesarViewController {
+class ChatViewController: CaesarViewController {
   // MARK: - Properties
 
   // MARK: - Computed variables
@@ -15,7 +15,7 @@ class WelcomeViewController: CaesarViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .red
+    view.backgroundColor = .blue
   }
 
   // MARK: - Public Methods

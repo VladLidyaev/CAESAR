@@ -7,12 +7,11 @@ import FirebaseAuth
 
 // MARK: - LaunchViewController
 
-class LaunchViewController: UIViewController {
+class LaunchViewController: CaesarViewController {
   // MARK: - Properties
 
   private let localAuthenticationContext = LAContext()
   private var localAuthenticationError: NSError?
-  private var manager: CaesarManager?
 
   // MARK: - Subviews
 
@@ -90,29 +89,27 @@ class LaunchViewController: UIViewController {
       return
     }
 
-    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-      self?.localAuth(
-        onSuccess: {
-          self?.remoteAuth(
-            onSuccess: { userID in
-              self?.createPrivateKey(
-                onSuccess: { privateKey in
-                  self?.launchManager(
-                    userInfo: UserInfo(
-                      userID: userID,
-                      privateKey: privateKey
-                    )
+    localAuth(
+      onSuccess: { [weak self] in
+        self?.remoteAuth(
+          onSuccess: { userID in
+            self?.createPrivateKey(
+              onSuccess: { privateKey in
+                self?.launchManager(
+                  userInfo: UserInfo(
+                    userID: userID,
+                    privateKey: privateKey
                   )
-                },
-                onError: onError
-              )
-            },
-            onError: onError
-          )
-        },
-        onError: onError
-      )
-    }
+                )
+              },
+              onError: onError
+            )
+          },
+          onError: onError
+        )
+      },
+      onError: onError
+    )
   }
 
   // MARK: - Local Auth
@@ -176,8 +173,10 @@ class LaunchViewController: UIViewController {
   // MARK: - Caesar Manager
 
   private func launchManager(userInfo: UserInfo) {
-    let manager = CaesarManager(userInfo: userInfo)
-    manager.launchViewController = self
+    let manager = CaesarManager(
+      userInfo: userInfo,
+      viewController: self
+    )
     self.manager = manager
     manager.launch()
   }

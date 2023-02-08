@@ -9,21 +9,11 @@ import CryptoKit
 class CaesarManager {
   // MARK: - Properties
 
-  weak var launchViewController: LaunchViewController? {
-    didSet {
-      actualViewController = launchViewController
-    }
-  }
-
-  weak var welcomeViewController: UIViewController? {
-    didSet {
-      actualViewController = welcomeViewController
-    }
-  }
-
-  weak var chatViewController: UIViewController? {
-    didSet {
-      actualViewController = chatViewController
+  private let userInfo: UserInfo
+  private let databaseProvider: DatabaseProvider
+  private weak var actualViewController: CaesarViewController? {
+    willSet {
+      newValue?.manager = self
     }
   }
 
@@ -33,18 +23,18 @@ class CaesarManager {
     }
   }
 
-  private let userInfo: UserInfo
-  private let databaseProvider: DatabaseProvider
-  private weak var actualViewController: UIViewController?
-
   // MARK: - Computed variables
 
   // MARK: - Constraints
 
   // MARK: - Initialization
   
-  init(userInfo: UserInfo) {
+  init(
+    userInfo: UserInfo,
+    viewController: LaunchViewController
+  ) {
     self.userInfo = userInfo
+    self.actualViewController = viewController
     self.databaseProvider = DatabaseProvider()
     updateConfig()
   }
@@ -60,7 +50,9 @@ class CaesarManager {
       onSuccess: { [weak self] in
         self?.createChatRequest(
           onSuccess: {
-            print("SUCCESS")
+            self?.presentVC(
+              self?.makeWelcomeViewController()
+            )
           },
           onError: onError
         )
@@ -204,11 +196,33 @@ class CaesarManager {
     )
   }
 
+  // MARK: - UI
+
+  private func presentVC(_ viewController: CaesarViewController?) {
+    guard
+      let viewController = viewController,
+      let actualViewController = actualViewController
+    else { return }
+    DispatchQueue.main.async {
+      actualViewController.present(viewController) { [weak self] in
+        self?.actualViewController = viewController
+      }
+    }
+  }
+
+  private func makeWelcomeViewController() -> WelcomeViewController {
+    WelcomeViewController()
+  }
+
+  private func makeChatViewController() -> ChatViewController {
+    ChatViewController()
+  }
+
   // MARK: - Helpers
 
   private func generateChatRequestID() -> String {
     var chatRequestID: String = .empty
-    for _ in .zero...Constants.Core.chatRequestIDLength {
+    for _ in .zero...Constants.Core.chatRequestIDLength - 1 {
       chatRequestID += String(Int.random(in: .zero...9))
     }
     return chatRequestID

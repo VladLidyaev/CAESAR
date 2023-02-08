@@ -19,7 +19,8 @@ extension UIViewController {
 // MARK: - Present With Dimm Animation
 
 extension UIViewController {
-  func present(_ viewContrtoller: UIViewController) {
+  func present(_ viewContrtoller: UIViewController, completion: @escaping () -> Void) {
+    viewContrtoller.modalPresentationStyle = .fullScreen
     UIView.animate(withDuration: Constants.Animation.default) { [weak self] in
       self?.view.layer.opacity = .zero
     } completion: { [weak self] _ in
@@ -31,7 +32,8 @@ extension UIViewController {
           UIView.animate(withDuration: Constants.Animation.default) {
             viewContrtoller.view.layer.opacity = .one
           } completion: { _ in
-            self?.view.layer.opacity = .one
+            completion()
+            self?.removeFromParent()
           }
         }
       )
