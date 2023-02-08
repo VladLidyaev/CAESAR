@@ -33,7 +33,9 @@ class UserInfo {
 
   init(
     userID: String,
-    displayName: String = Strings.UserInfo.defaultDisplayName,
+    displayName: String = Strings.UserInfo.defaultDisplayName + .init(
+      randomCharactersLength: Constants.Core.nicknameCodeLength
+    ),
     privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
   ) {
     self.userID = userID

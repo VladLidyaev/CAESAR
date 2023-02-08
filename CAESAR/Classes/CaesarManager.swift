@@ -144,7 +144,27 @@ class CaesarManager {
         self?.databaseProvider.getChat(
           chatID: chatID,
           onSuccess: { chatDTO in
+            self?.userInfo.chatDTO = chatDTO
             onSuccess(chatDTO)
+            guard
+              let userDTO = self?.userInfo.userDTO,
+              let userChatRequestID = self?.userInfo.chatRequestDTO?.id
+            else { return }
+            self?.databaseProvider.updateUser(
+              dto: userDTO,
+              onSuccess: {},
+              onError: onError
+            )
+            self?.databaseProvider.deleteChatRequest(
+              chatRequestID: chatRequestID,
+              onSuccess: {},
+              onError: onError
+            )
+            self?.databaseProvider.deleteChatRequest(
+              chatRequestID: userChatRequestID,
+              onSuccess: {},
+              onError: onError
+            )
           },
           onError: onError
         )
@@ -210,7 +230,14 @@ class CaesarManager {
           chatRequestID: chatRequestID,
           chatID: chatDTO.id,
           onSuccess: {
+            self?.userInfo.chatDTO = chatDTO
             onSuccess(chatDTO)
+            guard let userDTO = self?.userInfo.userDTO else { return }
+            self?.databaseProvider.updateUser(
+              dto: userDTO,
+              onSuccess: {},
+              onError: onError
+            )
           },
           onError: onError
         )
@@ -363,7 +390,7 @@ class CaesarManager {
     onError: @escaping (Error?) -> Void
   ) {
     let chatRequestDTO = ChatRequestDTO(
-      id: generateChatRequestID(),
+      id: .init(randomCharactersLength: Constants.Core.chatRequestIDLength),
       user_id: userInfo.userDTO.id
     )
     userInfo.chatRequestDTO = chatRequestDTO
@@ -394,16 +421,6 @@ class CaesarManager {
 
   private func makeChatViewController() -> ChatViewController {
     ChatViewController()
-  }
-
-  // MARK: - Helpers
-
-  private func generateChatRequestID() -> String {
-    var chatRequestID: String = .empty
-    for _ in .zero...Constants.Core.chatRequestIDLength - 1 {
-      chatRequestID += String(Int.random(in: .zero...9))
-    }
-    return chatRequestID
   }
 
   // MARK: - Error Handling
