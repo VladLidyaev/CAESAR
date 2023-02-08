@@ -12,7 +12,43 @@ extension UIViewController {
       message: alertMessage,
       preferredStyle: .alert
     )
-    self.present(alert, animated: true, completion: nil)
+    DispatchQueue.main.async { [weak self] in
+      self?.present(alert, animated: true, completion: nil)
+    }
+  }
+}
+
+// MARK: - StartChatAlert
+
+extension UIViewController {
+  func showStartChatAlert(
+    userName: String,
+    acceptAction: @escaping () -> Void,
+    declineAction: @escaping () -> Void
+  ) {
+    let companionName = userName == .empty ? Strings.UserInfo.defaultDisplayName : userName
+    let alert = UIAlertController(
+      title: Strings.StartChatViewController.title,
+      message: Strings.StartChatViewController.message(userName: companionName),
+      preferredStyle: .alert
+    )
+    alert.addAction(
+      .init(
+        title: Strings.StartChatViewController.acceptButtonTitle,
+        style: .default,
+        handler: { _ in acceptAction() }
+      )
+    )
+    alert.addAction(
+      .init(
+        title: Strings.StartChatViewController.declineButtonTitle,
+        style: .destructive,
+        handler: { _ in declineAction() }
+      )
+    )
+    DispatchQueue.main.async { [weak self] in
+      self?.present(alert, animated: true, completion: nil)
+    }
   }
 }
 
@@ -20,23 +56,25 @@ extension UIViewController {
 
 extension UIViewController {
   func present(_ viewContrtoller: UIViewController, completion: @escaping () -> Void) {
-    viewContrtoller.modalPresentationStyle = .fullScreen
-    UIView.animate(withDuration: Constants.Animation.default) { [weak self] in
-      self?.view.layer.opacity = .zero
-    } completion: { [weak self] _ in
-      viewContrtoller.view.layer.opacity = .zero
-      self?.present(
-        viewContrtoller,
-        animated: false,
-        completion: {
-          UIView.animate(withDuration: Constants.Animation.default) {
-            viewContrtoller.view.layer.opacity = .one
-          } completion: { _ in
-            completion()
-            self?.removeFromParent()
+    DispatchQueue.main.async { [weak self] in
+      viewContrtoller.modalPresentationStyle = .fullScreen
+      UIView.animate(withDuration: Constants.Animation.default) { [weak self] in
+        self?.view.layer.opacity = .zero
+      } completion: { [weak self] _ in
+        viewContrtoller.view.layer.opacity = .zero
+        self?.present(
+          viewContrtoller,
+          animated: false,
+          completion: {
+            UIView.animate(withDuration: Constants.Animation.default) {
+              viewContrtoller.view.layer.opacity = .one
+            } completion: { _ in
+              completion()
+              self?.removeFromParent()
+            }
           }
-        }
-      )
+        )
+      }
     }
   }
 }

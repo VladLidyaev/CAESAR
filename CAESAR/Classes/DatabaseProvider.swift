@@ -20,7 +20,7 @@ class DatabaseProvider {
     mainReference = Database.database().reference()
   }
 
-  // MARK: - Public Methods
+  // MARK: - Get Config
 
   func getConfig(
     onSuccess: @escaping (ConfigDTO) -> Void,
@@ -46,6 +46,8 @@ class DatabaseProvider {
     }
   }
 
+  // MARK: - GetUser
+
   func getUser(
     userID: String,
     onSuccess: @escaping (UserDTO?) -> Void,
@@ -68,69 +70,31 @@ class DatabaseProvider {
     }
   }
 
-  func updateUser(
-    dto: UserDTO,
-    onSuccess: @escaping () -> Void,
-    onError: @escaping (Error?) -> Void
-  ) {
-    mainReference.updateChildValues([
-      path([UserDTO.key, dto.id]): dto.asDictionary
-    ]) { error, _ in
-      guard error == nil else {
-        onError(error)
-        return
-      }
-      onSuccess()
-    }
-  }
+  // MARK: - GetChat
 
-  func deleteChatRequest(
-    chatRequestID: String,
-    onSuccess: @escaping () -> Void,
-    onError: @escaping (Error?) -> Void
-  ) {
-    mainReference.child(
-      path([ChatRequestDTO.key, chatRequestID])
-    ).removeValue { error, _ in
-      guard error == nil else {
-        onError(error)
-        return
-      }
-      onSuccess()
-    }
-  }
-
-  func deleteChat(
+  func getChat(
     chatID: String,
-    onSuccess: @escaping () -> Void,
+    onSuccess: @escaping (ChatDTO?) -> Void,
     onError: @escaping (Error?) -> Void
   ) {
     mainReference.child(
       path([ChatDTO.key, chatID])
-    ).removeValue { error, _ in
-      guard error == nil else {
+    ).getData { error, snapshot in
+      guard let snapshot = snapshot else {
         onError(error)
         return
       }
-      onSuccess()
+
+      guard let dictionary = snapshot.value as? Dictionary<String, Any> else {
+        onSuccess(nil)
+        return
+      }
+
+      onSuccess(ChatDTO(from: dictionary))
     }
   }
 
-  func deleteMessages(
-    chatID: String,
-    onSuccess: @escaping () -> Void,
-    onError: @escaping (Error?) -> Void
-  ) {
-    mainReference.child(
-      path([MessageDTO.key, chatID])
-    ).removeValue { error, _ in
-      guard error == nil else {
-        onError(error)
-        return
-      }
-      onSuccess()
-    }
-  }
+  // MARK: - CreateChatRequest
 
   func createChatRequest(
     userDTO: UserDTO,
@@ -152,6 +116,192 @@ class DatabaseProvider {
         onError: onError
       )
     }
+  }
+
+  // MARK: - CreateChat
+
+  func createChat(
+    chatDTO: ChatDTO,
+    chatRequestID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.updateChildValues([
+      path([ChatDTO.key, chatDTO.id]): chatDTO.asDictionary
+    ]) { [weak self] error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+
+      self?.updateChatRequestChatID(
+        chatRequestID: chatRequestID,
+        chatID: chatDTO.id,
+        onSuccess: onSuccess,
+        onError: onError
+      )
+    }
+  }
+
+  // MARK: - UpdateUser
+
+  func updateUser(
+    dto: UserDTO,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([UserDTO.key, dto.id])
+    ).setValue(dto.asDictionary) { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  // MARK: - UpdateChatRequestChatID
+
+  func updateChatRequestChatID(
+    chatRequestID: String,
+    chatID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.chat_id.rawValue])
+    ).setValue(chatID) { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  // MARK: - UpdateChatRequestCompanionID
+
+  func updateChatRequestCompanionID(
+    chatRequestID: String,
+    companionID: String?,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    if let companionID = companionID {
+      mainReference.updateChildValues([
+        path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue]): companionID
+      ]) { error, _ in
+        guard error == nil else {
+          onError(error)
+          return
+        }
+        onSuccess()
+      }
+    } else {
+      mainReference.child(
+        path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue])
+      ).removeValue { error, _ in
+        guard error == nil else {
+          onError(error)
+          return
+        }
+        onSuccess()
+      }
+    }
+  }
+
+  // MARK: - DeleteChatRequest
+
+  func deleteChatRequest(
+    chatRequestID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID])
+    ).removeValue { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  // MARK: - DeleteChat
+
+  func deleteChat(
+    chatID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatDTO.key, chatID])
+    ).removeValue { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  // MARK: - DeleteMessages
+
+  func deleteMessages(
+    chatID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([MessageDTO.key, chatID])
+    ).removeValue { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  // MARK: - SubscribeOnCompanionID
+
+  func subscribeOnCompanionID(
+    chatRequestID: String,
+    onSuccess: @escaping (String) -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.companion_id.rawValue])
+    ).observe(.value, with: { snapshot in
+      guard let value = snapshot.value else {
+        onError(nil)
+        return
+      }
+
+      guard let userID = value as? String else { return }
+
+      onSuccess(userID)
+    })
+  }
+
+  // MARK: - SubscribeOnChatID
+
+  func subscribeOnChatID(
+    chatRequestID: String,
+    onSuccess: @escaping (String) -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.chat_id.rawValue])
+    ).observe(.value, with: { snapshot in
+      guard let userID = snapshot.value as? String else {
+        onError(nil)
+        return
+      }
+      onSuccess(userID)
+    })
   }
 
   // MARK: - Private Methods

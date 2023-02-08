@@ -89,27 +89,29 @@ class LaunchViewController: CaesarViewController {
       return
     }
 
-    localAuth(
-      onSuccess: { [weak self] in
-        self?.remoteAuth(
-          onSuccess: { userID in
-            self?.createPrivateKey(
-              onSuccess: { privateKey in
-                self?.launchManager(
-                  userInfo: UserInfo(
-                    userID: userID,
-                    privateKey: privateKey
+    DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+      self?.localAuth(
+        onSuccess: {
+          self?.remoteAuth(
+            onSuccess: { userID in
+              self?.createPrivateKey(
+                onSuccess: { privateKey in
+                  self?.launchManager(
+                    userInfo: UserInfo(
+                      userID: userID,
+                      privateKey: privateKey
+                    )
                   )
-                )
-              },
-              onError: onError
-            )
-          },
-          onError: onError
-        )
-      },
-      onError: onError
-    )
+                },
+                onError: onError
+              )
+            },
+            onError: onError
+          )
+        },
+        onError: onError
+      )
+    }
   }
 
   // MARK: - Local Auth
@@ -173,12 +175,14 @@ class LaunchViewController: CaesarViewController {
   // MARK: - Caesar Manager
 
   private func launchManager(userInfo: UserInfo) {
-    let manager = CaesarManager(
-      userInfo: userInfo,
-      viewController: self
-    )
-    self.manager = manager
-    manager.launch()
+    DispatchQueue.global(qos: .userInitiated).async {
+      let manager = CaesarManager(
+        userInfo: userInfo,
+        viewController: self
+      )
+      self.manager = manager
+      manager.launch()
+    }
   }
 
   // MARK: - Error Handling

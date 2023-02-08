@@ -12,15 +12,16 @@ struct ChatDTO {
   let timestamp: Date
 
   init(
-     id: String,
+    id: String = UUID().uuidString,
      chat_request_id: String,
      user_id: String,
+     companion_id: String,
      message_ids: [String] = [],
      timestamp: Date = Date()
   ) {
     self.id = id
     self.chat_request_id = chat_request_id
-    self.user_ids = [user_id]
+    self.user_ids = [user_id, companion_id]
     self.message_ids = message_ids
     self.timestamp = timestamp
   }

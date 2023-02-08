@@ -10,12 +10,14 @@ class WelcomeViewController: CaesarViewController {
   // MARK: - Computed variables
 
   // MARK: - Subviews
+//
+//  private lazy var chatRequestIDLabel = makeChatRequestIDLabel()
+//  private lazy var chatRequestIDTextView = makeChatRequestIDTextView()
 
   // MARK: - Constraints
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .red
   }
 
   // MARK: - Public Methods

@@ -4,6 +4,13 @@ import Foundation
 import UIKit
 import CryptoKit
 
+// MARK: - CaesarManagerState
+
+enum CaesarManagerState {
+  case pending
+  case chatting
+}
+
 // MARK: - CaesarManager
 
 class CaesarManager {
@@ -11,11 +18,8 @@ class CaesarManager {
 
   private let userInfo: UserInfo
   private let databaseProvider: DatabaseProvider
-  private weak var actualViewController: CaesarViewController? {
-    willSet {
-      newValue?.manager = self
-    }
-  }
+  private var state: CaesarManagerState = .pending
+  private weak var actualViewController: CaesarViewController?
 
   private var config: Config? {
     didSet {
@@ -36,7 +40,6 @@ class CaesarManager {
     self.userInfo = userInfo
     self.actualViewController = viewController
     self.databaseProvider = DatabaseProvider()
-    updateConfig()
   }
 
   // MARK: - Public Methods
@@ -46,12 +49,17 @@ class CaesarManager {
       self?.handleError(error)
     }
 
-    updateState(
+    updateConfig(
       onSuccess: { [weak self] in
-        self?.createChatRequest(
+        self?.updateState(
           onSuccess: {
-            self?.presentVC(
-              self?.makeWelcomeViewController()
+            self?.createChatRequest(
+              onSuccess: {
+                self?.presentVC(
+                  self?.makeWelcomeViewController()
+                )
+              },
+              onError: onError
             )
           },
           onError: onError
@@ -61,14 +69,61 @@ class CaesarManager {
     )
   }
 
-  // MARK: - Private Methods
-
-  private func updateConfig() {
-    databaseProvider.getConfig { [weak self] configDTO in
-      self?.config =  Config(dto: configDTO)
-    } onError: { [weak self] error in
+  func subscribeOnCompanion(
+    onSuccess: @escaping (UserDTO) -> Void
+  ) {
+    let onError: (Error?) -> () = { [weak self] error in
       self?.handleError(error)
     }
+
+    guard let chatRequestDTO = userInfo.chatRequestDTO else {
+      onError(nil)
+      return
+    }
+
+    databaseProvider.subscribeOnCompanionID(
+      chatRequestID: chatRequestDTO.id,
+      onSuccess: { [weak self] companionID in
+        self?.databaseProvider.getUser(
+          userID: companionID,
+          onSuccess: { userDTO in
+            guard let userDTO = userDTO else {
+              onError(nil)
+              return
+            }
+            onSuccess(userDTO)
+          },
+          onError: onError
+        )
+      },
+      onError: onError
+    )
+  }
+
+  func requestChat(chatRequestID: String) {
+    databaseProvider.updateChatRequestCompanionID(
+      chatRequestID: chatRequestID,
+      companionID: userInfo.userDTO.id,
+      onSuccess: {},
+      onError: { [weak self] error in
+        self?.handleError(error)
+      }
+    )
+  }
+
+  // MARK: - Private Methods
+
+  private func updateConfig(
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    databaseProvider.getConfig(
+      onSuccess: { [weak self] configDTO in
+        self?.config =  Config(dto: configDTO)
+        onSuccess()
+      },
+      onError: onError
+    )
   }
 
   private func checkAppVersion() {
@@ -187,7 +242,7 @@ class CaesarManager {
       id: generateChatRequestID(),
       user_id: userInfo.userDTO.id
     )
-    userInfo.setChatRequestID(chatRequestDTO.id)
+    userInfo.chatRequestDTO = chatRequestDTO
     databaseProvider.createChatRequest(
       userDTO: userInfo.userDTO,
       chatRequestDTO: chatRequestDTO,
@@ -203,10 +258,9 @@ class CaesarManager {
       let viewController = viewController,
       let actualViewController = actualViewController
     else { return }
-    DispatchQueue.main.async {
-      actualViewController.present(viewController) { [weak self] in
-        self?.actualViewController = viewController
-      }
+    viewController.manager = self
+    actualViewController.present(viewController) { [weak self] in
+      self?.actualViewController = viewController
     }
   }
 

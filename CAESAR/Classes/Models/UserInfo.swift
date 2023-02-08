@@ -8,11 +8,8 @@ import CryptoKit
 class UserInfo {
   // MARK: - Properties
 
-  private let userID: String
-  private var chatRequestID: String?
-  private var chatID: String?
-  private let displayName: String
-  private let privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
+  var chatRequestDTO: ChatRequestDTO?
+  var chatDTO: ChatDTO?
 
   var publicKey: P256.KeyAgreement.PublicKey {
     privateKey.publicKey
@@ -23,10 +20,14 @@ class UserInfo {
       id: userID,
       public_key: publicKey.rawRepresentation,
       display_name: displayName,
-      chat_request_id: chatRequestID,
-      chat_id: chatID
+      chat_request_id: chatRequestDTO?.id,
+      chat_id: chatDTO?.id
     )
   }
+
+  private let userID: String
+  private let displayName: String
+  private let privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
 
   // MARK: - Initialization
 
@@ -38,16 +39,6 @@ class UserInfo {
     self.userID = userID
     self.displayName = displayName
     self.privateKey = privateKey
-  }
-
-  // MARK: - Public Methods
-
-  func setChatRequestID(_ value: String) {
-    chatRequestID = value
-  }
-
-  func setChatID(_ value: String) {
-    chatID = value
   }
 
   // MARK: - Private Methods
