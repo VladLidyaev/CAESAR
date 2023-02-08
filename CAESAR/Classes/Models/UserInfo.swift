@@ -20,4 +20,8 @@ class UserInfo {
     self.userID = userID
     self.privateKey = privateKey
   }
+
+  // MARK: - Public Methods
+
+  // MARK: - Private Methods
 }

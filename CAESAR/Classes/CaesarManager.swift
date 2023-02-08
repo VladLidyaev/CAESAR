@@ -15,9 +15,26 @@ class CaesarManager {
     }
   }
 
+  weak var welcomeViewController: UIViewController? {
+    didSet {
+      actualViewController = welcomeViewController
+    }
+  }
+
+  weak var chatViewController: UIViewController? {
+    didSet {
+      actualViewController = chatViewController
+    }
+  }
+
+  private var config: Config? {
+    didSet {
+      checkAppVersion()
+    }
+  }
+
   private let userInfo: UserInfo
   private let databaseProvider: DatabaseProvider
-  private var config: Config?
   private weak var actualViewController: UIViewController?
 
   // MARK: - Computed variables
@@ -29,27 +46,31 @@ class CaesarManager {
   init(userInfo: UserInfo) {
     self.userInfo = userInfo
     self.databaseProvider = DatabaseProvider()
+    updateConfig()
   }
 
   // MARK: - Public Methods
 
   func launch() {
-    updateConfig()
+    
   }
 
   // MARK: - Private Methods
 
   private func updateConfig() {
     databaseProvider.getConfig { [weak self] configDTO in
-      let newConfig = Config(dto: configDTO)
-      self?.config = newConfig
-      self?.checkAppVersion(config: newConfig)
+      self?.config =  Config(dto: configDTO)
     } onError: { [weak self] error in
       self?.handleError(error)
     }
   }
 
-  private func checkAppVersion(config: Config) {
+  private func checkAppVersion() {
+    guard let config = config else {
+      handleError()
+      return
+    }
+
     guard config.isVersionAvailbale(SystemProvider.bundleVersion) else {
       handleError(LocalError.unsupportedAppVersion)
       return
