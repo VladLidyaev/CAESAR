@@ -18,6 +18,7 @@ class ChatViewController: CaesarViewController {
   // MARK: - Subviews
 
   private lazy var quitButton = makeQuitButton()
+  private lazy var quitButtonContainer = makeQuitButtonContainer()
   private lazy var tableView = makeTableView()
   private lazy var inputMessageView = makeInputMessageView()
 
@@ -41,9 +42,11 @@ class ChatViewController: CaesarViewController {
 
   private func setupUI() {
     view.backgroundColor = Colors.background
-    view.addSubview(quitButton)
+    quitButtonContainer.addSubview(quitButton)
+    view.addSubview(quitButtonContainer)
     view.addSubview(tableView)
     view.addSubview(inputMessageView)
+    view.bringSubviewToFront(quitButtonContainer)
     setupConstraints()
   }
 
@@ -64,11 +67,17 @@ class ChatViewController: CaesarViewController {
         height: LocalConstants.quitButtonSideLength
       )
     )
-    quitButton.pinToSuperviewSafeAreaEdge(.top, offset: LocalConstants.quitButtonVerticalOffset)
-    quitButton.pinToSuperviewSafeAreaEdge(.trailing, offset: -LocalConstants.quitButtonTrailingOffset)
+    quitButton.pinToSuperviewEdge(.top, offset: LocalConstants.quitButtonVerticalOffset)
+    quitButton.pinToSuperviewEdge(.trailing, offset: -LocalConstants.quitButtonVerticalOffset)
+    quitButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.quitButtonVerticalOffset)
+    quitButton.pinToSuperviewEdge(.leading, offset: LocalConstants.quitButtonVerticalOffset)
+
+    // QuitButtonContainer
+    quitButtonContainer.pinToSuperviewSafeAreaEdge(.top, offset: LocalConstants.quitButtonTrailingOffset)
+    quitButtonContainer.pinToSuperviewSafeAreaEdge(.trailing, offset: -LocalConstants.quitButtonTrailingOffset)
 
     // TableView
-    tableView.pin(.top, to: .bottom, of: quitButton, offset: LocalConstants.quitButtonVerticalOffset)
+    tableView.pinToSuperviewEdge(.top)
     tableView.pin(.bottom, to: .top, of: inputMessageView)
     tableView.pinToSuperviewSafeAreaEdge(.trailing)
     tableView.pinToSuperviewSafeAreaEdge(.leading)
@@ -76,13 +85,20 @@ class ChatViewController: CaesarViewController {
 
   // MARK: - View Constructors
 
-  private func makeQuitButton() -> UIButton {
+  private func makeQuitButton() -> UIView {
     let image = Icons.quit.withRenderingMode(.alwaysTemplate)
     let button = UIButton().autoLayout()
     button.setImage(image, for: .normal)
     button.tintColor = Colors.textAndIcons
     button.addTarget(self, action: #selector(didTapQuitButton(_:)), for: .touchUpInside)
     return button
+  }
+
+  private func makeQuitButtonContainer() -> UIView {
+    let view = UIView().autoLayout()
+    view.backgroundColor = Colors.background
+    view.layer.cornerRadius = LocalConstants.cornerRadius
+    return view
   }
 
   private func makeInputMessageView() -> InputMessageView {
@@ -106,6 +122,13 @@ class ChatViewController: CaesarViewController {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.rowHeight = UITableView.automaticDimension
+    let topInset = view.safeAreaInsets.top + LocalConstants.tableViewTopContentInset
+    tableView.contentInset = UIEdgeInsets(
+      top: topInset,
+      left: .zero,
+      bottom: .zero,
+      right: .zero
+    )
     tableView.register(
       MessageCell.self,
       forCellReuseIdentifier: String(describing: MessageCell.self)
@@ -236,9 +259,11 @@ extension ChatViewController {
 // MARK: - LocalConstants
 
 private enum LocalConstants {
+  static let cornerRadius: CGFloat = 15.0
   static let quitButtonSideLength: CGFloat = 28.0
   static let quitButtonVerticalOffset: CGFloat = 8.0
   static let quitButtonTrailingOffset: CGFloat = 12.0
   static let inputMessageViewBottomOffset: CGFloat = 34.0
   static let textViewInitialHeight: CGFloat = 60
+  static let tableViewTopContentInset: CGFloat = quitButtonSideLength + quitButtonTrailingOffset + 3 * quitButtonVerticalOffset
 }
