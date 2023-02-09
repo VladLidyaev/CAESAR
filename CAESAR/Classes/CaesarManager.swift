@@ -19,6 +19,8 @@ class CaesarManager {
   private let userInfo: UserInfo
   private let databaseProvider: DatabaseProvider
   private var state: CaesarManagerState = .welcome
+  private var isChattingStarted: Bool = false
+  private var chatThrottler: Throttler?
   private weak var actualViewController: CaesarViewController?
 
   var config: Config? {
@@ -324,6 +326,7 @@ class CaesarManager {
             onError: { onError(nil) }
           )
         }
+        self?.throttlingMesasages(messages)
         onSuccess(messages)
       },
       onError: onError
@@ -340,6 +343,19 @@ class CaesarManager {
       onSuccess: { onError(nil) },
       onError: onError
     )
+  }
+
+  func throttlingMesasages(_ messages: [Message]) {
+    if isChattingStarted == true, messages.isEmpty { handleError() }
+    if !messages.isEmpty {
+      if isChattingStarted == false {
+        isChattingStarted = true
+      }
+      chatThrottler?.cancel()
+      chatThrottler?.throttle({ [weak self] in
+        self?.handleError()
+      })
+    }
   }
 
   // MARK: - Private Methods
@@ -374,6 +390,7 @@ class CaesarManager {
     databaseProvider.getConfig(
       onSuccess: { [weak self] configDTO in
         self?.config =  Config(dto: configDTO)
+        self?.chatThrottler = Throttler(interval: TimeInterval(configDTO.chat_ttl))
         onSuccess()
       },
       onError: onError

@@ -37,6 +37,7 @@
 		4F591E522993DB08003904CA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E512993DB08003904CA /* ChatViewController.swift */; };
 		4F591E542993E3BE003904CA /* CaesarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E532993E3BE003904CA /* CaesarViewController.swift */; };
 		4FC1A14029954B4700BAF755 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1A13F29954B4700BAF755 /* UITableView.swift */; };
+		4FC1A1422995574600BAF755 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1A1412995574600BAF755 /* Throttler.swift */; };
 		4FF22D8929951E5C00739797 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF22D8829951E5C00739797 /* Date.swift */; };
 		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
 		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
@@ -80,6 +81,7 @@
 		4F591E512993DB08003904CA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		4F591E532993E3BE003904CA /* CaesarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaesarViewController.swift; sourceTree = "<group>"; };
 		4FC1A13F29954B4700BAF755 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		4FC1A1412995574600BAF755 /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
 		4FF22D8829951E5C00739797 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				4F591E222992D728003904CA /* AutoLayout+Helpers.swift */,
 				4F591E412992EDC6003904CA /* SystemProvider.swift */,
 				4F591E532993E3BE003904CA /* CaesarViewController.swift */,
+				4FC1A1412995574600BAF755 /* Throttler.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				4F591E172992D1BD003904CA /* Icons.swift in Sources */,
 				4F591E392992DEA4003904CA /* String.swift in Sources */,
 				4FF22D8929951E5C00739797 /* Date.swift in Sources */,
+				4FC1A1422995574600BAF755 /* Throttler.swift in Sources */,
 				4F45C1302994555F0070D5B1 /* Message.swift in Sources */,
 				4F591E472992F9DB003904CA /* UserInfo.swift in Sources */,
 				4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */,
