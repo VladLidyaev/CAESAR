@@ -36,7 +36,7 @@ struct ChatRequestDTO {
     self.user_id = user_id
     self.companion_id = dictionary[Keys.companion_id.rawValue] as? String
     self.chat_id = dictionary[Keys.chat_id.rawValue] as? String
-    self.timestamp = Date(timeIntervalSinceReferenceDate: timestamp)
+    self.timestamp = Date(timeIntervalSince1970: timestamp)
   }
 }
 
@@ -61,7 +61,7 @@ extension ChatRequestDTO {
     var dictionary: Dictionary<String, Any> = [
       Keys.id.rawValue: id,
       Keys.user_id.rawValue: user_id,
-      Keys.timestamp.rawValue: timestamp.timeIntervalSinceReferenceDate,
+      Keys.timestamp.rawValue: timestamp.timeIntervalSince1970,
     ]
     dictionary[Keys.companion_id.rawValue] = companion_id
     dictionary[Keys.chat_id.rawValue] = chat_id

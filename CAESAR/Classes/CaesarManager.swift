@@ -9,24 +9,6 @@ import CryptoKit
 enum CaesarManagerState {
   case welcome
   case chatting
-
-  var isWelcomeScreen: Bool {
-    switch self {
-    case .welcome:
-      return true
-    default:
-      return false
-    }
-  }
-
-  var isChatScreen: Bool {
-    switch self {
-    case .chatting:
-      return true
-    default:
-      return false
-    }
-  }
 }
 
 // MARK: - CaesarManager
@@ -99,7 +81,6 @@ class CaesarManager {
     onSuccess: @escaping (UserDTO) -> Void
   ) {
     let onError: (Error?) -> () = { [weak self] error in
-      guard self?.state.isWelcomeScreen == true else { return }
       self?.handleError(error)
     }
 
@@ -118,8 +99,6 @@ class CaesarManager {
               onError(nil)
               return
             }
-
-            guard self?.state.isWelcomeScreen == true else { return }
             onSuccess(userDTO)
           },
           onError: onError
@@ -134,7 +113,6 @@ class CaesarManager {
     onSuccess: @escaping (ChatDTO) -> Void
   ) {
     let onError: (Error?) -> () = { [weak self] error in
-      guard self?.state.isWelcomeScreen == true else { return }
       self?.handleError(error)
     }
 
@@ -145,7 +123,36 @@ class CaesarManager {
           chatID: chatID,
           onSuccess: { chatDTO in
             self?.userInfo.chatDTO = chatDTO
-            onSuccess(chatDTO)
+            self?.databaseProvider.getChatRequest(
+              chatRequestID: chatRequestID,
+              onSuccess: { chatRequestDTO in
+                guard let userID = chatRequestDTO?.user_id else {
+                  onError(nil)
+                  return
+                }
+
+                self?.databaseProvider.getUser(
+                  userID: userID,
+                  onSuccess: { userDTO in
+                    guard let userDTO = userDTO else {
+                      onError(nil)
+                      return
+                    }
+
+                    self?.userInfo.companionUserDTO = userDTO
+                    self?.userInfo.setCompanionPublicKeyData(
+                      userDTO.public_key,
+                      saltString: chatID,
+                      onSuccess: { onSuccess(chatDTO) },
+                      onError: { onError(nil) }
+                    )
+                  },
+                  onError: onError
+                )
+              },
+              onError: onError
+            )
+
             guard
               let userDTO = self?.userInfo.userDTO,
               let userChatRequestID = self?.userInfo.chatRequestDTO?.id
@@ -231,7 +238,25 @@ class CaesarManager {
           chatID: chatDTO.id,
           onSuccess: {
             self?.userInfo.chatDTO = chatDTO
-            onSuccess(chatDTO)
+            self?.databaseProvider.getUser(
+              userID: companionID,
+              onSuccess: { userDTO in
+                guard let userDTO = userDTO else {
+                  onError(nil)
+                  return
+                }
+
+                self?.userInfo.companionUserDTO = userDTO
+                self?.userInfo.setCompanionPublicKeyData(
+                  userDTO.public_key,
+                  saltString: chatDTO.id,
+                  onSuccess: { onSuccess(chatDTO) },
+                  onError: { onError(nil) }
+                )
+              },
+              onError: onError
+            )
+
             guard let userDTO = self?.userInfo.userDTO else { return }
             self?.databaseProvider.updateUser(
               dto: userDTO,
@@ -255,14 +280,105 @@ class CaesarManager {
     databaseProvider.deleteSubscribeOnCompanionID(chatRequestID: chatRequestID)
   }
 
-
   func startChat(chatDTO: ChatDTO) {
     state = .chatting
     userInfo.chatDTO = chatDTO
     presentVC(makeChatViewController())
   }
 
+  func sendMessage(text: String) {
+    let onError: (Error?) -> () = { [weak self] error in
+      self?.handleError(error)
+    }
+
+    guard let chatID = userInfo.chatDTO?.id else { return }
+    userInfo.textToData(
+      text,
+      onSuccess: { [weak self] data in
+        guard let self = self else { return }
+        let messageDTO = MessageDTO(
+          user_id: self.userInfo.userDTO.id,
+          data: data
+        )
+        self.databaseProvider.createMessage(
+          chatID: chatID,
+          messageDTO: messageDTO,
+          onSuccess: {},
+          onError: onError
+        )
+      },
+      onError: { onError(nil) }
+    )
+  }
+
+  func subscribeOnMessages(onSuccess: @escaping ([Message]) -> Void) {
+    let onError: (Error?) -> () = { [weak self] error in
+      self?.handleError(error)
+    }
+
+    guard let chatID = userInfo.chatDTO?.id else { return }
+    databaseProvider.subscribeOnMessages(
+      chatID: chatID,
+      onSuccess: { [weak self] dtoArray in
+        var messages = [Message]()
+        dtoArray.forEach { dto in
+          self?.makeMessage(
+            dto: dto,
+            onSuccess: { message in
+              messages.append(message)
+            },
+            onError: { onError(nil) }
+          )
+        }
+        onSuccess(messages)
+      },
+      onError: onError
+    )
+  }
+
+  func deleteChat() {
+    let onError: (Error?) -> () = { [weak self] error in
+      self?.handleError(error)
+    }
+
+    deleteChatsIfNeeded(
+      chatID: userInfo.chatDTO?.id,
+      onSuccess: { onError(nil) },
+      onError: onError
+    )
+  }
+
   // MARK: - Private Methods
+
+  private func makeMessage(
+    dto: MessageDTO,
+    onSuccess: (Message) -> Void,
+    onError: () -> Void
+  ) {
+    guard let companionName = userInfo.companionUserDTO?.display_name else {
+      onError()
+      return
+    }
+
+    let isUserAutor = dto.user_id == userInfo.userDTO.id
+    let autorName = isUserAutor ? Strings.UserInfo.userDisplayName : companionName
+    let timeLabelText = calculateTimeDelta(creationDate: dto.timestamp)
+
+    userInfo.dataToText(
+      dto.data,
+      onSuccess: { text in
+        onSuccess(
+          Message(
+            text: text,
+            isUserAutor: isUserAutor,
+            timeLabelText: timeLabelText,
+            autorName: autorName
+          )
+        )
+      },
+      onError: onError
+    )
+  }
 
   private func updateConfig(
     onSuccess: @escaping () -> Void,
@@ -302,14 +418,8 @@ class CaesarManager {
             self?.deleteChatsIfNeeded(
               chatID: userDTO?.chat_id,
               onSuccess: {
-                self?.deleteMessagesIfNeeded(
-                  chatID: userDTO?.chat_id,
-                  onSuccess: {
-                    self?.updateUser(
-                      onSuccess: onSuccess,
-                      onError: onError
-                    )
-                  },
+                self?.updateUser(
+                  onSuccess: onSuccess,
                   onError: onError
                 )
               },
@@ -363,24 +473,13 @@ class CaesarManager {
 
     databaseProvider.deleteChat(
       chatID: chatID,
-      onSuccess: onSuccess,
-      onError: onError
-    )
-  }
-
-  private func deleteMessagesIfNeeded(
-    chatID: String?,
-    onSuccess: @escaping () -> Void,
-    onError: @escaping (Error?) -> Void
-  ) {
-    guard let chatID = chatID else {
-      onSuccess()
-      return
-    }
-
-    databaseProvider.deleteMessages(
-      chatID: chatID,
-      onSuccess: onSuccess,
+      onSuccess: { [weak self] in
+        self?.databaseProvider.deleteMessages(
+          chatID: chatID,
+          onSuccess: onSuccess,
+          onError: onError
+        )
+      },
       onError: onError
     )
   }
@@ -427,6 +526,35 @@ class CaesarManager {
 
   private func handleError(_ error: Error? = nil) {
     guard let actualViewController = actualViewController else { return }
-    actualViewController.showErrorAlert(message: error?.localizedDescription)
+    switch state {
+    case .welcome:
+      actualViewController.showErrorAlert(message: error?.localizedDescription)
+    case .chatting:
+      actualViewController.showClosedChatAlert()
+    }
+  }
+
+  // MARK: - Helpers
+
+  private func calculateTimeDelta(creationDate: Date) -> String {
+    let datesDiff = Date() - creationDate
+
+    if let years = datesDiff.year, years != .zero, years > .zero {
+      return "\(years) " + Strings.DatesShorts.year
+    } else if let months = datesDiff.month, months != .zero, months > .zero {
+      return "\(months) " + Strings.DatesShorts.month
+    } else if let weeks = datesDiff.week, weeks != .zero, weeks > .zero {
+      return "\(weeks) " + Strings.DatesShorts.week
+    } else if let days = datesDiff.day, days != .zero, days > .zero {
+      return "\(days) " + Strings.DatesShorts.day
+    } else if let hours = datesDiff.hour, hours != .zero, hours > .zero {
+      return "\(hours) " + Strings.DatesShorts.hour
+    } else if let minutes = datesDiff.minute, minutes != .zero, minutes > .zero {
+      return "\(minutes) " + Strings.DatesShorts.minute
+    } else if let seconds = datesDiff.second, seconds != .zero, seconds > .zero {
+      return "\(seconds) " + Strings.DatesShorts.second
+    } else {
+      return .empty
+    }
   }
 }

@@ -18,6 +18,22 @@ extension UIViewController {
   }
 }
 
+
+// MARK: - ClosedChatAlert
+
+extension UIViewController {
+  func showClosedChatAlert() {
+    let alert = UIAlertController(
+      title: Strings.ClosedChatAlert.title,
+      message: Strings.ClosedChatAlert.message,
+      preferredStyle: .alert
+    )
+    DispatchQueue.main.async { [weak self] in
+      self?.present(alert, animated: true, completion: nil)
+    }
+  }
+}
+
 // MARK: - StartChatAlert
 
 extension UIViewController {

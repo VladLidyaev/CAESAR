@@ -137,7 +137,7 @@ private enum LocalConstants {
   static let containerHorizontalOffset: CGFloat = 12.0
   static let containerVerticalOffset: CGFloat = 8.0
   static let containerHeight: CGFloat = 44.0
-  static let containerViewWidth: CGFloat = 1.0
+  static let containerViewWidth: CGFloat = 2.0
   static let sendButtonDisabledStateAlpha: CGFloat = 0.5
   static let sendButtonOffset: CGFloat = 8.0
   static let sendButtonSideLength: CGFloat = 28.0

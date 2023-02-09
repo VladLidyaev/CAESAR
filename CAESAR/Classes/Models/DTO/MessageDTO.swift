@@ -34,7 +34,7 @@ struct MessageDTO {
     self.id = id
     self.user_id = user_id
     self.data = data
-    self.timestamp = Date(timeIntervalSinceReferenceDate: timestamp)
+    self.timestamp = Date(timeIntervalSince1970: timestamp)
   }
 }
 
@@ -59,7 +59,7 @@ extension MessageDTO {
       Keys.id.rawValue: id,
       Keys.user_id.rawValue: user_id,
       Keys.data.rawValue: data.base64EncodedString(),
-      Keys.timestamp.rawValue: timestamp.timeIntervalSinceReferenceDate,
+      Keys.timestamp.rawValue: timestamp.timeIntervalSince1970,
     ]
   }
 }

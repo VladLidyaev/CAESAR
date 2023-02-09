@@ -13,6 +13,13 @@ enum Strings {
     static let message = "An unknown error has occurred. Restart or reinstall the app."
   }
 
+  // MARK: - ClosedChatAlert
+
+  enum ClosedChatAlert {
+    static let title = "CHAT ENDED"
+    static let message = "Restart app to start a new chat."
+  }
+
   // MARK: - StartChatViewController
 
   enum StartChatViewController {
@@ -40,5 +47,18 @@ enum Strings {
 
   enum UserInfo {
     static let defaultDisplayName = "Unkown"
+    static let userDisplayName = "You"
+  }
+
+  // MARK: - DatesShorts
+
+  enum DatesShorts {
+    static let year = "y"
+    static let month = "m"
+    static let week = "w"
+    static let day = "d"
+    static let hour = "h"
+    static let minute = "min"
+    static let second = "sec"
   }
 }

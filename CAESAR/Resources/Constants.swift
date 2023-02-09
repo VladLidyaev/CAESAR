@@ -12,6 +12,7 @@ extension Constants {
   enum Core {
     static let chatRequestIDLength: Int = 6
     static let nicknameCodeLength: Int = 4
+    static let outputByteCount: Int = 32
   }
 }
 

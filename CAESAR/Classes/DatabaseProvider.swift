@@ -169,6 +169,34 @@ class DatabaseProvider {
     }
   }
 
+  // MARK: - CreateMessage
+
+  func createMessage(
+    chatID: String,
+    messageDTO: MessageDTO,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    let chatArrayReference = mainReference.child(
+      path([MessageDTO.key, chatID])
+    )
+
+    guard let key = chatArrayReference.childByAutoId().key else {
+      onError(nil)
+      return
+    }
+
+    chatArrayReference.updateChildValues([
+      path([key]): messageDTO.asDictionary
+    ]) { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
   // MARK: - UpdateUser
 
   func updateUser(
@@ -351,6 +379,36 @@ class DatabaseProvider {
   func deleteSubscribeOnChatID(chatRequestID: String) {
     mainReference.child(
       path([ChatRequestDTO.key, chatRequestID, ChatRequestDTO.Keys.chat_id.rawValue])
+    ).removeAllObservers()
+  }
+
+  // MARK: - SubscribeOnMessages
+
+  func subscribeOnMessages(
+    chatID: String,
+    onSuccess: @escaping ([MessageDTO]) -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([MessageDTO.key, chatID])
+    ).observe(.value, with: { snapshot in
+      guard let value = snapshot.value else {
+        onError(nil)
+        return
+      }
+
+      guard let dictionary = value as? Dictionary<String, Any> else {
+        onSuccess([])
+        return
+      }
+      let array: [Dictionary<String, Any>] = dictionary.compactMap { $0.value as? Dictionary<String, Any> }
+      onSuccess(array.compactMap { MessageDTO(from: $0) })
+    })
+  }
+
+  func deleteSubscribeOnMessages(chatID: String) {
+    mainReference.child(
+      path([MessageDTO.key, chatID])
     ).removeAllObservers()
   }
 

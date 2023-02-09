@@ -9,9 +9,7 @@ class ChatViewController: CaesarViewController {
 
   private var isTimerActive: Bool = false
   private var items: [Message] = [] {
-    didSet {
-      tableView.reloadData()
-    }
+    didSet { tableView.reloadData() }
   }
 
   // MARK: - Computed variables
@@ -57,7 +55,7 @@ class ChatViewController: CaesarViewController {
     inputMessageView.pinToSuperviewSafeAreaEdge(.trailing)
 
     // TableView
-    tableView.pinEdgesToSuperview(excluding: .bottom)
+    tableView.pinEdgesToSuperviewSafeArea(excluding: .bottom)
     tableView.pin(.bottom, to: .top, of: inputMessageView)
   }
 
@@ -93,11 +91,13 @@ class ChatViewController: CaesarViewController {
   // MARK: - Private Methods
 
   private func subscribeOnMessages() {
-    
+    manager?.subscribeOnMessages(onSuccess: { [weak self] items in
+      self?.items = items
+    })
   }
 
   private func sendMessage(text: String) {
-
+    manager?.sendMessage(text: text)
   }
 
   // MARK: - Layout Animation
