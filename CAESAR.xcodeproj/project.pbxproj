@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4F45C12A29940CEF0070D5B1 /* CodeField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F45C12929940CEF0070D5B1 /* CodeField.swift */; };
+		4F45C12C299452590070D5B1 /* InputMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F45C12B299452590070D5B1 /* InputMessageView.swift */; };
+		4F45C12E299454610070D5B1 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F45C12D299454610070D5B1 /* MessageCell.swift */; };
+		4F45C1302994555F0070D5B1 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F45C12F2994555F0070D5B1 /* Message.swift */; };
 		4F591E0A2992A3CB003904CA /* Conception.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F591E092992A3CB003904CA /* Conception.txt */; };
 		4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E0C2992BAEA003904CA /* ConfigDTO.swift */; };
 		4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E0E2992BF65003904CA /* UserDTO.swift */; };
@@ -46,6 +49,9 @@
 
 /* Begin PBXFileReference section */
 		4F45C12929940CEF0070D5B1 /* CodeField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeField.swift; sourceTree = "<group>"; };
+		4F45C12B299452590070D5B1 /* InputMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputMessageView.swift; sourceTree = "<group>"; };
+		4F45C12D299454610070D5B1 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		4F45C12F2994555F0070D5B1 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		4F591E092992A3CB003904CA /* Conception.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Conception.txt; sourceTree = "<group>"; };
 		4F591E0C2992BAEA003904CA /* ConfigDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigDTO.swift; sourceTree = "<group>"; };
 		4F591E0E2992BF65003904CA /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
@@ -120,6 +126,7 @@
 				4F591E212992D6CC003904CA /* DTO */,
 				4F591E3A2992E04F003904CA /* Config.swift */,
 				4F591E462992F9DB003904CA /* UserInfo.swift */,
+				4F45C12F2994555F0070D5B1 /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -149,7 +156,6 @@
 				4F591E222992D728003904CA /* AutoLayout+Helpers.swift */,
 				4F591E412992EDC6003904CA /* SystemProvider.swift */,
 				4F591E532993E3BE003904CA /* CaesarViewController.swift */,
-				4F45C12929940CEF0070D5B1 /* CodeField.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -196,7 +202,9 @@
 		4F591E502993DAED003904CA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				4F45C12B299452590070D5B1 /* InputMessageView.swift */,
 				4F591E512993DB08003904CA /* ChatViewController.swift */,
+				4F45C12D299454610070D5B1 /* MessageCell.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -283,6 +291,7 @@
 		F52E3FE029927484001C3EA0 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
+				4F45C12929940CEF0070D5B1 /* CodeField.swift */,
 				F52E3FE5299274E6001C3EA0 /* WelcomeViewController.swift */,
 			);
 			path = Welcome;
@@ -369,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F591E0D2992BAEA003904CA /* ConfigDTO.swift in Sources */,
+				4F45C12C299452590070D5B1 /* InputMessageView.swift in Sources */,
 				4F45C12A29940CEF0070D5B1 /* CodeField.swift in Sources */,
 				4F591E542993E3BE003904CA /* CaesarViewController.swift in Sources */,
 				4F591E1D2992D2FB003904CA /* Colors.swift in Sources */,
@@ -385,6 +395,7 @@
 				4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */,
 				4F591E362992DD18003904CA /* Strings.swift in Sources */,
 				4F591E112992C737003904CA /* ChatRequestDTO.swift in Sources */,
+				4F45C12E299454610070D5B1 /* MessageCell.swift in Sources */,
 				F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */,
 				4F591E0F2992BF66003904CA /* UserDTO.swift in Sources */,
 				4F591E232992D728003904CA /* AutoLayout+Helpers.swift in Sources */,
@@ -393,6 +404,7 @@
 				4F591E452992F523003904CA /* Errors.swift in Sources */,
 				4F591E172992D1BD003904CA /* Icons.swift in Sources */,
 				4F591E392992DEA4003904CA /* String.swift in Sources */,
+				4F45C1302994555F0070D5B1 /* Message.swift in Sources */,
 				4F591E472992F9DB003904CA /* UserInfo.swift in Sources */,
 				4F591E132992CA0D003904CA /* ChatDTO.swift in Sources */,
 			);

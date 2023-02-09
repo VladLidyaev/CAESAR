@@ -9,7 +9,6 @@ struct ChatDTO {
   let chat_request_id: String
   let user_ids: [String]
   let message_ids: [String]
-  let is_closed: Bool
   let timestamp: Date
 
   init(
@@ -18,14 +17,12 @@ struct ChatDTO {
     user_id: String,
     companion_id: String,
     message_ids: [String] = [],
-    is_closed: Bool = false,
     timestamp: Date = Date()
   ) {
     self.id = id
     self.chat_request_id = chat_request_id
     self.user_ids = [user_id, companion_id]
     self.message_ids = message_ids
-    self.is_closed = is_closed
     self.timestamp = timestamp
   }
 
@@ -34,7 +31,6 @@ struct ChatDTO {
       let id = dictionary[Keys.id.rawValue] as? String,
       let chat_request_id = dictionary[Keys.chat_request_id.rawValue] as? String,
       let user_ids = dictionary[Keys.user_ids.rawValue] as? [String],
-      let is_closed = dictionary[Keys.is_closed.rawValue] as? Bool,
       let timestamp = dictionary[Keys.timestamp.rawValue] as? TimeInterval
     else { return nil }
 
@@ -42,7 +38,6 @@ struct ChatDTO {
     self.chat_request_id = chat_request_id
     self.user_ids = user_ids
     self.message_ids = dictionary[Keys.message_ids.rawValue] as? [String] ?? [String]()
-    self.is_closed = is_closed
     self.timestamp = Date(timeIntervalSinceReferenceDate: timestamp)
   }
 }
@@ -57,7 +52,6 @@ extension ChatDTO {
     case chat_request_id
     case user_ids
     case message_ids
-    case is_closed
     case timestamp
   }
 }
@@ -71,7 +65,6 @@ extension ChatDTO {
       Keys.chat_request_id.rawValue: chat_request_id,
       Keys.user_ids.rawValue: user_ids,
       Keys.message_ids.rawValue: message_ids,
-      Keys.is_closed.rawValue: is_closed,
       Keys.timestamp.rawValue: timestamp.timeIntervalSinceReferenceDate,
     ]
   }

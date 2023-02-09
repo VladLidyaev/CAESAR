@@ -9,8 +9,6 @@ class WelcomeViewController: CaesarViewController {
 
   private var isTimerActive: Bool = false
 
-  // MARK: - Computed variables
-
   // MARK: - Subviews
 
   private lazy var stackView = makeStackView()
@@ -32,8 +30,6 @@ class WelcomeViewController: CaesarViewController {
     subscribeOnCompanion()
   }
 
-  // MARK: - Public Methods
-
   // MARK: - Setup UI
 
   private func setupUI() {
@@ -49,10 +45,33 @@ class WelcomeViewController: CaesarViewController {
     stackView.pinToSuperviewSafeAreaEdge(.bottom, offset: -LocalConstants.stackViewOffset)
     stackView.pinToSuperviewSafeAreaEdge(.leading, offset: LocalConstants.stackViewOffset)
 
-    titleLabel.setDimension(.height, equalTo: .height, of: stackView, multiplier: LocalConstants.titleLabelHeightMultiplier)
-    codeField.setDimension(.height, equalTo: .height, of: stackView, multiplier: LocalConstants.codeFieldHeightMultiplier)
-    subtitleLabel.setDimension(.height, equalTo: .height, of: stackView, multiplier: LocalConstants.subtitleLabelHeightMultiplier)
-    codeLabel.setDimension(.height, equalTo: .height, of: stackView, multiplier: LocalConstants.codeLabelHeightMultiplier)
+    titleLabel.setDimension(
+      .height,
+      equalTo: .height,
+      of: stackView,
+      multiplier: LocalConstants.titleLabelHeightMultiplier
+    )
+
+    codeField.setDimension(
+      .height,
+      equalTo: .height,
+      of: stackView,
+      multiplier: LocalConstants.codeFieldHeightMultiplier
+    )
+
+    subtitleLabel.setDimension(
+      .height,
+      equalTo: .height,
+      of: stackView,
+      multiplier: LocalConstants.subtitleLabelHeightMultiplier
+    )
+
+    codeLabel.setDimension(
+      .height,
+      equalTo: .height,
+      of: stackView,
+      multiplier: LocalConstants.codeLabelHeightMultiplier
+    )
   }
 
   // MARK: - View Constructors
@@ -84,6 +103,26 @@ class WelcomeViewController: CaesarViewController {
     return label
   }
 
+  private func makeSubtitleLabel() -> UILabel {
+    let label = UILabel().autoLayout()
+    label.numberOfLines = .zero
+    label.textAlignment = .center
+    label.text = Strings.WelcomeViewController.subtitleLabelText
+    label.textColor = Colors.textAndIcons
+    label.font = LocalConstants.titleFont
+    return label
+  }
+
+  private func makeCodeLabel() -> UILabel {
+    let label = UILabel().autoLayout()
+    label.numberOfLines = .zero
+    label.textAlignment = .center
+    label.text = manager?.chatRequestID?.withSpacings
+    label.textColor = Colors.textAndIcons
+    label.font = LocalConstants.codeFont
+    return label
+  }
+
   private func makeCodeField() -> CodeField {
     let codeField = CodeField(blocks: 1, elementsInBlock: Constants.Core.chatRequestIDLength)
     codeField.toolbar = toolbar
@@ -107,26 +146,6 @@ class WelcomeViewController: CaesarViewController {
       })
     }
     return codeField
-  }
-
-  private func makeSubtitleLabel() -> UILabel {
-    let label = UILabel().autoLayout()
-    label.numberOfLines = .zero
-    label.textAlignment = .center
-    label.text = Strings.WelcomeViewController.subtitleLabelText
-    label.textColor = Colors.textAndIcons
-    label.font = LocalConstants.titleFont
-    return label
-  }
-
-  private func makeCodeLabel() -> UILabel {
-    let label = UILabel().autoLayout()
-    label.numberOfLines = .zero
-    label.textAlignment = .center
-    label.text = manager?.chatRequestID?.withSpacings
-    label.textColor = Colors.textAndIcons
-    label.font = LocalConstants.codeFont
-    return label
   }
 
   // MARK: - Private Methods

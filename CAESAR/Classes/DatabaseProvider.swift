@@ -343,8 +343,6 @@ class DatabaseProvider {
         return
       }
 
-      print(value)
-
       guard let chatID = value as? String else { return }
       onSuccess(chatID)
     })

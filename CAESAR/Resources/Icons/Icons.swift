@@ -6,6 +6,7 @@ import UIKit
 
 enum Icons {
   static let logo = IconAsset(name: Constants.Icons.logo).icon
+  static let send = IconAsset(name: Constants.Icons.send).icon
   static let logoTitle = IconAsset(name: Constants.Icons.logoTitle).icon
 }
 
