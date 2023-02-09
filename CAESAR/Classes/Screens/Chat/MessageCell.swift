@@ -45,6 +45,8 @@ class MessageCell: UITableViewCell {
   private func makeMessageLabel() -> UILabel {
     let label = UILabel().autoLayout()
     label.textColor = Colors.textAndIcons
+    label.lineBreakMode = .byClipping
+    label.numberOfLines = .zero
     return label
   }
 }

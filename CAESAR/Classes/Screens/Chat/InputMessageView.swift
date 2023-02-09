@@ -113,13 +113,10 @@ class InputMessageView: UIView {
   private func didTapSendButton(_: Any?) {
     onSendTap(textView.text)
     textView.text = .empty
+    updateState()
   }
-}
 
-// MARK: - UITextViewDelegate
-
-extension InputMessageView: UITextViewDelegate {
-  func textViewDidChange(_ textView: UITextView) {
+  private func updateState() {
     let textViewContentHeight = textView.contentSize.height
     textView.showsVerticalScrollIndicator = textViewContentHeight >= LocalConstants.textViewMaxHeight
     sendButton.isEnabled = textView.text != .empty
@@ -131,13 +128,21 @@ extension InputMessageView: UITextViewDelegate {
   }
 }
 
+// MARK: - UITextViewDelegate
+
+extension InputMessageView: UITextViewDelegate {
+  func textViewDidChange(_ textView: UITextView) {
+    updateState()
+  }
+}
+
 // MARK: - LocalConstants
 
 private enum LocalConstants {
   static let containerHorizontalOffset: CGFloat = 12.0
   static let containerVerticalOffset: CGFloat = 8.0
   static let containerHeight: CGFloat = 44.0
-  static let containerViewWidth: CGFloat = 2.0
+  static let containerViewWidth: CGFloat = 2.5
   static let sendButtonDisabledStateAlpha: CGFloat = 0.5
   static let sendButtonOffset: CGFloat = 8.0
   static let sendButtonSideLength: CGFloat = 28.0

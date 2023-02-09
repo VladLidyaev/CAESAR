@@ -16,6 +16,7 @@ class ChatViewController: CaesarViewController {
 
   // MARK: - Subviews
 
+  private lazy var quitButton = makeQuitButton()
   private lazy var tableView = makeTableView()
   private lazy var inputMessageView = makeInputMessageView()
 
@@ -39,6 +40,7 @@ class ChatViewController: CaesarViewController {
 
   private func setupUI() {
     view.backgroundColor = Colors.background
+    view.addSubview(quitButton)
     view.addSubview(tableView)
     view.addSubview(inputMessageView)
     setupConstraints()
@@ -54,12 +56,33 @@ class ChatViewController: CaesarViewController {
     inputMessageView.pinToSuperviewSafeAreaEdge(.leading)
     inputMessageView.pinToSuperviewSafeAreaEdge(.trailing)
 
+    // QuitButton
+    quitButton.setDimensions(
+      to: .init(
+        width: LocalConstants.quitButtonSideLength,
+        height: LocalConstants.quitButtonSideLength
+      )
+    )
+    quitButton.pinToSuperviewSafeAreaEdge(.top, offset: LocalConstants.quitButtonVerticalOffset)
+    quitButton.pinToSuperviewSafeAreaEdge(.trailing, offset: -LocalConstants.quitButtonTrailingOffset)
+
     // TableView
-    tableView.pinEdgesToSuperviewSafeArea(excluding: .bottom)
+    tableView.pin(.top, to: .bottom, of: quitButton, offset: LocalConstants.quitButtonVerticalOffset)
     tableView.pin(.bottom, to: .top, of: inputMessageView)
+    tableView.pinToSuperviewSafeAreaEdge(.trailing)
+    tableView.pinToSuperviewSafeAreaEdge(.leading)
   }
 
   // MARK: - View Constructors
+
+  private func makeQuitButton() -> UIButton {
+    let image = Icons.quit.withRenderingMode(.alwaysTemplate)
+    let button = UIButton().autoLayout()
+    button.setImage(image, for: .normal)
+    button.tintColor = Colors.textAndIcons
+    button.addTarget(self, action: #selector(didTapQuitButton(_:)), for: .touchUpInside)
+    return button
+  }
 
   private func makeInputMessageView() -> InputMessageView {
     let view = InputMessageView(
@@ -81,12 +104,19 @@ class ChatViewController: CaesarViewController {
     tableView.backgroundColor = .clear
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.rowHeight = UITableView.automaticDimension
     tableView.register(
       MessageCell.self,
       forCellReuseIdentifier: String(describing: MessageCell.self)
     )
     return tableView
   }
+
+  @objc
+  private func didTapQuitButton(_: Any?) {
+    manager?.deleteChat()
+  }
+
 
   // MARK: - Private Methods
 
@@ -191,6 +221,9 @@ extension ChatViewController {
 // MARK: - LocalConstants
 
 private enum LocalConstants {
+  static let quitButtonSideLength: CGFloat = 28.0
+  static let quitButtonVerticalOffset: CGFloat = 8.0
+  static let quitButtonTrailingOffset: CGFloat = 12.0
   static let inputMessageViewBottomOffset: CGFloat = 34.0
   static let textViewInitialHeight: CGFloat = 60
 }
