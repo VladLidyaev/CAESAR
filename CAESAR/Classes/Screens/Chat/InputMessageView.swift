@@ -111,7 +111,7 @@ class InputMessageView: UIView {
 
   @objc
   private func didTapSendButton(_: Any?) {
-    onSendTap(textView.text)
+    onSendTap(textView.text.trimmingCharacters(in: .whitespacesAndNewlines))
     textView.text = .empty
     updateState()
   }
@@ -119,7 +119,7 @@ class InputMessageView: UIView {
   private func updateState() {
     let textViewContentHeight = textView.contentSize.height
     textView.showsVerticalScrollIndicator = textViewContentHeight >= LocalConstants.textViewMaxHeight
-    sendButton.isEnabled = textView.text != .empty
+    sendButton.isEnabled = !textView.text.containsOnlyWhitespacesAndNewlines
     let textViewHeight = max(
       min(LocalConstants.textViewMaxHeight, textViewContentHeight),
       LocalConstants.textViewMinHeight

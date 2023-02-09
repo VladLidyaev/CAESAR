@@ -8,5 +8,4 @@ struct Message {
   let text: String
   let isUserAutor: Bool
   let timeLabelText: String
-  let autorName: String
 }

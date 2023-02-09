@@ -60,5 +60,6 @@ enum Strings {
     static let hour = "h"
     static let minute = "min"
     static let second = "sec"
+    static let justNow = "Just now"
   }
 }

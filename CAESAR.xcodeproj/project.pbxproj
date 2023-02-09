@@ -36,6 +36,7 @@
 		4F591E4F29939B2B003904CA /* DatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E4E29939B2B003904CA /* DatabaseProvider.swift */; };
 		4F591E522993DB08003904CA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E512993DB08003904CA /* ChatViewController.swift */; };
 		4F591E542993E3BE003904CA /* CaesarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E532993E3BE003904CA /* CaesarViewController.swift */; };
+		4FC1A14029954B4700BAF755 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1A13F29954B4700BAF755 /* UITableView.swift */; };
 		4FF22D8929951E5C00739797 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF22D8829951E5C00739797 /* Date.swift */; };
 		F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */; };
 		F52E3FB12991A277001C3EA0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52E3FB02991A277001C3EA0 /* SceneDelegate.swift */; };
@@ -78,6 +79,7 @@
 		4F591E4E29939B2B003904CA /* DatabaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProvider.swift; sourceTree = "<group>"; };
 		4F591E512993DB08003904CA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		4F591E532993E3BE003904CA /* CaesarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaesarViewController.swift; sourceTree = "<group>"; };
+		4FC1A13F29954B4700BAF755 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		4FF22D8829951E5C00739797 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		F52E3FAB2991A277001C3EA0 /* CAESAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CAESAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F52E3FAE2991A277001C3EA0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				4F591E482992FCA8003904CA /* CGFloat.swift */,
 				4F591E4A2992FD6D003904CA /* Float.swift */,
 				4FF22D8829951E5C00739797 /* Date.swift */,
+				4FC1A13F29954B4700BAF755 /* UITableView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				F52E3FE6299274E6001C3EA0 /* WelcomeViewController.swift in Sources */,
 				4F591E3B2992E04F003904CA /* Config.swift in Sources */,
 				4F591E4F29939B2B003904CA /* DatabaseProvider.swift in Sources */,
+				4FC1A14029954B4700BAF755 /* UITableView.swift in Sources */,
 				4F591E2A2992DBDE003904CA /* CaesarManager.swift in Sources */,
 				F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */,
 				4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */,

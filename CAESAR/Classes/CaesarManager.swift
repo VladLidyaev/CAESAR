@@ -35,10 +35,6 @@ class CaesarManager {
     userInfo.userDTO.display_name
   }
 
-  // MARK: - Computed variables
-
-  // MARK: - Constraints
-
   // MARK: - Initialization
   
   init(
@@ -139,7 +135,6 @@ class CaesarManager {
                       return
                     }
 
-                    self?.userInfo.companionUserDTO = userDTO
                     self?.userInfo.setCompanionPublicKeyData(
                       userDTO.public_key,
                       saltString: chatID,
@@ -246,7 +241,6 @@ class CaesarManager {
                   return
                 }
 
-                self?.userInfo.companionUserDTO = userDTO
                 self?.userInfo.setCompanionPublicKeyData(
                   userDTO.public_key,
                   saltString: chatDTO.id,
@@ -321,7 +315,7 @@ class CaesarManager {
       chatID: chatID,
       onSuccess: { [weak self] dtoArray in
         var messages = [Message]()
-        dtoArray.forEach { dto in
+        dtoArray.sorted { $0.timestamp < $1.timestamp }.forEach { dto in
           self?.makeMessage(
             dto: dto,
             onSuccess: { message in
@@ -355,13 +349,7 @@ class CaesarManager {
     onSuccess: (Message) -> Void,
     onError: () -> Void
   ) {
-    guard let companionName = userInfo.companionUserDTO?.display_name else {
-      onError()
-      return
-    }
-
     let isUserAutor = dto.user_id == userInfo.userDTO.id
-    let autorName = isUserAutor ? Strings.UserInfo.userDisplayName : companionName
     let timeLabelText = calculateTimeDelta(creationDate: dto.timestamp)
 
     userInfo.dataToText(
@@ -371,8 +359,7 @@ class CaesarManager {
           Message(
             text: text,
             isUserAutor: isUserAutor,
-            timeLabelText: timeLabelText,
-            autorName: autorName
+            timeLabelText: timeLabelText
           )
         )
       },
@@ -554,7 +541,7 @@ class CaesarManager {
     } else if let seconds = datesDiff.second, seconds != .zero, seconds > .zero {
       return "\(seconds) " + Strings.DatesShorts.second
     } else {
-      return .empty
+      return Strings.DatesShorts.justNow
     }
   }
 }

@@ -9,10 +9,11 @@ class ChatViewController: CaesarViewController {
 
   private var isTimerActive: Bool = false
   private var items: [Message] = [] {
-    didSet { tableView.reloadData() }
+    didSet {
+      tableView.reloadData()
+      tableView.scrollToBottom(animated: true)
+    }
   }
-
-  // MARK: - Computed variables
 
   // MARK: - Subviews
 
@@ -147,6 +148,13 @@ class ChatViewController: CaesarViewController {
       }
     )
   }
+
+  // MARK: - Helpers
+
+  private func isUserItemAutor(at index: Int) -> Bool {
+    guard index >= .zero, index < items.count else { return false }
+    return items[index].isUserAutor
+  }
 }
 
 // MARK: - UITableViewDelegate & UITableViewDataSource
@@ -163,7 +171,14 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     ) as? MessageCell
 
     if let cell = messageCell {
-      cell.configure(with: items[indexPath.row])
+      cell.configure(
+        with: items[indexPath.row],
+        isUserPreviousItemAutor: isUserItemAutor(at: indexPath.row - 1),
+        isUserNextItemAutor: isUserItemAutor(at: indexPath.row + 1),
+        updateLayoutAction: { [weak self] in
+          self?.view.layoutIfNeeded()
+        }
+      )
       return cell
     } else {
       return UITableViewCell()

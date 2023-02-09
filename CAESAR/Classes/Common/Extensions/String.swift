@@ -8,6 +8,14 @@ extension String {
   static let empty: String = ""
 }
 
+// MARK: - containsOnlyWhitespacesAndNewlines
+
+extension String {
+  var containsOnlyWhitespacesAndNewlines: Bool {
+    trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+}
+
 // MARK: - Empty
 
 extension String {
