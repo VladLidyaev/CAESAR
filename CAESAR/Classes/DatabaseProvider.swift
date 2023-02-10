@@ -278,6 +278,22 @@ class DatabaseProvider {
 
   // MARK: - DeleteChatRequest
 
+  func deleteUser(
+    userID: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([UserDTO.key, userID])
+    ).removeValue { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
   func deleteChatRequest(
     chatRequestID: String,
     onSuccess: @escaping () -> Void,

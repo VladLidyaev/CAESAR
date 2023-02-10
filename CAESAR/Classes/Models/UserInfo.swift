@@ -10,6 +10,7 @@ class UserInfo {
 
   var chatRequestDTO: ChatRequestDTO?
   var chatDTO: ChatDTO?
+  var companionID: String?
   var userDTO: UserDTO {
     UserDTO(
       id: userID,

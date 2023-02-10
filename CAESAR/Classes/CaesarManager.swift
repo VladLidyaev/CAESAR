@@ -137,6 +137,7 @@ class CaesarManager {
                       return
                     }
 
+                    self?.userInfo.companionID = userDTO.id
                     self?.userInfo.setCompanionPublicKeyData(
                       userDTO.public_key,
                       saltString: chatID,
@@ -219,6 +220,7 @@ class CaesarManager {
       return
     }
 
+    userInfo.companionID = companionID
     let chatDTO = ChatDTO(
       chat_request_id: chatRequestID,
       user_id: userInfo.userDTO.id,
@@ -333,18 +335,6 @@ class CaesarManager {
     )
   }
 
-  func deleteChat() {
-    let onError: (Error?) -> () = { [weak self] error in
-      self?.handleError(error)
-    }
-
-    deleteChatsIfNeeded(
-      chatID: userInfo.chatDTO?.id,
-      onSuccess: { onError(nil) },
-      onError: onError
-    )
-  }
-
   func throttlingMesasages(_ messages: [Message]) {
     if isChattingStarted == true, messages.isEmpty { handleError() }
     if !messages.isEmpty {
@@ -356,6 +346,35 @@ class CaesarManager {
         self?.handleError()
       })
     }
+  }
+
+  func deleteAllInfo() {
+    let onError: (Error?) -> () = { _ in }
+    guard let companionID = userInfo.companionID else { return }
+
+    databaseProvider.deleteUser(
+      userID: userInfo.userDTO.id,
+      onSuccess: { [weak self] in
+        self?.databaseProvider.deleteUser(
+          userID: companionID,
+          onSuccess: {
+            self?.deleteChatsIfNeeded(
+              chatID: self?.userInfo.chatDTO?.id,
+              onSuccess: {
+                self?.deleteMessagesIfNeeded(
+                  chatID: self?.userInfo.chatDTO?.id,
+                  onSuccess: {},
+                  onError: onError
+                )
+              },
+              onError: onError
+            )
+          },
+          onError: onError
+        )
+      },
+      onError: onError
+    )
   }
 
   // MARK: - Private Methods
@@ -422,8 +441,14 @@ class CaesarManager {
             self?.deleteChatsIfNeeded(
               chatID: userDTO?.chat_id,
               onSuccess: {
-                self?.updateUser(
-                  onSuccess: onSuccess,
+                self?.deleteMessagesIfNeeded(
+                  chatID: userDTO?.chat_id,
+                  onSuccess: {
+                    self?.updateUser(
+                      onSuccess: onSuccess,
+                      onError: onError
+                    )
+                  },
                   onError: onError
                 )
               },
@@ -477,13 +502,24 @@ class CaesarManager {
 
     databaseProvider.deleteChat(
       chatID: chatID,
-      onSuccess: { [weak self] in
-        self?.databaseProvider.deleteMessages(
-          chatID: chatID,
-          onSuccess: onSuccess,
-          onError: onError
-        )
-      },
+      onSuccess: onSuccess,
+      onError: onError
+    )
+  }
+
+  private func deleteMessagesIfNeeded(
+    chatID: String?,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    guard let chatID = chatID else {
+      onSuccess()
+      return
+    }
+
+    databaseProvider.deleteMessages(
+      chatID: chatID,
+      onSuccess: onSuccess,
       onError: onError
     )
   }

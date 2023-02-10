@@ -138,7 +138,7 @@ class ChatViewController: CaesarViewController {
 
   @objc
   private func didTapQuitButton(_: Any?) {
-    manager?.deleteChat()
+    manager?.deleteAllInfo()
   }
 
 
