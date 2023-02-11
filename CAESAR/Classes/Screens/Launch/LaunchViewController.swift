@@ -163,8 +163,18 @@ class LaunchViewController: CaesarViewController {
     onSuccess: @escaping (SecureEnclave.P256.KeyAgreement.PrivateKey) -> Void,
     onError: @escaping (Error?) -> Void
   ) {
+    var error: Unmanaged<CFError>? = nil
+    guard let accessControl = SecAccessControlCreateWithFlags(
+      nil,
+      kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
+      [.privateKeyUsage, .biometryCurrentSet],
+      &error
+    ) else {
+      onError(nil)
+      return
+    }
     do {
-      let privateKey = try SecureEnclave.P256.KeyAgreement.PrivateKey()
+      let privateKey = try SecureEnclave.P256.KeyAgreement.PrivateKey.init(accessControl: accessControl)
       onSuccess(privateKey)
     } catch {
       onError(error)
