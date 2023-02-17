@@ -141,7 +141,6 @@ class ChatViewController: CaesarViewController {
     manager?.deleteAllInfo()
   }
 
-
   // MARK: - Private Methods
 
   private func subscribeOnMessages() {

@@ -46,6 +46,7 @@ class CaesarManager {
     self.userInfo = userInfo
     self.actualViewController = viewController
     self.databaseProvider = DatabaseProvider()
+    NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
   }
 
   // MARK: - Public Methods
@@ -572,6 +573,13 @@ class CaesarManager {
     case .chatting:
       actualViewController.showClosedChatAlert()
     }
+  }
+
+  // MARK: - WillResignActive
+
+  @objc func willResignActive(_ notification: Notification) {
+    guard state == .chatting else { return }
+    deleteAllInfo()
   }
 
   // MARK: - Helpers
