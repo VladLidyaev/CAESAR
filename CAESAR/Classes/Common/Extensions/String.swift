@@ -1,6 +1,6 @@
 // Made by Vladislav Lidiaev [aka Balonka] on 2023.
 
-import Foundation
+import UIKit
 
 // MARK: - Empty
 
@@ -38,5 +38,14 @@ extension String {
     self.forEach { result += spacingCharacter + String($0) }
     result.removeFirst(spacerCount)
     return result
+  }
+}
+
+// MARK: - String To Image Converter
+
+extension String {
+  func toImage() -> UIImage? {
+    guard let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) else { return nil }
+    return UIImage(data: data)
   }
 }

@@ -150,7 +150,7 @@ class ChatViewController: CaesarViewController {
   }
 
   private func sendMessage(text: String) {
-    manager?.sendMessage(text: text)
+    manager?.sendMessage(with: .text(text))
   }
 
   // MARK: - Layout Animation

@@ -285,14 +285,23 @@ class CaesarManager {
     presentVC(makeChatViewController())
   }
 
-  func sendMessage(text: String) {
+  func sendMessage(with messageData: MessageData) {
     let onError: (Error?) -> () = { [weak self] error in
       self?.handleError(error)
     }
 
-    guard let chatID = userInfo.chatDTO?.id else { return }
-    userInfo.textToData(
-      text,
+    guard
+      let chatID = userInfo.chatDTO?.id,
+      let codableData = MessageDataCodable(messageData),
+      let stringData = try? JSONEncoder().encode(codableData),
+      let string = String(data: stringData, encoding: .utf8)
+    else {
+      onError(nil)
+      return
+    }
+
+    userInfo.stringToData(
+      string,
       onSuccess: { [weak self] data in
         guard let self = self else { return }
         let messageDTO = MessageDTO(
@@ -392,12 +401,21 @@ class CaesarManager {
     let isUserAutor = dto.user_id == userInfo.userDTO.id
     let timeLabelText = calculateTimeDelta(creationDate: dto.timestamp)
 
-    userInfo.dataToText(
+    userInfo.dataToString(
       dto.data,
-      onSuccess: { text in
+      onSuccess: { string in
+        guard
+          let stringData = string.data(using: .utf8),
+          let codableData = try? JSONDecoder().decode(MessageDataCodable.self, from: stringData),
+          let messageData = codableData.data
+        else {
+          onError()
+          return
+        }
+
         onSuccess(
           Message(
-            text: text,
+            data: messageData,
             isUserAutor: isUserAutor,
             timeLabelText: timeLabelText
           )

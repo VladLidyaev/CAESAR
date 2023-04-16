@@ -40,15 +40,15 @@ class UserInfo {
     self.privateKey = privateKey
   }
 
-  func textToData(
-    _ text: String,
+  func stringToData(
+    _ string: String,
     onSuccess: (Data) -> Void,
     onError: () -> Void
   ) {
     guard
       SecureEnclave.isAvailable,
       let symmetricKey = symmetricKey,
-      let data = text.data(using: .utf8),
+      let data = string.data(using: .utf8),
       let box = try? ChaChaPoly.seal(data, using: symmetricKey).combined
     else {
       onError()
@@ -57,7 +57,7 @@ class UserInfo {
     onSuccess(box)
   }
 
-  func dataToText(
+  func dataToString(
     _ data: Data,
     onSuccess: (String) -> Void,
     onError: () -> Void
@@ -66,13 +66,13 @@ class UserInfo {
       SecureEnclave.isAvailable,
       let symmetricKey = symmetricKey,
       let box = try? ChaChaPoly.SealedBox(combined: data),
-      let textData = try? ChaChaPoly.open(box, using: symmetricKey),
-      let text = String(data: textData, encoding: .utf8)
+      let stringData = try? ChaChaPoly.open(box, using: symmetricKey),
+      let string = String(data: stringData, encoding: .utf8)
     else {
       onError()
       return
     }
-    onSuccess(text)
+    onSuccess(string)
   }
 
   func setCompanionPublicKeyData(
