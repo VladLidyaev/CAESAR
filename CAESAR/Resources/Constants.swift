@@ -44,7 +44,7 @@ extension Constants {
     static let `default`: String = "questionmark.circle"
     static let logo: String = "logo_icon"
     static let logoTitle: String = "logo_title_icon"
-    static let sendText: String = "send_text_icon"
+    static let send: String = "send_icon"
     static let attachImage: String = "attach_image_icon"
     static let messageSent: String = "message_sent_icon"
     static let messageRead: String = "message_read_icon"

@@ -8,7 +8,9 @@ class InputMessageView: UIView {
   // MARK: - Properties
 
   private let onSendButtonTap: (MessageData) -> Void
+  private let onAttachImageButtonTap: ((UIImage) -> Void) -> Void
   private let updateInputMessageViewConstraintValue: (CGFloat) -> Void
+  private var attachedImage: UIImage?
 
   var toolbar = UIToolbar() {
     didSet {
@@ -23,7 +25,7 @@ class InputMessageView: UIView {
     text = text?.containsOnlyWhitespacesAndNewlines == true ? nil : text
     return MessageData(
       text: text,
-      image: nil
+      image: attachedImage
     )
   }
 
@@ -31,15 +33,18 @@ class InputMessageView: UIView {
 
   private lazy var containerView = makeContainerView()
   private lazy var textView = makeTextView()
-  private lazy var sendTextButton = makeSendTextButton()
+  private lazy var sendButton = makeSendButton()
+  private lazy var attachImageButton = makeAttachImageButton()
 
   // MARK: - Initialization
 
   init(
     onSendButtonTap: @escaping (MessageData) -> Void,
+    onAttachImageButtonTap: @escaping ((UIImage) -> Void) -> Void,
     updateInputMessageViewConstraintValue: @escaping (CGFloat) -> Void
   ) {
     self.onSendButtonTap = onSendButtonTap
+    self.onAttachImageButtonTap = onAttachImageButtonTap
     self.updateInputMessageViewConstraintValue = updateInputMessageViewConstraintValue
     super.init(frame: .zero)
     setupUI()
@@ -55,7 +60,8 @@ class InputMessageView: UIView {
   private func setupUI() {
     addSubview(containerView)
     containerView.addSubview(textView)
-    containerView.addSubview(sendTextButton)
+    containerView.addSubview(attachImageButton)
+    containerView.addSubview(sendButton)
     setupConstraints()
   }
 
@@ -68,19 +74,29 @@ class InputMessageView: UIView {
 
     // TextView
     textView.pinToSuperviewEdge(.top, offset: LocalConstants.textViewVerticalOffset)
-    textView.pinToSuperviewEdge(.trailing, offset: -LocalConstants.textViewtrailingOffset)
+    textView.pin(.trailing, to: .leading, of: attachImageButton, offset: -LocalConstants.buttonOffset)
     textView.pinToSuperviewEdge(.bottom, offset: -LocalConstants.textViewVerticalOffset)
     textView.pinToSuperviewEdge(.leading, offset: LocalConstants.textViewLeadingOffset)
 
-    // SendTextButton
-    sendTextButton.setDimensions(
+    // SendButton
+    sendButton.setDimensions(
       to: .init(
-        width: LocalConstants.sendTextButtonSideLength,
-        height: LocalConstants.sendTextButtonSideLength
+        width: LocalConstants.buttonSideLength,
+        height: LocalConstants.buttonSideLength
       )
     )
-    sendTextButton.pinToSuperviewEdge(.trailing, offset: -LocalConstants.sendTextButtonOffset)
-    sendTextButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.sendTextButtonOffset)
+    sendButton.pinToSuperviewEdge(.trailing, offset: -LocalConstants.buttonOffset)
+    sendButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.buttonOffset)
+
+    // AttachImageButton
+    attachImageButton.setDimensions(
+      to: .init(
+        width: LocalConstants.buttonSideLength,
+        height: LocalConstants.buttonSideLength
+      )
+    )
+    attachImageButton.pin(.trailing, to: .leading, of: sendButton, offset: -LocalConstants.buttonOffset)
+    attachImageButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.buttonOffset)
   }
 
   // MARK: - View Constructors
@@ -108,13 +124,22 @@ class InputMessageView: UIView {
     return textView
   }
 
-  private func makeSendTextButton() -> UIButton {
-    let image = Icons.sendText.withRenderingMode(.alwaysTemplate)
+  private func makeSendButton() -> UIButton {
+    let image = Icons.send.withRenderingMode(.alwaysTemplate)
     let button = UIButton().autoLayout()
     button.setImage(image, for: .normal)
     button.tintColor = Colors.textAndIcons
     button.isEnabled = false
     button.addTarget(self, action: #selector(didTapSendButton(_:)), for: .touchUpInside)
+    return button
+  }
+
+  private func makeAttachImageButton() -> UIButton {
+    let image = Icons.attachImage.withRenderingMode(.alwaysTemplate)
+    let button = UIButton().autoLayout()
+    button.setImage(image, for: .normal)
+    button.tintColor = Colors.textAndIcons
+    button.addTarget(self, action: #selector(didTapAttachImageButton(_:)), for: .touchUpInside)
     return button
   }
 
@@ -126,10 +151,17 @@ class InputMessageView: UIView {
     updateState()
   }
 
+  @objc
+  private func didTapAttachImageButton(_: Any?) {
+    onAttachImageButtonTap() { [weak self] image in
+      self?.attachedImage = image
+    }
+  }
+
   private func updateState() {
     let textViewContentHeight = textView.contentSize.height
     textView.showsVerticalScrollIndicator = textViewContentHeight >= LocalConstants.textViewMaxHeight
-    sendTextButton.isEnabled = data != nil
+    sendButton.isEnabled = data != nil
     let textViewHeight = max(
       min(LocalConstants.textViewMaxHeight, textViewContentHeight),
       LocalConstants.textViewMinHeight
@@ -153,14 +185,13 @@ private enum LocalConstants {
   static let containerVerticalOffset: CGFloat = 8.0
   static let containerHeight: CGFloat = 44.0
   static let containerViewBorderWidth: CGFloat = 2
-  static let sendTextButtonDisabledStateAlpha: CGFloat = 0.5
-  static let sendTextButtonOffset: CGFloat = 8.0
-  static let sendTextButtonSideLength: CGFloat = 28.0
+  static let sendButtonDisabledStateAlpha: CGFloat = 0.5
+  static let buttonOffset: CGFloat = 8.0
+  static let buttonSideLength: CGFloat = 28.0
   static let textViewFont: UIFont = UIFont.systemFont(ofSize: 20.0, weight: .regular)
   static let textViewMinHeight: CGFloat = 40
   static let textViewMaxHeight: CGFloat = 136
-  static let textViewVertialDiff: CGFloat = 2 * (sendTextButtonOffset + textViewVerticalOffset)
+  static let textViewVertialDiff: CGFloat = 2 * (buttonOffset + textViewVerticalOffset)
   static let textViewLeadingOffset: CGFloat = 16.0
-  static let textViewtrailingOffset: CGFloat = 44.0
   static let textViewVerticalOffset: CGFloat = 2.0
 }

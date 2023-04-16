@@ -106,6 +106,9 @@ class ChatViewController: CaesarViewController {
       onSendButtonTap: { [weak self] data in
         self?.sendMessage(data: data)
       },
+      onAttachImageButtonTap: { [weak self] completion in
+        
+      },
       updateInputMessageViewConstraintValue: { [weak self] value in
         self?.inputMessageViewHeightConstraint?.constant = value
         self?.animateLayout()
