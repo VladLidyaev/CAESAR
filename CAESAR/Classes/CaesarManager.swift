@@ -349,7 +349,7 @@ class CaesarManager {
     }
   }
 
-  func deleteAllInfo() {
+  func deleteAllInfo(withChatEndedNotification: Bool = false) {
     let onError: (Error?) -> () = { _ in }
     guard let companionID = userInfo.companionID else { return }
 
@@ -364,7 +364,11 @@ class CaesarManager {
               onSuccess: {
                 self?.deleteMessagesIfNeeded(
                   chatID: self?.userInfo.chatDTO?.id,
-                  onSuccess: {},
+                  onSuccess: {
+                    if withChatEndedNotification {
+                      self?.actualViewController?.showClosedChatAlert()
+                    }
+                  },
                   onError: onError
                 )
               },
