@@ -6,7 +6,12 @@ import UIKit
 
 extension UIImage {
   func toString() -> String? {
-    let data = self.pngData()
-    return data?.base64EncodedString(options: .endLineWithLineFeed)
+    guard let maxData = self.jpegData(compressionQuality: .one) else { return nil }
+    var compressionQualityCoeff: CGFloat = CGFloat(maxData.count / Constants.Core.maxImageBytesCount)
+    compressionQualityCoeff = max(.zero, min(.one, compressionQualityCoeff))
+    return self
+      .jpegData(compressionQuality: compressionQualityCoeff)?
+      .base64EncodedString(options: .endLineWithLineFeed)
   }
 }
+

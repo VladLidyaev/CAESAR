@@ -41,7 +41,7 @@ class MessageCell: UITableViewCell {
     updateLayoutAction: @escaping () -> Void
   ) {
     textView.text = model.data.text
-    timeLabel.text = model.timeLabelText
+    timeLabel.text = TimeDeltaCalculator.calculateTimeDelta(creationDate: model.timestamp)
 
     topConstraint?.constant = isUserPreviousItemAutor == model.isUserAutor ? LocalConstants.verticalMinOffset : LocalConstants.verticalMaxOffset
     bottomConstraint?.constant = isUserNextItemAutor == model.isUserAutor ? -LocalConstants.verticalMinOffset : -LocalConstants.verticalMaxOffset
@@ -61,7 +61,7 @@ class MessageCell: UITableViewCell {
       trailingStrongConstraint?.isActive = true
       trailingStrongConstraint?.constant = -LocalConstants.horizontalMinOffset
     } else {
-      containerView.backgroundColor = Colors.textAndIcons.withAlphaComponent(LocalConstants.containerAlpha)
+      containerView.backgroundColor = Colors.backgroundGray
 
       timeLabelTrailingConstraint?.isActive = false
       timeLabelLeadingConstraint?.isActive = true
@@ -83,7 +83,6 @@ class MessageCell: UITableViewCell {
   private func setupUI() {
     selectionStyle = .none
     contentView.clipsToBounds = true
-    backgroundColor = .clear
 
     contentView.addSubview(containerView)
     containerView.addSubview(textView)
@@ -145,7 +144,6 @@ class MessageCell: UITableViewCell {
 // MARK: - LocalConstants
 
 private enum LocalConstants {
-  static let containerAlpha: CGFloat = 0.15
   static let cornerRadius: CGFloat = 15.0
   static let verticalMinOffset: CGFloat = 1.0
   static let verticalMaxOffset: CGFloat = 3.0

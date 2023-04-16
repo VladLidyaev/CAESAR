@@ -13,6 +13,7 @@ extension Constants {
     static let chatRequestIDLength: Int = 6
     static let nicknameCodeLength: Int = 4
     static let outputByteCount: Int = 32
+    static let maxImageBytesCount: Int = 9961472
   }
 }
 
@@ -33,6 +34,7 @@ extension Constants {
   enum Colors {
     static let accent: String = "AccentColor"
     static let background: String = "BackgroundColor"
+    static let backgroundGray: String = "BackgroundGrayColor"
     static let textAndIcons: String = "TextAndIconsColor"
   }
 }
@@ -46,6 +48,7 @@ extension Constants {
     static let logoTitle: String = "logo_title_icon"
     static let send: String = "send_icon"
     static let attachImage: String = "attach_image_icon"
+    static let deleteImage: String = "delete_image_icon"
     static let messageSent: String = "message_sent_icon"
     static let messageRead: String = "message_read_icon"
     static let quit: String = "quit_icon"

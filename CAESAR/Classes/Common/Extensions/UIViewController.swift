@@ -34,6 +34,47 @@ extension UIViewController {
   }
 }
 
+// MARK: - ImagePickerAlert
+
+extension UIViewController {
+  func showImagePickerAlert(
+    showImagePicker: @escaping (UIImagePickerController.SourceType) -> Void
+  ) {
+    let alert = UIAlertController(
+      title: nil,
+      message: nil,
+      preferredStyle: .actionSheet
+    )
+
+    let cameraAction = UIAlertAction(
+      title: Strings.ImagePickerController.cameraLabelText,
+      style: .default
+    ) { _ in
+      showImagePicker(.camera)
+    }
+    alert.addAction(cameraAction)
+
+    let libraryAction = UIAlertAction(
+      title: Strings.ImagePickerController.libraryLabelText,
+      style: .default
+    ) { _ in
+      showImagePicker(.photoLibrary)
+    }
+    alert.addAction(libraryAction)
+
+    let cancelAction = UIAlertAction(
+      title: Strings.ImagePickerController.cancelLabelText,
+      style: .cancel,
+      handler: nil
+    )
+    alert.addAction(cancelAction)
+
+    DispatchQueue.main.async { [weak self] in
+      self?.present(alert, animated: true, completion: nil)
+    }
+  }
+}
+
 // MARK: - StartChatAlert
 
 extension UIViewController {

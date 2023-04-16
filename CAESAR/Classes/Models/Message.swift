@@ -7,7 +7,7 @@ import UIKit
 struct Message {
   let data: MessageData
   let isUserAutor: Bool
-  let timeLabelText: String
+  let timestamp: Date
 }
 
 struct MessageData: Codable {

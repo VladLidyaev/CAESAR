@@ -37,6 +37,15 @@ enum Strings {
     static let displayNameLabelText = "Your nickname: "
   }
 
+  // MARK: - ImagePickerController
+
+  enum ImagePickerController {
+    static let cameraLabelText = "Camera"
+    static let libraryLabelText = "Library"
+    static let cancelLabelText = "Cancel"
+  }
+
+
   // MARK: - LocalAuthenticationContext
 
   enum LocalAuthenticationContext {

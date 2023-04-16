@@ -8,8 +8,9 @@ class InputMessageView: UIView {
   // MARK: - Properties
 
   private let onSendButtonTap: (MessageData) -> Void
-  private let onAttachImageButtonTap: ((UIImage) -> Void) -> Void
+  private let onAttachImageButtonTap: (@escaping (UIImage?) -> Void) -> Void
   private let updateInputMessageViewConstraintValue: (CGFloat) -> Void
+
   private var attachedImage: UIImage?
 
   var toolbar = UIToolbar() {
@@ -40,7 +41,7 @@ class InputMessageView: UIView {
 
   init(
     onSendButtonTap: @escaping (MessageData) -> Void,
-    onAttachImageButtonTap: @escaping ((UIImage) -> Void) -> Void,
+    onAttachImageButtonTap: @escaping (@escaping (UIImage?) -> Void) -> Void,
     updateInputMessageViewConstraintValue: @escaping (CGFloat) -> Void
   ) {
     self.onSendButtonTap = onSendButtonTap
@@ -155,6 +156,7 @@ class InputMessageView: UIView {
   private func didTapAttachImageButton(_: Any?) {
     onAttachImageButtonTap() { [weak self] image in
       self?.attachedImage = image
+      self?.updateState()
     }
   }
 

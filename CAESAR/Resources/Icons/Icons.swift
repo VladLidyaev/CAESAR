@@ -8,6 +8,7 @@ enum Icons {
   static let quit = IconAsset(name: Constants.Icons.quit).icon
   static let send = IconAsset(name: Constants.Icons.send).icon
   static let attachImage = IconAsset(name: Constants.Icons.attachImage).icon
+  static let deleteImage = IconAsset(name: Constants.Icons.deleteImage).icon
   static let messageSent = IconAsset(name: Constants.Icons.messageSent).icon
   static let messageRead = IconAsset(name: Constants.Icons.messageRead).icon
   static let logo = IconAsset(name: Constants.Icons.logo).icon

@@ -7,6 +7,7 @@ import UIKit
 enum Colors {
   static let accent = ColorAsset(name: Constants.Colors.accent).color
   static let background = ColorAsset(name: Constants.Colors.background).color
+  static let backgroundGray = ColorAsset(name: Constants.Colors.backgroundGray).color
   static let textAndIcons = ColorAsset(name: Constants.Colors.textAndIcons).color
 }
 

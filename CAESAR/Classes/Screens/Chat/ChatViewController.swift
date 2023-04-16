@@ -7,7 +7,6 @@ import UIKit
 class ChatViewController: CaesarViewController {
   // MARK: - Properties
 
-  private var isTimerActive: Bool = false
   private var items: [Message] = [] {
     didSet {
       tableView.reloadData()
@@ -21,6 +20,7 @@ class ChatViewController: CaesarViewController {
   private lazy var quitButtonContainer = makeQuitButtonContainer()
   private lazy var tableView = makeTableView()
   private lazy var inputMessageView = makeInputMessageView()
+  private var imagePicker: ImagePicker?
 
   // MARK: - Constraints
 
@@ -106,8 +106,9 @@ class ChatViewController: CaesarViewController {
       onSendButtonTap: { [weak self] data in
         self?.sendMessage(data: data)
       },
-      onAttachImageButtonTap: { [weak self] completion in
-        
+      onAttachImageButtonTap: { [weak self] completionHandler in
+        self?.closeKeyboardIfNeeded()
+        self?.presentImagePicker(completionHandler)
       },
       updateInputMessageViewConstraintValue: { [weak self] value in
         self?.inputMessageViewHeightConstraint?.constant = value
@@ -154,6 +155,24 @@ class ChatViewController: CaesarViewController {
 
   private func sendMessage(data: MessageData) {
     manager?.sendMessage(data: data)
+  }
+
+  private func closeKeyboardIfNeeded() {
+    view.resignFirstResponder()
+  }
+
+  private func presentImagePicker(_ completionHandler: @escaping (UIImage?) -> Void) {
+    imagePicker = ImagePicker()
+    showImagePickerAlert(
+      showImagePicker: { [weak self] sourceType in
+        guard let self else { return }
+        self.imagePicker?.present(
+          from: self,
+          sourceType: sourceType,
+          completionHandler: completionHandler
+        )
+      }
+    )
   }
 
   // MARK: - Layout Animation
@@ -261,6 +280,7 @@ extension ChatViewController {
 // MARK: - LocalConstants
 
 private enum LocalConstants {
+  static let timeLabelUpdateInterval: TimeInterval = 1.0
   static let cornerRadius: CGFloat = 15.0
   static let quitButtonSideLength: CGFloat = 28.0
   static let quitButtonVerticalOffset: CGFloat = 8.0

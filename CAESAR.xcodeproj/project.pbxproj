@@ -37,6 +37,8 @@
 		4F591E542993E3BE003904CA /* CaesarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F591E532993E3BE003904CA /* CaesarViewController.swift */; };
 		4F651F8D29EC52F20045CF29 /* DatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F651F8C29EC52F10045CF29 /* DatabaseProvider.swift */; };
 		4F651F9129EC566F0045CF29 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F651F9029EC566F0045CF29 /* UIImage.swift */; };
+		4F79FCF629EC776200D751FF /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79FCF529EC776200D751FF /* ImagePicker.swift */; };
+		4F79FCFA29EC867900D751FF /* TimeDeltaCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F79FCF929EC867900D751FF /* TimeDeltaCalculator.swift */; };
 		4FC1A14029954B4700BAF755 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1A13F29954B4700BAF755 /* UITableView.swift */; };
 		4FC1A1422995574600BAF755 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1A1412995574600BAF755 /* Throttler.swift */; };
 		4FF22D8929951E5C00739797 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF22D8829951E5C00739797 /* Date.swift */; };
@@ -82,6 +84,8 @@
 		4F591E532993E3BE003904CA /* CaesarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaesarViewController.swift; sourceTree = "<group>"; };
 		4F651F8C29EC52F10045CF29 /* DatabaseProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseProvider.swift; sourceTree = "<group>"; };
 		4F651F9029EC566F0045CF29 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		4F79FCF529EC776200D751FF /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		4F79FCF929EC867900D751FF /* TimeDeltaCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDeltaCalculator.swift; sourceTree = "<group>"; };
 		4FC1A13F29954B4700BAF755 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		4FC1A1412995574600BAF755 /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
 		4FF22D8829951E5C00739797 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -112,6 +116,7 @@
 		4F591E0729929F65003904CA /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				4F79FCF729EC776600D751FF /* ImagePicker */,
 				4F591E502993DAED003904CA /* Chat */,
 				F52E3FE029927484001C3EA0 /* Welcome */,
 				F52E3FD929927213001C3EA0 /* Launch */,
@@ -221,6 +226,23 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		4F79FCF729EC776600D751FF /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				4F79FCF529EC776200D751FF /* ImagePicker.swift */,
+			);
+			path = ImagePicker;
+			sourceTree = "<group>";
+		};
+		4F79FCF829EC865A00D751FF /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				4F651F8C29EC52F10045CF29 /* DatabaseProvider.swift */,
+				4F79FCF929EC867900D751FF /* TimeDeltaCalculator.swift */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
 		F52E3FA22991A277001C3EA0 = {
 			isa = PBXGroup;
 			children = (
@@ -281,7 +303,7 @@
 		F52E3FD629927169001C3EA0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4F651F8C29EC52F10045CF29 /* DatabaseProvider.swift */,
+				4F79FCF829EC865A00D751FF /* Supporting files */,
 				4F591E292992DBDE003904CA /* CaesarManager.swift */,
 				F52E3FCD29927047001C3EA0 /* Delegate */,
 				4F591E202992D6BE003904CA /* Common */,
@@ -406,7 +428,9 @@
 				4FC1A14029954B4700BAF755 /* UITableView.swift in Sources */,
 				4F591E2A2992DBDE003904CA /* CaesarManager.swift in Sources */,
 				F52E3FAF2991A277001C3EA0 /* AppDelegate.swift in Sources */,
+				4F79FCF629EC776200D751FF /* ImagePicker.swift in Sources */,
 				4F591E152992CBBF003904CA /* MessageDTO.swift in Sources */,
+				4F79FCFA29EC867900D751FF /* TimeDeltaCalculator.swift in Sources */,
 				4F591E362992DD18003904CA /* Strings.swift in Sources */,
 				4F591E112992C737003904CA /* ChatRequestDTO.swift in Sources */,
 				4F45C12E299454610070D5B1 /* MessageCell.swift in Sources */,
