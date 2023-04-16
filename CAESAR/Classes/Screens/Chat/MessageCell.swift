@@ -40,10 +40,7 @@ class MessageCell: UITableViewCell {
     isUserNextItemAutor: Bool,
     updateLayoutAction: @escaping () -> Void
   ) {
-    // TODO: - fix it
-    guard case let MessageData.text(text) = model.data else { return }
-    textView.text = text
-
+    textView.text = model.data.text
     timeLabel.text = model.timeLabelText
 
     topConstraint?.constant = isUserPreviousItemAutor == model.isUserAutor ? LocalConstants.verticalMinOffset : LocalConstants.verticalMaxOffset

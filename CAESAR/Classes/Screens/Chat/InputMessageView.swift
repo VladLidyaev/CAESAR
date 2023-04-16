@@ -7,7 +7,7 @@ import UIKit
 class InputMessageView: UIView {
   // MARK: - Properties
 
-  private let onSendTextTap: (String) -> Void
+  private let onSendButtonTap: (MessageData) -> Void
   private let updateInputMessageViewConstraintValue: (CGFloat) -> Void
 
   var toolbar = UIToolbar() {
@@ -18,6 +18,15 @@ class InputMessageView: UIView {
 
   // MARK: - Computed variables
 
+  private var data: MessageData? {
+    var text: String? = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+    text = text?.containsOnlyWhitespacesAndNewlines == true ? nil : text
+    return MessageData(
+      text: text,
+      image: nil
+    )
+  }
+
   // MARK: - Subviews
 
   private lazy var containerView = makeContainerView()
@@ -27,10 +36,10 @@ class InputMessageView: UIView {
   // MARK: - Initialization
 
   init(
-    onSendTextTap: @escaping (String) -> Void,
+    onSendButtonTap: @escaping (MessageData) -> Void,
     updateInputMessageViewConstraintValue: @escaping (CGFloat) -> Void
   ) {
-    self.onSendTextTap = onSendTextTap
+    self.onSendButtonTap = onSendButtonTap
     self.updateInputMessageViewConstraintValue = updateInputMessageViewConstraintValue
     super.init(frame: .zero)
     setupUI()
@@ -111,7 +120,8 @@ class InputMessageView: UIView {
 
   @objc
   private func didTapSendButton(_: Any?) {
-    onSendTextTap(textView.text.trimmingCharacters(in: .whitespacesAndNewlines))
+    guard let data else { return }
+    onSendButtonTap(data)
     textView.text = .empty
     updateState()
   }
@@ -119,7 +129,7 @@ class InputMessageView: UIView {
   private func updateState() {
     let textViewContentHeight = textView.contentSize.height
     textView.showsVerticalScrollIndicator = textViewContentHeight >= LocalConstants.textViewMaxHeight
-    sendTextButton.isEnabled = !textView.text.containsOnlyWhitespacesAndNewlines
+    sendTextButton.isEnabled = data != nil
     let textViewHeight = max(
       min(LocalConstants.textViewMaxHeight, textViewContentHeight),
       LocalConstants.textViewMinHeight

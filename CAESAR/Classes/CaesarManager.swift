@@ -285,15 +285,14 @@ class CaesarManager {
     presentVC(makeChatViewController())
   }
 
-  func sendMessage(with messageData: MessageData) {
+  func sendMessage(data: MessageData) {
     let onError: (Error?) -> () = { [weak self] error in
       self?.handleError(error)
     }
 
     guard
       let chatID = userInfo.chatDTO?.id,
-      let codableData = MessageDataCodable(messageData),
-      let stringData = try? JSONEncoder().encode(codableData),
+      let stringData = try? JSONEncoder().encode(data),
       let string = String(data: stringData, encoding: .utf8)
     else {
       onError(nil)
@@ -406,8 +405,7 @@ class CaesarManager {
       onSuccess: { string in
         guard
           let stringData = string.data(using: .utf8),
-          let codableData = try? JSONDecoder().decode(MessageDataCodable.self, from: stringData),
-          let messageData = codableData.data
+          let messageData = try? JSONDecoder().decode(MessageData.self, from: stringData)
         else {
           onError()
           return

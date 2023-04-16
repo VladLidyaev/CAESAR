@@ -103,8 +103,8 @@ class ChatViewController: CaesarViewController {
 
   private func makeInputMessageView() -> InputMessageView {
     let view = InputMessageView(
-      onSendTextTap: { [weak self] text in
-        self?.sendMessage(text: text)
+      onSendButtonTap: { [weak self] data in
+        self?.sendMessage(data: data)
       },
       updateInputMessageViewConstraintValue: { [weak self] value in
         self?.inputMessageViewHeightConstraint?.constant = value
@@ -149,8 +149,8 @@ class ChatViewController: CaesarViewController {
     })
   }
 
-  private func sendMessage(text: String) {
-    manager?.sendMessage(with: .text(text))
+  private func sendMessage(data: MessageData) {
+    manager?.sendMessage(data: data)
   }
 
   // MARK: - Layout Animation
