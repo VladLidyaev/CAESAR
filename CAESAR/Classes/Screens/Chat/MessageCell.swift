@@ -43,7 +43,7 @@ class MessageCell: UITableViewCell {
     // TODO: - fix it
     guard case let MessageData.text(text) = model.data else { return }
     textView.text = text
-    
+
     timeLabel.text = model.timeLabelText
 
     topConstraint?.constant = isUserPreviousItemAutor == model.isUserAutor ? LocalConstants.verticalMinOffset : LocalConstants.verticalMaxOffset

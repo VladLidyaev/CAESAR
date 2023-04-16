@@ -7,7 +7,7 @@ import UIKit
 class InputMessageView: UIView {
   // MARK: - Properties
 
-  private let onSendTap: (String) -> Void
+  private let onSendTextTap: (String) -> Void
   private let updateInputMessageViewConstraintValue: (CGFloat) -> Void
 
   var toolbar = UIToolbar() {
@@ -22,15 +22,15 @@ class InputMessageView: UIView {
 
   private lazy var containerView = makeContainerView()
   private lazy var textView = makeTextView()
-  private lazy var sendButton = makeSendButton()
+  private lazy var sendTextButton = makeSendTextButton()
 
   // MARK: - Initialization
 
   init(
-    onSendTap: @escaping (String) -> Void,
+    onSendTextTap: @escaping (String) -> Void,
     updateInputMessageViewConstraintValue: @escaping (CGFloat) -> Void
   ) {
-    self.onSendTap = onSendTap
+    self.onSendTextTap = onSendTextTap
     self.updateInputMessageViewConstraintValue = updateInputMessageViewConstraintValue
     super.init(frame: .zero)
     setupUI()
@@ -46,7 +46,7 @@ class InputMessageView: UIView {
   private func setupUI() {
     addSubview(containerView)
     containerView.addSubview(textView)
-    containerView.addSubview(sendButton)
+    containerView.addSubview(sendTextButton)
     setupConstraints()
   }
 
@@ -63,15 +63,15 @@ class InputMessageView: UIView {
     textView.pinToSuperviewEdge(.bottom, offset: -LocalConstants.textViewVerticalOffset)
     textView.pinToSuperviewEdge(.leading, offset: LocalConstants.textViewLeadingOffset)
 
-    // SendButton
-    sendButton.setDimensions(
+    // SendTextButton
+    sendTextButton.setDimensions(
       to: .init(
-        width: LocalConstants.sendButtonSideLength,
-        height: LocalConstants.sendButtonSideLength
+        width: LocalConstants.sendTextButtonSideLength,
+        height: LocalConstants.sendTextButtonSideLength
       )
     )
-    sendButton.pinToSuperviewEdge(.trailing, offset: -LocalConstants.sendButtonOffset)
-    sendButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.sendButtonOffset)
+    sendTextButton.pinToSuperviewEdge(.trailing, offset: -LocalConstants.sendTextButtonOffset)
+    sendTextButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.sendTextButtonOffset)
   }
 
   // MARK: - View Constructors
@@ -80,7 +80,7 @@ class InputMessageView: UIView {
     let view = UIView().autoLayout()
     view.layer.cornerRadius = LocalConstants.containerHeight / 2
     view.layer.borderColor = Colors.textAndIcons.cgColor
-    view.layer.borderWidth = LocalConstants.containerViewWidth
+    view.layer.borderWidth = LocalConstants.containerViewBorderWidth
     view.clipsToBounds = true
     return view
   }
@@ -99,8 +99,8 @@ class InputMessageView: UIView {
     return textView
   }
 
-  private func makeSendButton() -> UIButton {
-    let image = Icons.send.withRenderingMode(.alwaysTemplate)
+  private func makeSendTextButton() -> UIButton {
+    let image = Icons.sendText.withRenderingMode(.alwaysTemplate)
     let button = UIButton().autoLayout()
     button.setImage(image, for: .normal)
     button.tintColor = Colors.textAndIcons
@@ -111,7 +111,7 @@ class InputMessageView: UIView {
 
   @objc
   private func didTapSendButton(_: Any?) {
-    onSendTap(textView.text.trimmingCharacters(in: .whitespacesAndNewlines))
+    onSendTextTap(textView.text.trimmingCharacters(in: .whitespacesAndNewlines))
     textView.text = .empty
     updateState()
   }
@@ -119,7 +119,7 @@ class InputMessageView: UIView {
   private func updateState() {
     let textViewContentHeight = textView.contentSize.height
     textView.showsVerticalScrollIndicator = textViewContentHeight >= LocalConstants.textViewMaxHeight
-    sendButton.isEnabled = !textView.text.containsOnlyWhitespacesAndNewlines
+    sendTextButton.isEnabled = !textView.text.containsOnlyWhitespacesAndNewlines
     let textViewHeight = max(
       min(LocalConstants.textViewMaxHeight, textViewContentHeight),
       LocalConstants.textViewMinHeight
@@ -142,14 +142,14 @@ private enum LocalConstants {
   static let containerHorizontalOffset: CGFloat = 12.0
   static let containerVerticalOffset: CGFloat = 8.0
   static let containerHeight: CGFloat = 44.0
-  static let containerViewWidth: CGFloat = 2.5
-  static let sendButtonDisabledStateAlpha: CGFloat = 0.5
-  static let sendButtonOffset: CGFloat = 8.0
-  static let sendButtonSideLength: CGFloat = 28.0
+  static let containerViewBorderWidth: CGFloat = 2
+  static let sendTextButtonDisabledStateAlpha: CGFloat = 0.5
+  static let sendTextButtonOffset: CGFloat = 8.0
+  static let sendTextButtonSideLength: CGFloat = 28.0
   static let textViewFont: UIFont = UIFont.systemFont(ofSize: 20.0, weight: .regular)
   static let textViewMinHeight: CGFloat = 40
   static let textViewMaxHeight: CGFloat = 136
-  static let textViewVertialDiff: CGFloat = 2 * (sendButtonOffset + textViewVerticalOffset)
+  static let textViewVertialDiff: CGFloat = 2 * (sendTextButtonOffset + textViewVerticalOffset)
   static let textViewLeadingOffset: CGFloat = 16.0
   static let textViewtrailingOffset: CGFloat = 44.0
   static let textViewVerticalOffset: CGFloat = 2.0

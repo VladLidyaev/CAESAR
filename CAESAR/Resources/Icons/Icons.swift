@@ -2,11 +2,15 @@
 
 import UIKit
 
-// MARK: - Icons
+// MARK: - Icons, SOURCE: https://feathericons.com/
 
 enum Icons {
   static let quit = IconAsset(name: Constants.Icons.quit).icon
-  static let send = IconAsset(name: Constants.Icons.send).icon
+  static let sendText = IconAsset(name: Constants.Icons.sendText).icon
+  static let sendImage = IconAsset(name: Constants.Icons.sendImage).icon
+  static let messageSent = IconAsset(name: Constants.Icons.messageSent).icon
+  static let messageDelivered = IconAsset(name: Constants.Icons.messageDelivered).icon
+  static let messageRead = IconAsset(name: Constants.Icons.messageRead).icon
   static let logo = IconAsset(name: Constants.Icons.logo).icon
   static let logoTitle = IconAsset(name: Constants.Icons.logoTitle).icon
 }

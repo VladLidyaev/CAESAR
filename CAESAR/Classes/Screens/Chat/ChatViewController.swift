@@ -103,7 +103,7 @@ class ChatViewController: CaesarViewController {
 
   private func makeInputMessageView() -> InputMessageView {
     let view = InputMessageView(
-      onSendTap: { [weak self] text in
+      onSendTextTap: { [weak self] text in
         self?.sendMessage(text: text)
       },
       updateInputMessageViewConstraintValue: { [weak self] value in
