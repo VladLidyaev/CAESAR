@@ -7,20 +7,17 @@ import Foundation
 struct UserDTO {
   let id: String
   let public_key: Data
-  let display_name: String
   let chat_request_id: String?
   let chat_id: String?
 
   init(
     id: String,
     public_key: Data,
-    display_name: String,
     chat_request_id: String? = nil,
     chat_id: String? = nil
   ) {
     self.id = id
     self.public_key = public_key
-    self.display_name = display_name
     self.chat_request_id = chat_request_id
     self.chat_id = chat_id
   }
@@ -29,13 +26,11 @@ struct UserDTO {
     guard
       let id = dictionary[Keys.id.rawValue] as? String,
       let public_key_string = dictionary[Keys.public_key.rawValue] as? String,
-      let public_key = Data(base64Encoded: public_key_string),
-      let display_name = dictionary[Keys.display_name.rawValue] as? String
+      let public_key = Data(base64Encoded: public_key_string)
     else { return nil }
 
     self.id = id
     self.public_key = public_key
-    self.display_name = display_name
     self.chat_request_id = dictionary[Keys.chat_request_id.rawValue] as? String
     self.chat_id = dictionary[Keys.chat_id.rawValue] as? String
   }
@@ -49,7 +44,6 @@ extension UserDTO {
   enum Keys: String {
     case id
     case public_key
-    case display_name
     case chat_request_id
     case chat_id
   }
@@ -61,8 +55,7 @@ extension UserDTO {
   var asDictionary: Dictionary<String, Any> {
     var dictionary = [
       Keys.id.rawValue: id,
-      Keys.public_key.rawValue: public_key.base64EncodedString(),
-      Keys.display_name.rawValue: display_name,
+      Keys.public_key.rawValue: public_key.base64EncodedString()
     ]
     dictionary[Keys.chat_request_id.rawValue] = chat_request_id
     dictionary[Keys.chat_id.rawValue] = chat_id

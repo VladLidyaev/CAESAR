@@ -79,15 +79,14 @@ extension UIViewController {
 
 extension UIViewController {
   func showStartChatAlert(
-    userName: String,
+    code: String?,
     acceptAction: @escaping () -> Void,
     declineAction: @escaping () -> Void,
     completion: @escaping (@escaping () -> Void) -> Void
   ) {
-    let companionName = userName == .empty ? Strings.UserInfo.defaultDisplayName : userName
     let alert = UIAlertController(
       title: Strings.StartChatViewController.title,
-      message: Strings.StartChatViewController.message(userName: companionName),
+      message: Strings.StartChatViewController.message(code: code),
       preferredStyle: .alert
     )
     alert.addAction(
@@ -110,6 +109,7 @@ extension UIViewController {
         alert.dismiss(animated: true)
       }
     })
+    
     DispatchQueue.main.async { [weak self] in
       self?.present(alert, animated: true, completion: nil)
     }

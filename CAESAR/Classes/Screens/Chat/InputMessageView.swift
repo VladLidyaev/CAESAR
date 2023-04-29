@@ -7,27 +7,15 @@ import UIKit
 class InputMessageView: UIView {
   // MARK: - Properties
 
-  private let onSendButtonTap: (MessageData) -> Void
-  private let onAttachImageButtonTap: (@escaping (UIImage?) -> Void) -> Void
+  private let onSendButtonTap: (String) -> Void
+  private let onAttachImageButtonTap: () -> Void
+  private let onSwipeDown: () -> Void
   private let updateInputMessageViewConstraintValue: (CGFloat) -> Void
-
-  private var attachedImage: UIImage?
 
   var toolbar = UIToolbar() {
     didSet {
       textView.inputAccessoryView = toolbar
     }
-  }
-
-  // MARK: - Computed variables
-
-  private var data: MessageData? {
-    var text: String? = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-    text = text?.containsOnlyWhitespacesAndNewlines == true ? nil : text
-    return MessageData(
-      text: text,
-      image: attachedImage
-    )
   }
 
   // MARK: - Subviews
@@ -40,12 +28,14 @@ class InputMessageView: UIView {
   // MARK: - Initialization
 
   init(
-    onSendButtonTap: @escaping (MessageData) -> Void,
-    onAttachImageButtonTap: @escaping (@escaping (UIImage?) -> Void) -> Void,
+    onSendButtonTap: @escaping (String) -> Void,
+    onAttachImageButtonTap: @escaping () -> Void,
+    onSwipeDown: @escaping () -> Void,
     updateInputMessageViewConstraintValue: @escaping (CGFloat) -> Void
   ) {
     self.onSendButtonTap = onSendButtonTap
     self.onAttachImageButtonTap = onAttachImageButtonTap
+    self.onSwipeDown = onSwipeDown
     self.updateInputMessageViewConstraintValue = updateInputMessageViewConstraintValue
     super.init(frame: .zero)
     setupUI()
@@ -144,26 +134,33 @@ class InputMessageView: UIView {
     return button
   }
 
+  private func setupKeyboardDismissRecognizer() {
+    let swipeDownGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeDown))
+    swipeDownGestureRecognizer.direction = .down
+    addGestureRecognizer(swipeDownGestureRecognizer)
+  }
+
+  @objc
+  private func didSwipeDown() {
+    onSwipeDown()
+  }
+
   @objc
   private func didTapSendButton(_: Any?) {
-    guard let data else { return }
-    onSendButtonTap(data)
+    onSendButtonTap(textView.text.trimmingCharacters(in: .whitespacesAndNewlines))
     textView.text = .empty
     updateState()
   }
 
   @objc
   private func didTapAttachImageButton(_: Any?) {
-    onAttachImageButtonTap() { [weak self] image in
-      self?.attachedImage = image
-      self?.updateState()
-    }
+    onAttachImageButtonTap()
   }
 
   private func updateState() {
     let textViewContentHeight = textView.contentSize.height
     textView.showsVerticalScrollIndicator = textViewContentHeight >= LocalConstants.textViewMaxHeight
-    sendButton.isEnabled = data != nil
+    sendButton.isEnabled = !textView.text.containsOnlyWhitespacesAndNewlines
     let textViewHeight = max(
       min(LocalConstants.textViewMaxHeight, textViewContentHeight),
       LocalConstants.textViewMinHeight

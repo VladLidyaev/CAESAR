@@ -15,14 +15,12 @@ class UserInfo {
     UserDTO(
       id: userID,
       public_key: privateKey.publicKey.rawRepresentation,
-      display_name: displayName,
       chat_request_id: chatRequestDTO?.id,
       chat_id: chatDTO?.id
     )
   }
 
   private let userID: String
-  private let displayName: String
   private let privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
   private var symmetricKey: SymmetricKey?
 
@@ -30,13 +28,9 @@ class UserInfo {
 
   init(
     userID: String,
-    displayName: String = Strings.UserInfo.defaultDisplayName + .init(
-      randomCharactersLength: Constants.Core.nicknameCodeLength
-    ),
     privateKey: SecureEnclave.P256.KeyAgreement.PrivateKey
   ) {
     self.userID = userID
-    self.displayName = displayName
     self.privateKey = privateKey
   }
 

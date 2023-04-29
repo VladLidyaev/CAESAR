@@ -24,9 +24,10 @@ enum Strings {
 
   enum StartChatViewController {
     static let title = "CHAT REQUEST"
-    static func message(userName: String) -> String { "User \(userName) wants to open a chat with you." }
+    static func message(code: String?) -> String { "User with code: \(code ?? noneCode) wants to open a chat with you." }
     static let acceptButtonTitle = "Accept"
     static let declineButtonTitle = "Decline"
+    private static let noneCode = "NONE"
   }
 
   // MARK: - WelcomeViewController
@@ -50,13 +51,6 @@ enum Strings {
 
   enum LocalAuthenticationContext {
     static let reason = "Authentication required"
-  }
-
-  // MARK: - UserInfo
-
-  enum UserInfo {
-    static let defaultDisplayName = "Unkown"
-    static let userDisplayName = "You"
   }
 
   // MARK: - DatesShorts

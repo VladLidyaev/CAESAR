@@ -103,12 +103,15 @@ class ChatViewController: CaesarViewController {
 
   private func makeInputMessageView() -> InputMessageView {
     let view = InputMessageView(
-      onSendButtonTap: { [weak self] data in
-        self?.sendMessage(data: data)
+      onSendButtonTap: { [weak self] text in
+        self?.manager?.sendMessage(data: .text(text))
       },
-      onAttachImageButtonTap: { [weak self] completionHandler in
+      onAttachImageButtonTap: { [weak self] in
         self?.closeKeyboardIfNeeded()
-        self?.presentImagePicker(completionHandler)
+        self?.presentImagePicker()
+      },
+      onSwipeDown: { [weak self] in
+        self?.closeKeyboardIfNeeded()
       },
       updateInputMessageViewConstraintValue: { [weak self] value in
         self?.inputMessageViewHeightConstraint?.constant = value
@@ -153,15 +156,11 @@ class ChatViewController: CaesarViewController {
     })
   }
 
-  private func sendMessage(data: MessageData) {
-    manager?.sendMessage(data: data)
-  }
-
   private func closeKeyboardIfNeeded() {
     view.resignFirstResponder()
   }
 
-  private func presentImagePicker(_ completionHandler: @escaping (UIImage?) -> Void) {
+  private func presentImagePicker() {
     imagePicker = ImagePicker()
     showImagePickerAlert(
       showImagePicker: { [weak self] sourceType in
@@ -169,7 +168,10 @@ class ChatViewController: CaesarViewController {
         self.imagePicker?.present(
           from: self,
           sourceType: sourceType,
-          completionHandler: completionHandler
+          completionHandler: { [weak self] image in
+            guard let image else { return }
+            self?.manager?.sendMessage(data: .image(image))
+          }
         )
       }
     )

@@ -154,7 +154,7 @@ class WelcomeViewController: CaesarViewController {
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       self?.manager?.subscribeOnCompanion(onSuccess: { userDTO in
         self?.showStartChatAlert(
-          userName: userDTO.display_name,
+          code: userDTO.chat_request_id,
           acceptAction: {
             self?.manager?.acceptChatRequest(
               with: userDTO.id,

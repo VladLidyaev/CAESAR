@@ -33,10 +33,6 @@ class CaesarManager {
     userInfo.chatRequestDTO?.id
   }
 
-  var displayName: String {
-    userInfo.userDTO.display_name
-  }
-
   // MARK: - Initialization
   
   init(
@@ -46,7 +42,12 @@ class CaesarManager {
     self.userInfo = userInfo
     self.actualViewController = viewController
     self.databaseProvider = DatabaseProvider()
-    NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(willResignActive),
+      name: UIScene.willDeactivateNotification,
+      object: nil
+    )
   }
 
   // MARK: - Public Methods
