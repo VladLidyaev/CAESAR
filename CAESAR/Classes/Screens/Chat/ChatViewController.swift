@@ -110,9 +110,6 @@ class ChatViewController: CaesarViewController {
         self?.closeKeyboardIfNeeded()
         self?.presentImagePicker()
       },
-      onSwipeDown: { [weak self] in
-        self?.closeKeyboardIfNeeded()
-      },
       updateInputMessageViewConstraintValue: { [weak self] value in
         self?.inputMessageViewHeightConstraint?.constant = value
         self?.animateLayout()

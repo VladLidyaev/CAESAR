@@ -9,7 +9,6 @@ class InputMessageView: UIView {
 
   private let onSendButtonTap: (String) -> Void
   private let onAttachImageButtonTap: () -> Void
-  private let onSwipeDown: () -> Void
   private let updateInputMessageViewConstraintValue: (CGFloat) -> Void
 
   var toolbar = UIToolbar() {
@@ -30,12 +29,10 @@ class InputMessageView: UIView {
   init(
     onSendButtonTap: @escaping (String) -> Void,
     onAttachImageButtonTap: @escaping () -> Void,
-    onSwipeDown: @escaping () -> Void,
     updateInputMessageViewConstraintValue: @escaping (CGFloat) -> Void
   ) {
     self.onSendButtonTap = onSendButtonTap
     self.onAttachImageButtonTap = onAttachImageButtonTap
-    self.onSwipeDown = onSwipeDown
     self.updateInputMessageViewConstraintValue = updateInputMessageViewConstraintValue
     super.init(frame: .zero)
     setupUI()
@@ -54,6 +51,7 @@ class InputMessageView: UIView {
     containerView.addSubview(attachImageButton)
     containerView.addSubview(sendButton)
     setupConstraints()
+    setupKeyboardDismissRecognizer()
   }
 
   private func setupConstraints() {
@@ -88,6 +86,12 @@ class InputMessageView: UIView {
     )
     attachImageButton.pin(.trailing, to: .leading, of: sendButton, offset: -LocalConstants.buttonOffset)
     attachImageButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.buttonOffset)
+  }
+
+  private func setupKeyboardDismissRecognizer() {
+    let swipeDownGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeDown))
+    swipeDownGestureRecognizer.direction = .down
+    addGestureRecognizer(swipeDownGestureRecognizer)
   }
 
   // MARK: - View Constructors
@@ -134,15 +138,9 @@ class InputMessageView: UIView {
     return button
   }
 
-  private func setupKeyboardDismissRecognizer() {
-    let swipeDownGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(didSwipeDown))
-    swipeDownGestureRecognizer.direction = .down
-    addGestureRecognizer(swipeDownGestureRecognizer)
-  }
-
   @objc
   private func didSwipeDown() {
-    onSwipeDown()
+    textView.resignFirstResponder()
   }
 
   @objc
