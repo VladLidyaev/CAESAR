@@ -5,6 +5,9 @@ import UIKit
 // MARK: - MessageCell
 
 class MessageCell: UITableViewCell {
+  // MARK: - Properties
+  var onImageTap: ((UIImage) -> Void)?
+
   // MARK: - Subviews
 
   private lazy var containerView = makeContainerView()
@@ -26,7 +29,10 @@ class MessageCell: UITableViewCell {
 
   // MARK: - Initalization
 
-  override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+  override public init(
+    style: UITableViewCell.CellStyle,
+    reuseIdentifier: String?
+  ) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupUI()
   }
@@ -39,8 +45,7 @@ class MessageCell: UITableViewCell {
   func configure(
     with model: Message,
     isUserPreviousItemAutor: Bool,
-    isUserNextItemAutor: Bool,
-    updateLayoutAction: @escaping () -> Void
+    isUserNextItemAutor: Bool
   ) {
     textView.removeFromSuperview()
     imageContainer.removeFromSuperview()
@@ -91,8 +96,6 @@ class MessageCell: UITableViewCell {
       trailingWeakConstraint?.isActive = true
       trailingWeakConstraint?.constant = -LocalConstants.horizontalMaxOffset
     }
-
-    updateLayoutAction()
   }
 
   // MARK: - Setup Methods
@@ -163,6 +166,9 @@ class MessageCell: UITableViewCell {
   private func makeImageContainer() -> UIImageView {
     let imageView = UIImageView().autoLayout()
     imageView.contentMode = .scaleAspectFill
+    imageView.isUserInteractionEnabled = true
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didImageTap))
+    imageView.addGestureRecognizer(tapGestureRecognizer)
     return imageView
   }
 
@@ -182,6 +188,14 @@ class MessageCell: UITableViewCell {
     label.font = LocalConstants.timeLabelFont
     label.numberOfLines = 1
     return label
+  }
+
+  // MARK: - Tap Handler
+
+  @objc
+  private func didImageTap() {
+    guard let image = imageContainer.image else { return }
+    onImageTap?(image)
   }
 }
 

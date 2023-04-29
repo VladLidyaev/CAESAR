@@ -49,5 +49,6 @@ extension Constants {
     static let send: String = "send_icon"
     static let attachImage: String = "attach_image_icon"
     static let quit: String = "quit_icon"
+    static let close: String = "close_icon"
   }
 }

@@ -5,6 +5,7 @@ import UIKit
 // MARK: - Icons, SOURCE: https://feathericons.com/
 
 enum Icons {
+  static let close = IconAsset(name: Constants.Icons.close).icon
   static let quit = IconAsset(name: Constants.Icons.quit).icon
   static let send = IconAsset(name: Constants.Icons.send).icon
   static let attachImage = IconAsset(name: Constants.Icons.attachImage).icon

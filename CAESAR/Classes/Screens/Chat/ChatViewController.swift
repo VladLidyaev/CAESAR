@@ -198,6 +198,16 @@ class ChatViewController: CaesarViewController {
     guard index >= .zero, index < items.count else { return false }
     return items[index].isUserAutor
   }
+
+  // MARK: - FullScreenImageView
+
+  private func showFullScreenImageView(for image: UIImage) {
+    let fullScreenImageVC = FullScreenImageViewController()
+    fullScreenImageVC.image = image
+    fullScreenImageVC.modalPresentationStyle = .overFullScreen
+    fullScreenImageVC.modalTransitionStyle = .crossDissolve
+    present(fullScreenImageVC, animated: true, completion: nil)
+  }
 }
 
 // MARK: - UITableViewDelegate & UITableViewDataSource
@@ -217,11 +227,9 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
       cell.configure(
         with: items[indexPath.row],
         isUserPreviousItemAutor: isUserItemAutor(at: indexPath.row - 1),
-        isUserNextItemAutor: isUserItemAutor(at: indexPath.row + 1),
-        updateLayoutAction: { [weak self] in
-          self?.view.layoutIfNeeded()
-        }
+        isUserNextItemAutor: isUserItemAutor(at: indexPath.row + 1)
       )
+      cell.onImageTap = { [weak self] image in self?.showFullScreenImageView(for: image) }
       return cell
     } else {
       return UITableViewCell()
