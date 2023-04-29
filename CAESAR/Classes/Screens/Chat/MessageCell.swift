@@ -8,6 +8,8 @@ class MessageCell: UITableViewCell {
   // MARK: - Subviews
 
   private lazy var containerView = makeContainerView()
+  private lazy var contentContainerView = makeContentContainerView()
+  private lazy var imageContainer = makeImageContainer()
   private lazy var textView = makeTextView()
   private lazy var timeLabel = makeTimeLabel()
 
@@ -40,10 +42,19 @@ class MessageCell: UITableViewCell {
     isUserNextItemAutor: Bool,
     updateLayoutAction: @escaping () -> Void
   ) {
-    if case let .text(text) = model.data {
+    textView.removeFromSuperview()
+    imageContainer.removeFromSuperview()
+    switch model.data {
+    case .text(let text):
+      textView.isHidden = false
+      imageContainer.isHidden = true
       textView.text = text
-    } else {
-      textView.text = .empty
+      setupTextView()
+    case .image(let image):
+      imageContainer.isHidden = false
+      textView.isHidden = true
+      imageContainer.image = image
+      setupImageContainer()
     }
 
     timeLabel.text = TimeDeltaCalculator.calculateTimeDelta(creationDate: model.timestamp)
@@ -80,6 +91,7 @@ class MessageCell: UITableViewCell {
       trailingWeakConstraint?.isActive = true
       trailingWeakConstraint?.constant = -LocalConstants.horizontalMaxOffset
     }
+
     updateLayoutAction()
   }
 
@@ -88,10 +100,9 @@ class MessageCell: UITableViewCell {
   private func setupUI() {
     selectionStyle = .none
     contentView.clipsToBounds = true
-
     contentView.addSubview(containerView)
-    containerView.addSubview(textView)
     contentView.addSubview(timeLabel)
+    containerView.addSubview(contentContainerView)
     setupContraints()
   }
 
@@ -107,24 +118,52 @@ class MessageCell: UITableViewCell {
     trailingWeakConstraint?.isActive = false
     leadingWeakConstraint?.isActive = false
 
-    // TextView
+    // ContentContainerView
+    contentContainerView.pinToSuperviewEdge(.leading, offset: LocalConstants.contentContainerBorderWidth)
+    contentContainerView.pinToSuperviewEdge(.top, offset: LocalConstants.contentContainerBorderWidth)
+    contentContainerView.pinToSuperviewEdge(.trailing, offset: -LocalConstants.contentContainerBorderWidth)
+    contentContainerView.pinToSuperviewEdge(.bottom, offset: -LocalConstants.contentContainerBorderWidth)
+
+    // TimeLabel
+    timeLabelLeadingConstraint = timeLabel.pin(.leading, to: .trailing, of: containerView, offset: LocalConstants.timeLabelHorizontalOffset)
+    timeLabelTrailingConstraint = timeLabel.pin(.trailing, to: .leading, of: containerView, offset: -LocalConstants.timeLabelHorizontalOffset)
+    timeLabel.pin(.bottom, to: .bottom, of: containerView)
+  }
+
+  private func setupTextView() {
+    contentContainerView.addSubview(textView)
     textView.pinToSuperviewEdge(.top)
     textView.pinToSuperviewEdge(.trailing, offset: -LocalConstants.textViewHorizontalOffset)
     textView.pinToSuperviewEdge(.bottom)
     textView.pinToSuperviewEdge(.leading, offset: LocalConstants.textViewHorizontalOffset)
+  }
 
-    // TimeLabel
-    timeLabelLeadingConstraint = timeLabel.pin(.leading, to: .trailing, of: containerView, offset: LocalConstants.textViewHorizontalOffset)
-    timeLabelTrailingConstraint = timeLabel.pin(.trailing, to: .leading, of: containerView, offset: -LocalConstants.textViewHorizontalOffset)
-    timeLabel.pin(.bottom, to: .bottom, of: containerView)
+  private func setupImageContainer() {
+    contentContainerView.addSubview(imageContainer)
+    imageContainer.setDimensionsRatio(.heightToWidth, to: .one)
+    imageContainer.pinEdgesToSuperview()
   }
 
   // MARK: - Views Constructors
 
   private func makeContainerView() -> UIView {
     let view = UIView().autoLayout()
-    view.layer.cornerRadius = LocalConstants.cornerRadius
+    view.clipsToBounds = true
+    view.layer.cornerRadius = LocalConstants.containerCornerRadius
     return view
+  }
+
+  private func makeContentContainerView() -> UIView {
+    let view = UIView().autoLayout()
+    view.clipsToBounds = true
+    view.layer.cornerRadius = LocalConstants.contentContainerViewCornerRadius
+    return view
+  }
+
+  private func makeImageContainer() -> UIImageView {
+    let imageView = UIImageView().autoLayout()
+    imageView.contentMode = .scaleAspectFill
+    return imageView
   }
 
   private func makeTextView() -> UITextView {
@@ -140,7 +179,7 @@ class MessageCell: UITableViewCell {
   private func makeTimeLabel() -> UILabel {
     let label = UILabel().autoLayout()
     label.textColor = Colors.textAndIcons
-    label.font = LocalConstants.timeLableFont
+    label.font = LocalConstants.timeLabelFont
     label.numberOfLines = 1
     return label
   }
@@ -149,12 +188,15 @@ class MessageCell: UITableViewCell {
 // MARK: - LocalConstants
 
 private enum LocalConstants {
-  static let cornerRadius: CGFloat = 15.0
+  static let containerCornerRadius: CGFloat = 15.0
   static let verticalMinOffset: CGFloat = 1.0
   static let verticalMaxOffset: CGFloat = 3.0
   static let horizontalMinOffset: CGFloat = 12.0
-  static let horizontalMaxOffset: CGFloat = 84.0
+  static let horizontalMaxOffset: CGFloat = 90.0
   static let textFont = UIFont.systemFont(ofSize: 18, weight: .light)
-  static let timeLableFont = UIFont.systemFont(ofSize: 10, weight: .thin)
-  static let textViewHorizontalOffset: CGFloat = 8.0
+  static let timeLabelFont = UIFont.systemFont(ofSize: 10, weight: .thin)
+  static let timeLabelHorizontalOffset: CGFloat = 8.0
+  static let contentContainerBorderWidth: CGFloat = 2.0
+  static let contentContainerViewCornerRadius: CGFloat = containerCornerRadius - contentContainerBorderWidth
+  static let textViewHorizontalOffset: CGFloat = 4.0
 }
