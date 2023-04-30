@@ -174,7 +174,7 @@ class LaunchViewController: CaesarViewController {
       return
     }
     do {
-      let privateKey = try SecureEnclave.P256.KeyAgreement.PrivateKey.init()
+      let privateKey = try SecureEnclave.P256.KeyAgreement.PrivateKey.init(accessControl: accessControl)
       onSuccess(privateKey)
     } catch {
       onError(error)

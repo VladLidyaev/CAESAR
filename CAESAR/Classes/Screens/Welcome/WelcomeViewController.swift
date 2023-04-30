@@ -45,13 +45,6 @@ class WelcomeViewController: CaesarViewController {
     stackView.pinToSuperviewSafeAreaEdge(.bottom, offset: -LocalConstants.stackViewOffset)
     stackView.pinToSuperviewSafeAreaEdge(.leading, offset: LocalConstants.stackViewOffset)
 
-    titleLabel.setDimension(
-      .height,
-      equalTo: .height,
-      of: stackView,
-      multiplier: LocalConstants.titleLabelHeightMultiplier
-    )
-
     codeField.setDimension(
       .height,
       equalTo: .height,
@@ -186,8 +179,8 @@ class WelcomeViewController: CaesarViewController {
 
 private enum LocalConstants {
   static let stackViewSpacing: CGFloat = 8.0
-  static let stackViewOffset: CGFloat = 32
-  static let stackViewLargeOffset: CGFloat = 3 * stackViewOffset
+  static let stackViewOffset: CGFloat = 20
+  static let stackViewLargeOffset: CGFloat = 4 * stackViewOffset
   static let titleLabelHeightMultiplier: CGFloat = 1 / 6
   static let codeFieldHeightMultiplier: CGFloat = 1 / 8
   static let subtitleLabelHeightMultiplier: CGFloat = 1 / 8
