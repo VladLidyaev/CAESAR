@@ -12,6 +12,7 @@ class ChatViewController: CaesarViewController {
     didSet {
       tableView.reloadData()
       tableView.scrollToBottom(animated: true)
+      placeholderLabel.isHidden = !items.isEmpty
     }
   }
 
@@ -21,6 +22,7 @@ class ChatViewController: CaesarViewController {
   private lazy var quitButtonContainer = makeQuitButtonContainer()
   private lazy var tableView = makeTableView()
   private lazy var inputMessageView = makeInputMessageView()
+  private lazy var placeholderLabel = makePlaceholderLabel()
   private var imagePicker: ImagePicker?
 
   // MARK: - Constraints
@@ -46,6 +48,7 @@ class ChatViewController: CaesarViewController {
     quitButtonContainer.addSubview(quitButton)
     view.addSubview(quitButtonContainer)
     view.addSubview(tableView)
+    tableView.addSubview(placeholderLabel)
     view.addSubview(inputMessageView)
     view.bringSubviewToFront(quitButtonContainer)
     setupConstraints()
@@ -82,6 +85,10 @@ class ChatViewController: CaesarViewController {
     tableView.pin(.bottom, to: .top, of: inputMessageView)
     tableView.pinToSuperviewSafeAreaEdge(.trailing)
     tableView.pinToSuperviewSafeAreaEdge(.leading)
+
+    // PlaceholderLabel
+    placeholderLabel.alignToSuperviewAxis(.vertical)
+    placeholderLabel.alignToSuperviewAxis(.horizontal)
   }
 
   // MARK: - View Constructors
@@ -118,6 +125,17 @@ class ChatViewController: CaesarViewController {
     ).autoLayout()
     view.toolbar = toolbar
     return view
+  }
+
+  private func makePlaceholderLabel() -> UILabel {
+    let label = UILabel().autoLayout()
+    label.clipsToBounds = true
+    label.contentMode = .center
+    label.numberOfLines = .zero
+    label.font = LocalConstants.placeholderLabelFont
+    label.textColor = Colors.textAndIcons.withAlphaComponent(LocalConstants.placeholderLabelTextAlpha)
+    label.text = Strings.ChatViewController.placeholderTableText
+    return label
   }
 
   private func makeTableView() -> UITableView {
@@ -352,8 +370,10 @@ private enum LocalConstants {
   static let cornerRadius: CGFloat = 13.0
   static let quitButtonSideLength: CGFloat = 28.0
   static let quitButtonVerticalOffset: CGFloat = 8.0
-  static let quitButtonOffset: CGFloat = 14.0
+  static let quitButtonOffset: CGFloat = 12.0
   static let inputMessageViewBottomOffset: CGFloat = 34.0
   static let textViewInitialHeight: CGFloat = 60
   static let tableViewTopContentInset: CGFloat = quitButtonSideLength + quitButtonOffset + 3 * quitButtonVerticalOffset
+  static let placeholderLabelTextAlpha: CGFloat = 0.5
+  static let placeholderLabelFont: UIFont = UIFont.systemFont(ofSize: 20.0, weight: .regular)
 }

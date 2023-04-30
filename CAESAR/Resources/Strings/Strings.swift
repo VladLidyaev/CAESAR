@@ -24,7 +24,7 @@ enum Strings {
 
   enum StartChatViewController {
     static let title = "CHAT REQUEST"
-    static func message(code: String?) -> String { "User with code: \(code ?? noneCode) wants to open a chat with you." }
+    static func message(code: String?) -> String { "User with code \(code ?? noneCode) wants to open a chat with you." }
     static let acceptButtonTitle = "Accept"
     static let declineButtonTitle = "Decline"
     private static let noneCode = "NONE"
@@ -41,7 +41,8 @@ enum Strings {
   // MARK: - ChatViewController
 
   enum ChatViewController {
-    static let placeholderText = "Message"
+    static let placeholderTableText = "No messages"
+    static let placeholderInputText = "Message"
   }
 
   // MARK: - ImagePickerController

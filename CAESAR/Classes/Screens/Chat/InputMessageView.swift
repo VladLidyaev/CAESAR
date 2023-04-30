@@ -152,7 +152,7 @@ class InputMessageView: UIView {
     label.numberOfLines = .zero
     label.font = LocalConstants.textViewFont
     label.textColor = Colors.textAndIcons.withAlphaComponent(LocalConstants.placeholderLabelTextAlpha)
-    label.text = Strings.ChatViewController.placeholderText
+    label.text = Strings.ChatViewController.placeholderInputText
     return label
   }
 
