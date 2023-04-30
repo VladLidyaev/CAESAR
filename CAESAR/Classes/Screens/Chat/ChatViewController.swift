@@ -48,7 +48,7 @@ class ChatViewController: CaesarViewController {
     quitButtonContainer.addSubview(quitButton)
     view.addSubview(quitButtonContainer)
     view.addSubview(tableView)
-    tableView.addSubview(placeholderLabel)
+    view.addSubview(placeholderLabel)
     view.addSubview(inputMessageView)
     view.bringSubviewToFront(quitButtonContainer)
     setupConstraints()
@@ -87,8 +87,8 @@ class ChatViewController: CaesarViewController {
     tableView.pinToSuperviewSafeAreaEdge(.leading)
 
     // PlaceholderLabel
-    placeholderLabel.alignToSuperviewAxis(.vertical)
-    placeholderLabel.alignToSuperviewAxis(.horizontal)
+    placeholderLabel.alignToAxis(.vertical, of: tableView)
+    placeholderLabel.alignToAxis(.horizontal, of: tableView)
   }
 
   // MARK: - View Constructors
@@ -104,7 +104,9 @@ class ChatViewController: CaesarViewController {
 
   private func makeQuitButtonContainer() -> UIView {
     let view = UIView().autoLayout()
-    view.backgroundColor = Colors.background
+    view.backgroundColor = Colors.background.withAlphaComponent(LocalConstants.alphaComponent)
+    view.layer.borderColor = Colors.textAndIcons.cgColor
+    view.layer.borderWidth = LocalConstants.borderWidth
     view.layer.cornerRadius = LocalConstants.cornerRadius
     return view
   }
@@ -367,7 +369,9 @@ extension ChatViewController: UIContextMenuInteractionDelegate {
 
 private enum LocalConstants {
   static let timeLabelUpdateInterval: TimeInterval = 1.0
-  static let cornerRadius: CGFloat = 13.0
+  static let alphaComponent: CGFloat = 0.6
+  static let borderWidth: CGFloat = 2
+  static let cornerRadius: CGFloat = 22.0
   static let quitButtonSideLength: CGFloat = 28.0
   static let quitButtonVerticalOffset: CGFloat = 8.0
   static let quitButtonOffset: CGFloat = 12.0

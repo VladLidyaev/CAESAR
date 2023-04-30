@@ -19,7 +19,6 @@ class CaesarManager {
   private let userInfo: UserInfo
   private let databaseProvider: DatabaseProvider
   private var state: CaesarManagerState = .welcome
-  private var isChattingStarted: Bool = false
   private var chatThrottler: Throttler?
   private weak var actualViewController: CaesarViewController?
 
@@ -346,16 +345,11 @@ class CaesarManager {
   }
 
   func throttlingMesasages(_ messages: [Message]) {
-    if isChattingStarted == true, messages.isEmpty { handleError() }
-    if !messages.isEmpty {
-      if isChattingStarted == false {
-        isChattingStarted = true
-      }
-      chatThrottler?.cancel()
-      chatThrottler?.throttle({ [weak self] in
-        self?.handleError()
-      })
-    }
+    guard !messages.isEmpty else { return }
+    chatThrottler?.cancel()
+    chatThrottler?.throttle({ [weak self] in
+      self?.handleError()
+    })
   }
 
   func deleteMessage(with id: String) {

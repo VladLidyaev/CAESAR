@@ -6,26 +6,35 @@ class FullScreenImageViewController: UIViewController, UIScrollViewDelegate {
   private var panGestureRecognizer: UIPanGestureRecognizer!
 
   private lazy var scrollView: UIScrollView = {
-    let scrollView = UIScrollView()
-    scrollView.translatesAutoresizingMaskIntoConstraints = false
+    let scrollView = UIScrollView().autoLayout()
+    scrollView.showsVerticalScrollIndicator = false
+    scrollView.showsHorizontalScrollIndicator = false
     return scrollView
   }()
 
   private lazy var imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.translatesAutoresizingMaskIntoConstraints = false
+    let imageView = UIImageView().autoLayout()
     imageView.isUserInteractionEnabled = true
     imageView.contentMode = .scaleAspectFit
     return imageView
   }()
 
   private lazy var closeButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.setImage(Icons.close, for: .normal)
-    button.tintColor = .white
+    let image = Icons.close.withRenderingMode(.alwaysTemplate)
+    let button = UIButton().autoLayout()
+    button.setImage(image, for: .normal)
+    button.tintColor = Colors.textAndIcons
     button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     return button
+  }()
+
+  private lazy var closeButtonContainer: UIView = {
+    let view = UIView().autoLayout()
+    view.backgroundColor = Colors.background.withAlphaComponent(LocalConstants.alphaComponent)
+    view.layer.borderColor = Colors.textAndIcons.cgColor
+    view.layer.borderWidth = LocalConstants.borderWidth
+    view.layer.cornerRadius = LocalConstants.cornerRadius
+    return view
   }()
 
   var image: UIImage?
@@ -49,7 +58,8 @@ class FullScreenImageViewController: UIViewController, UIScrollViewDelegate {
     view.backgroundColor = .black
     view.addSubview(scrollView)
     scrollView.addSubview(imageView)
-    view.addSubview(closeButton)
+    view.addSubview(closeButtonContainer)
+    closeButtonContainer.addSubview(closeButton)
   }
 
   private func setupConstraints() {
@@ -63,13 +73,20 @@ class FullScreenImageViewController: UIViewController, UIScrollViewDelegate {
     imageView.setDimension(.height, equalTo: .height, of: scrollView)
 
     // CloseButton
-    closeButton.pinToSuperviewSafeAreaEdge(.top, offset: LocalConstants.closeButtonTrailingOffset)
-    closeButton.pinToSuperviewSafeAreaEdge(.trailing, offset: -LocalConstants.closeButtonTrailingOffset)
     closeButton.setDimensions(
       to: .init(
-        width: LocalConstants.closeButtonSideLength, height: LocalConstants.closeButtonSideLength
+        width: LocalConstants.closeButtonSideLength,
+        height: LocalConstants.closeButtonSideLength
       )
     )
+    closeButton.pinToSuperviewEdge(.top, offset: LocalConstants.closeButtonVerticalOffset)
+    closeButton.pinToSuperviewEdge(.trailing, offset: -LocalConstants.closeButtonVerticalOffset)
+    closeButton.pinToSuperviewEdge(.bottom, offset: -LocalConstants.closeButtonVerticalOffset)
+    closeButton.pinToSuperviewEdge(.leading, offset: LocalConstants.closeButtonVerticalOffset)
+
+    // CloseButtonContainer
+    closeButtonContainer.pinToSuperviewSafeAreaEdge(.top, offset: LocalConstants.closeButtonOffset)
+    closeButtonContainer.pinToSuperviewSafeAreaEdge(.trailing, offset: -LocalConstants.closeButtonOffset)
   }
 
   @objc func closeButtonTapped() {
@@ -107,6 +124,11 @@ class FullScreenImageViewController: UIViewController, UIScrollViewDelegate {
 private enum LocalConstants {
   static let scrollViewMinimumZoomScale: CGFloat = 1.0
   static let scrollViewMaximumZoomScale: CGFloat = 6.0
+  static let alphaComponent: CGFloat = 0.6
+  static let borderWidth: CGFloat = 2
+  static let cornerRadius: CGFloat = 22.0
+  static let closeButtonVerticalOffset: CGFloat = 8.0
+  static let closeButtonOffset: CGFloat = 12.0
   static let closeButtonSideLength: CGFloat = 28.0
   static let closeButtonTrailingOffset: CGFloat = 20.0
 }

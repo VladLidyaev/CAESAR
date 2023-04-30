@@ -208,7 +208,7 @@ class MessageCell: UITableViewCell {
 // MARK: - LocalConstants
 
 private enum LocalConstants {
-  static let containerCornerRadius: CGFloat = 15.0
+  static let containerCornerRadius: CGFloat = 13.0
   static let verticalMinOffset: CGFloat = 1.0
   static let verticalMaxOffset: CGFloat = 3.0
   static let horizontalMinOffset: CGFloat = 12.0
