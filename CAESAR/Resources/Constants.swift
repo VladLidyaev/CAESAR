@@ -36,6 +36,7 @@ extension Constants {
     static let background: String = "BackgroundColor"
     static let backgroundGray: String = "BackgroundGrayColor"
     static let textAndIcons: String = "TextAndIconsColor"
+    static let destructive: String = "DestructiveColor"
   }
 }
 
@@ -50,5 +51,7 @@ extension Constants {
     static let attachImage: String = "attach_image_icon"
     static let quit: String = "quit_icon"
     static let close: String = "close_icon"
+    static let trash: String = "trash_icon"
+    static let copy: String = "copy_icon"
   }
 }

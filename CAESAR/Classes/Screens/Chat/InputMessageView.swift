@@ -23,6 +23,7 @@ class InputMessageView: UIView {
   private lazy var textView = makeTextView()
   private lazy var sendButton = makeSendButton()
   private lazy var attachImageButton = makeAttachImageButton()
+  private lazy var placeholderLabel = makePlaceholderLabel()
 
   // MARK: - Initialization
 
@@ -48,6 +49,7 @@ class InputMessageView: UIView {
   private func setupUI() {
     addSubview(containerView)
     containerView.addSubview(textView)
+    textView.addSubview(placeholderLabel)
     containerView.addSubview(attachImageButton)
     containerView.addSubview(sendButton)
     setupConstraints()
@@ -66,6 +68,11 @@ class InputMessageView: UIView {
     textView.pin(.trailing, to: .leading, of: attachImageButton, offset: -LocalConstants.buttonOffset)
     textView.pinToSuperviewEdge(.bottom, offset: -LocalConstants.textViewVerticalOffset)
     textView.pinToSuperviewEdge(.leading, offset: LocalConstants.textViewLeadingOffset)
+
+    // PlaceholderLabel
+    placeholderLabel.alignToAxis(.vertical, of: textView)
+    placeholderLabel.pinToSuperviewEdge(.trailing)
+    placeholderLabel.pinToSuperviewEdge(.leading, offset: LocalConstants.placeholderLabelLeadingOffset)
 
     // SendButton
     sendButton.setDimensions(
@@ -138,6 +145,17 @@ class InputMessageView: UIView {
     return button
   }
 
+  private func makePlaceholderLabel() -> UILabel {
+    let label = UILabel().autoLayout()
+    label.clipsToBounds = true
+    label.contentMode = .center
+    label.numberOfLines = .zero
+    label.font = LocalConstants.textViewFont
+    label.textColor = Colors.textAndIcons.withAlphaComponent(LocalConstants.placeholderLabelTextAlpha)
+    label.text = Strings.ChatViewController.placeholderText
+    return label
+  }
+
   @objc
   private func didSwipeDown() {
     textView.resignFirstResponder()
@@ -159,6 +177,7 @@ class InputMessageView: UIView {
     let textViewContentHeight = textView.contentSize.height
     textView.showsVerticalScrollIndicator = textViewContentHeight >= LocalConstants.textViewMaxHeight
     sendButton.isEnabled = !textView.text.containsOnlyWhitespacesAndNewlines
+    placeholderLabel.isHidden = !textView.text.isEmpty
     let textViewHeight = max(
       min(LocalConstants.textViewMaxHeight, textViewContentHeight),
       LocalConstants.textViewMinHeight
@@ -191,4 +210,6 @@ private enum LocalConstants {
   static let textViewVertialDiff: CGFloat = 2 * (buttonOffset + textViewVerticalOffset)
   static let textViewLeadingOffset: CGFloat = 16.0
   static let textViewVerticalOffset: CGFloat = 2.0
+  static let placeholderLabelTextAlpha: CGFloat = 0.5
+  static let placeholderLabelLeadingOffset: CGFloat = 4.5
 }

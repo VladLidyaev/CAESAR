@@ -6,6 +6,7 @@ import UIKit
 
 class MessageCell: UITableViewCell {
   // MARK: - Properties
+
   var onImageTap: ((UIImage) -> Void)?
 
   // MARK: - Subviews
@@ -45,8 +46,13 @@ class MessageCell: UITableViewCell {
   func configure(
     with model: Message,
     isUserPreviousItemAutor: Bool,
-    isUserNextItemAutor: Bool
+    isUserNextItemAutor: Bool,
+    containerContextMenuInteraction: UIContextMenuInteraction
   ) {
+    model.cell = self
+    model.containerView = containerView
+    containerView.addInteraction(containerContextMenuInteraction)
+
     textView.removeFromSuperview()
     imageContainer.removeFromSuperview()
     switch model.data {
@@ -102,7 +108,7 @@ class MessageCell: UITableViewCell {
 
   private func setupUI() {
     selectionStyle = .none
-    contentView.clipsToBounds = true
+    contentView.clipsToBounds = false
     contentView.addSubview(containerView)
     contentView.addSubview(timeLabel)
     containerView.addSubview(contentContainerView)
@@ -167,7 +173,7 @@ class MessageCell: UITableViewCell {
     let imageView = UIImageView().autoLayout()
     imageView.contentMode = .scaleAspectFill
     imageView.isUserInteractionEnabled = true
-    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didImageTap))
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleImageTap))
     imageView.addGestureRecognizer(tapGestureRecognizer)
     return imageView
   }
@@ -193,7 +199,7 @@ class MessageCell: UITableViewCell {
   // MARK: - Tap Handler
 
   @objc
-  private func didImageTap() {
+  private func handleImageTap() {
     guard let image = imageContainer.image else { return }
     onImageTap?(image)
   }

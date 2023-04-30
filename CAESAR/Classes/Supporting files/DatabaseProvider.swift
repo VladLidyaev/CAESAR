@@ -181,14 +181,28 @@ class DatabaseProvider {
       path([MessageDTO.key, chatID])
     )
 
-    guard let key = chatArrayReference.childByAutoId().key else {
-      onError(nil)
-      return
-    }
-
     chatArrayReference.updateChildValues([
-      path([key]): messageDTO.asDictionary
+      path([messageDTO.id]): messageDTO.asDictionary
     ]) { error, _ in
+      guard error == nil else {
+        onError(error)
+        return
+      }
+      onSuccess()
+    }
+  }
+
+  // MARK: - DeleteMessage
+
+  func deleteMessage(
+    chatID: String,
+    messageId: String,
+    onSuccess: @escaping () -> Void,
+    onError: @escaping (Error?) -> Void
+  ) {
+    mainReference.child(
+      path([MessageDTO.key, chatID, messageId])
+    ).removeValue { error, _ in
       guard error == nil else {
         onError(error)
         return

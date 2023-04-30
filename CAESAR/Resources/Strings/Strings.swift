@@ -38,6 +38,12 @@ enum Strings {
     static let displayNameLabelText = "Your nickname: "
   }
 
+  // MARK: - ChatViewController
+
+  enum ChatViewController {
+    static let placeholderText = "Message"
+  }
+
   // MARK: - ImagePickerController
 
   enum ImagePickerController {
@@ -46,11 +52,18 @@ enum Strings {
     static let cancelLabelText = "Cancel"
   }
 
-
   // MARK: - LocalAuthenticationContext
 
   enum LocalAuthenticationContext {
     static let reason = "Authentication required"
+  }
+
+  // MARK: - MessageMenuContext
+
+  enum MessageMenuContext {
+    static let copy = "Copy"
+    static let deleteForMe = "Delete for me"
+    static let deleteForEvereone = "Delete for everyone"
   }
 
   // MARK: - DatesShorts

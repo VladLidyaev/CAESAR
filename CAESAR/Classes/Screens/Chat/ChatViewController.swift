@@ -7,6 +7,7 @@ import UIKit
 class ChatViewController: CaesarViewController {
   // MARK: - Properties
 
+  private var deletedItemIds = [String]()
   private var items: [Message] = [] {
     didSet {
       tableView.reloadData()
@@ -73,8 +74,8 @@ class ChatViewController: CaesarViewController {
     quitButton.pinToSuperviewEdge(.leading, offset: LocalConstants.quitButtonVerticalOffset)
 
     // QuitButtonContainer
-    quitButtonContainer.pinToSuperviewSafeAreaEdge(.top, offset: LocalConstants.quitButtonTrailingOffset)
-    quitButtonContainer.pinToSuperviewSafeAreaEdge(.trailing, offset: -LocalConstants.quitButtonTrailingOffset)
+    quitButtonContainer.pinToSuperviewSafeAreaEdge(.top, offset: LocalConstants.quitButtonOffset)
+    quitButtonContainer.pinToSuperviewSafeAreaEdge(.trailing, offset: -LocalConstants.quitButtonOffset)
 
     // TableView
     tableView.pinToSuperviewEdge(.top)
@@ -149,8 +150,12 @@ class ChatViewController: CaesarViewController {
 
   private func subscribeOnMessages() {
     manager?.subscribeOnMessages(onSuccess: { [weak self] items in
-      self?.items = items
+      self?.setItems(items)
     })
+  }
+
+  private func setItems(_ newItems: [Message]? = nil) {
+    items = (newItems ?? items).filter { deletedItemIds.contains($0.id) == false }
   }
 
   private func closeKeyboardIfNeeded() {
@@ -227,7 +232,8 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
       cell.configure(
         with: items[indexPath.row],
         isUserPreviousItemAutor: isUserItemAutor(at: indexPath.row - 1),
-        isUserNextItemAutor: isUserItemAutor(at: indexPath.row + 1)
+        isUserNextItemAutor: isUserItemAutor(at: indexPath.row + 1),
+        containerContextMenuInteraction: UIContextMenuInteraction(delegate: self)
       )
       cell.onImageTap = { [weak self] image in self?.showFullScreenImageView(for: image) }
       return cell
@@ -284,15 +290,70 @@ extension ChatViewController {
   }
 }
 
+extension ChatViewController: UIContextMenuInteractionDelegate {
+  func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+    guard
+      let model = items.filter({ $0.containerView === interaction.view }).first,
+      let cell = model.cell
+    else { return nil }
+    tableView.bringSubviewToFront(cell)
+    return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+      var actions = [UIAction]()
+
+      // Copy
+      actions.append(
+        UIAction(
+          title: Strings.MessageMenuContext.copy,
+          image: Icons.copy.withTintColor(Colors.textAndIcons)
+        ) { _ in
+          switch model.data {
+          case .text(let text):
+            UIPasteboard.general.string = text
+          case .image(let image):
+            UIPasteboard.general.image = image
+          }
+        }
+      )
+
+      // Delete for me
+      actions.append(
+        UIAction(
+          title: Strings.MessageMenuContext.deleteForMe,
+          image: Icons.trash.withTintColor(Colors.destructive),
+          attributes: .destructive
+        ) { [weak self] _ in
+          self?.deletedItemIds.append(model.id)
+          self?.setItems()
+        }
+      )
+
+      // Delete for everyone
+      if model.isUserAutor {
+        actions.append(
+          UIAction(
+            title: Strings.MessageMenuContext.deleteForEvereone,
+            image: Icons.trash.withTintColor(Colors.destructive),
+            attributes: .destructive
+          ) { [weak self] _ in
+            self?.manager?.deleteMessage(with: model.id)
+          }
+        )
+      }
+
+      return UIMenu(title: .empty, children: actions)
+    }
+  }
+}
+
 // MARK: - LocalConstants
 
 private enum LocalConstants {
   static let timeLabelUpdateInterval: TimeInterval = 1.0
-  static let cornerRadius: CGFloat = 15.0
+  static let cornerRadius: CGFloat = 13.0
   static let quitButtonSideLength: CGFloat = 28.0
   static let quitButtonVerticalOffset: CGFloat = 8.0
-  static let quitButtonTrailingOffset: CGFloat = 12.0
+  static let quitButtonOffset: CGFloat = 14.0
   static let inputMessageViewBottomOffset: CGFloat = 34.0
   static let textViewInitialHeight: CGFloat = 60
-  static let tableViewTopContentInset: CGFloat = quitButtonSideLength + quitButtonTrailingOffset + 3 * quitButtonVerticalOffset
+  static let tableViewTopContentInset: CGFloat = quitButtonSideLength + quitButtonOffset + 3 * quitButtonVerticalOffset
 }

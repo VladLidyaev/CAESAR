@@ -4,10 +4,29 @@ import UIKit
 
 // MARK: - Message
 
-struct Message {
+class Message {
+  let id: String
   let data: MessageData
   let isUserAutor: Bool
   let timestamp: Date
+  var cell: UITableViewCell?
+  var containerView: UIView?
+
+  init(
+    id: String,
+    data: MessageData,
+    isUserAutor: Bool,
+    timestamp: Date,
+    cell: UITableViewCell? = nil,
+    containerView: UIView? = nil
+  ) {
+    self.id = id
+    self.data = data
+    self.isUserAutor = isUserAutor
+    self.timestamp = timestamp
+    self.cell = cell
+    self.containerView = containerView
+  }
 }
 
 enum MessageData: Codable, Equatable {

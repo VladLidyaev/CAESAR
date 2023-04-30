@@ -358,6 +358,16 @@ class CaesarManager {
     }
   }
 
+  func deleteMessage(with id: String) {
+    guard let chatID = userInfo.chatDTO?.id else { return }
+    databaseProvider.deleteMessage(
+      chatID: chatID,
+      messageId: id,
+      onSuccess: {},
+      onError: { _ in }
+    )
+  }
+
   func deleteAllInfo(withChatEndedNotification: Bool = false) {
     let onError: (Error?) -> () = { _ in }
     guard let companionID = userInfo.companionID else { return }
@@ -411,6 +421,7 @@ class CaesarManager {
 
         onSuccess(
           Message(
+            id: dto.id,
             data: messageData,
             isUserAutor: dto.user_id == userInfo.userDTO.id,
             timestamp: dto.timestamp
