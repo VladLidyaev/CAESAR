@@ -451,9 +451,3 @@ class DatabaseProvider {
     return result
   }
 }
-
-// MARK: - LocalConstants
-
-private enum LocalConstants {
-
-}

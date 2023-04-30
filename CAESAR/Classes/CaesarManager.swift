@@ -142,7 +142,10 @@ class CaesarManager {
                     self?.userInfo.setCompanionPublicKeyData(
                       userDTO.public_key,
                       saltString: chatID,
-                      onSuccess: { onSuccess(chatDTO) },
+                      onSuccess: {
+                        self?.deleteAllInfo()
+                        onSuccess(chatDTO)
+                      },
                       onError: { onError(nil) }
                     )
                   },
